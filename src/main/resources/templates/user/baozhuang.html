@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>报装登记</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+</head>
+<body class="childrenBody">
+<!-- 搜索条件开始 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>查询条件</legend>
+</fieldset>
+<form class="layui-form" method="post" id="searchFrm">
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">客户账号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userId" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">
+                    查询
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+<div id="meterBar" style="display: none;">
+    <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="add">增容</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="jian">减容</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="guohu">过户</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">销户</a>
+</div>
+
+<!-- 数据表格开始 -->
+<table class="layui-hide" id="meterTable" lay-filter="meterTable"></table>
+
+<div class="layui-btn-group" id="meterTool" style="display: none;" >
+    <button type="button" class="layui-btn"  lay-event="add">新装登记</button>
+</div>
+<!--更改电容-->
+<div style="display: none;padding: 20px;" id="optionDiv">
+    <form class="layui-form" lay-filter="optionForm" id="optionForm">
+        <input type="hidden" name="meterId" value=""/>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">原电容/A</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="type" lay-verify="required|number" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">新电容/A</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="newType"  lay-verify="required|number" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doOptionSubmit" lay-submit="">确认
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--过户-->
+<div style="display: none;padding: 20px;" id="guohuDiv">
+    <form class="layui-form" lay-filter="guohuForm" id="guohuForm">
+        <input type="hidden" name="meterId" value=""/>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">原客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userId" lay-verify="required" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">新客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="newUserId"  lay-verify="required" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doGouhuSubmit" lay-submit="">确认更改
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--给客户分配电表信息-->
+<div style="display: none;padding: 20px" id="addMeter">
+    <form class="layui-form" lay-filter="addMeterForm" id="addMeterForm">
+        <input type="hidden" name="meterId" value=""/>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userId" lay-verify="required" placeholder="请输入客户账号" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电容/A</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="type"  required="required|number" lay-verify="required" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电表选择</label>
+                <div class="layui-input-inline">
+                    <select name="meterName" class="layui-input" id="selectName" lay-filter="selectName">
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表状态</label>
+                <div class="layui-input-inline">
+                    <select name="state" class="layui-input" >
+                        <option value="0">可用</option>
+                        <option value="1">停用</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电表编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" id="code" readonly="readonly" lay-verify="required" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表厂家</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="factory" id="factory" readonly="readonly" lay-verify="required" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doMeterSubmit" lay-submit="">确认
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+    <!--<table lay-filter="meterTab" id="meterTab"></table>-->
+</div>
+
+<!--客户设备报装-->
+<div style="display: none;padding: 20px" id="divFacility">
+    <form class="layui-form" lay-filter="materForm" id="materForm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userId" lay-verify="required" placeholder="请输入客户账号" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">客户姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">设备名称</label>
+                <div class="layui-input-inline">
+                    <select name="facId" lay-verify="required" id="select" lay-filter="price" >
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报装日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="createDate" id="date2"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">设备单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="facPrice" name="price" readonly="readonly" lay-verify="required|number"  autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">设备数量</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" lay-verify="required|number" placeholder="请输入数量" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doSubmitFacForm" lay-submit="">提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="javascript">
+    var tableIns;
+    layui.use(['jquery', 'layer', 'form', 'table', 'laydate'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var laydate = layui.laydate;
+
+        var url;
+        var mainIndex;
+        var tableIns;
+
+        laydate.render({
+            elem: "#startDate",
+            type: 'date'
+        });
+        laydate.render({
+            elem: "#date2",
+            type: 'date',
+        });
+
+        tableIns = table.render({
+            elem: '#meterTable'   //渲染的目标对象
+            , url: '/meter/meterList' //数据接口
+            , toolbar: '#meterTool'
+            , title: '电力设备信息'//数据导出来的标题
+            , cellMinWidth: 100 //设置列的最小默认宽度
+            , page: true  //是否启用分页
+            , defaultToolbar: [""]
+            , cols: [
+                [
+                    {field: 'meterId', title: 'ID', align: 'center', width: 80, sort: true},
+                    {field: 'userId', title: '客户账号', align: 'center', width: 180, sort: true},
+                    {field: 'meterName', title: '电表', align: 'center', width: 160, sort: true},
+                    {field: 'type', title: '电容(A)', align: 'center', width: 120, sort: true},
+                    {field: 'code', title: '电表编号', align: 'center', width: 160, sort: true},
+                    {field: 'factory', title: '出厂商', align: 'center', width: 160, sort: true},
+                    {
+                        field: 'state', title: '线路状态', align: 'center', width: 100, sort: true, templet: function (d) {
+                            return d.state == '0' ? '<font color=blue>可用</font>' : '<font color=red>停用</font>';
+                        }
+                    },
+                    {field: 'startDate', title: '报装日期', align: 'center', width: 120,sort:true},
+                    {fixed: 'right', title: '操作', toolbar: '#meterBar', width: 260, align: 'center'}
+                ]
+            ]
+        });
+
+        //监听行工具事件
+        table.on('tool(meterTable)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (layEvent === 'del') { //删除
+                layer.confirm('真的删除ID为【' + data.meterId + '】报装记录吗', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/meter/deleteMeter", {meterId: data.meterId}, function (res) {
+                        layer.msg(res.msg);
+                        //刷新数据 表格
+                        tableIns.reload();
+                    })
+                });
+            } else if (layEvent === 'edit') { //
+                openEditMeter(data);
+                $.ajax({
+                    url: "/facility/findFacType2?facType=1",
+                    type: "get",
+                    datType: "json",
+                    success: function(d) {
+                        $("#selectName").html('<option value="-1"></option>');
+                        $.each(d.data, function (key, val) {
+                            var option1 = "<option value='"+val.facName+"' code='"+val.facCode+"' factory='"+val.facFactory+"'>"+val.facName+"</option>";
+                            //通过LayUI.jQuery添加列表项
+                            $("#selectName").append(option1);
+                        });
+                        form.val("addMeterForm", data);
+                        layui.form.render('selectName');
+                    }
+                });
+            }else if(layEvent === 'add'){
+                openChange(data);
+            }else if(layEvent === 'jian'){
+                openChange(data);
+            }else if(layEvent === 'guohu'){
+                openGuohu(data);
+            }
+        });
+        // 添加电容
+        function openChange(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: '更改容量',
+                content: $("#optionDiv"),
+                area: ['780px', '280px'],
+                success: function (index) {
+                    $("#optionForm")[0].reset();
+                    form.val("optionForm", data);
+                    url = "/meter/changeMeter";
+                }
+            });
+        }
+        // 添加电容
+        function openGuohu(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: '过户',
+                content: $("#guohuDiv"),
+                area: ['780px', '280px'],
+                success: function (index) {
+                    $("#guohuForm")[0].reset();
+                    form.val("guohuForm", data);
+                    url = "/meter/guohuMeter";
+                }
+            });
+        }
+
+        //打开编辑页面
+        function openEditMeter(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: '编辑报装信息',
+                content: $("#addMeter"),
+                area: ['780px', '480px'],
+                success: function (index) {
+                    url = "/meter/updateMeter";
+                }
+            });
+        }
+        //模糊查询
+        $("#doSearch").click(function () {
+            var params = $("#searchFrm").serialize();
+            tableIns.reload({
+                url: "/meter/meterList?" + params
+            })
+        });
+
+
+        //监听头部工具栏事件
+        table.on("toolbar(meterTable)", function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    openAddMeter();
+                    $.ajax({
+                        url: "/facility/findFacType2?facType=1",
+                        type: "get",
+                        datType: "json",
+                        success: function(data) {
+                            $("#selectName").html('<option value="-1"></option>');
+                            $.each(data.data, function (key, val) {
+                                var option1 = "<option value='"+val.facName+"' code='"+val.facCode+"' factory='"+val.facFactory+"'>"+val.facName+"</option>";
+                                //通过LayUI.jQuery添加列表项
+                                $("#selectName").append(option1);
+                            });
+                            layui.form.render('selectName');
+                        }
+                    });
+                    break;
+            }
+        });
+
+
+        // 客户安装设备
+        function openAddMeter(){
+            mainIndex = layer.open({
+                type: 1,
+                title: '客户报装设备登记',
+                content: $("#addMeter"),
+                area: ['780px', '480px'],
+                success: function (index) {
+                    //清空表单数据
+                    $("#addMeterForm")[0].reset();
+                    url = "/meter/addMeter";
+                }
+        });
+        }
+
+        // 编号厂商联动
+        form.on('select(selectName)', function(data){
+            var code = $(data.elem).find("option:selected").attr("code");
+            var factory = $(data.elem).find("option:selected").attr("factory");
+            $("#code").val(code);
+            $("#factory").val(factory);
+        });
+
+        //保存
+        form.on("submit(doMeterSubmit)", function (data) {
+             var params = data.field
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex);
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+        // 更改电容
+        form.on("submit(doOptionSubmit)", function (data) {
+            var params = data.field
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex);
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+        // 过户
+        form.on("submit(doGouhuSubmit)", function (data) {
+            var params = data.field
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex);
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+
+
+
+
+        });
+</script>
+</body>
+</html>

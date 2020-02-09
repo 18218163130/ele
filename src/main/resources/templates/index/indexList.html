@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>指标列表</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+</head>
+<body>
+<!-- 搜索条件开始 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>查询条件</legend>
+</fieldset>
+<form class="layui-form" method="post" id="searchFrom">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">指标名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="indexName" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">创建人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="setPerson" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">起始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="sTime" id="stratTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否完成</label>
+            <div class="layui-input-block">
+                <input type="radio" name="state" value="1"  title="是">
+                <input type="radio" name="state" value="0" title="否">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">查询
+            </button>
+            <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+        </div>
+    </div>
+</form>
+
+<!--弹出编辑层-->
+<div id="updateIndexDiv"  style="display: none;padding: 20px;" >
+    <form class="layui-form" action="" lay-filter="updateForm" id="updateForm">
+        <input type="hidden" name="indexId"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">指标名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="indexName" lay-verify="required|title" autocomplete="off" placeholder="请输入指标名称" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">指标类型</label>
+            <div class="layui-input-block">
+                <select name="type" id="indexType" lay-filter="indexType" lay-verify="required">
+                    <option value=""></option>
+                    <option value="0">电量销售</option>
+                    <option value="1">工业售电均价</option>
+                    <option value="2">商业售电均价</option>
+                    <option value="3">家庭售电均价</option>
+                    <option value="4">营业收入</option>
+                    <option value="5">综合线损</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">起始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="sTime" id="sTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">截止时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="oTime" id="oTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否完成</label>
+            <div class="layui-input-block">
+                <input type="radio" name="state" value="1" title="是">
+                <input type="radio" name="state" value="0" title="否">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea" id="description"  name="description" lay-verify="description"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建人</label>
+            <div class="layui-input-block">
+                <input type="text" name="setPerson" lay-verify="title" autocomplete="off" readonly="readonly" placeholder="请输入创建人" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改人</label>
+            <div class="layui-input-block">
+                <input type="text" name="changePerson" lay-verify="title|required" autocomplete="off"  placeholder="请输入修改人" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="reset" class="layui-btn " id="btnReset">重置</button>
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 数据表格开始 -->
+<table class="layui-hide" id="indexTable" lay-filter="indexTable"></table>
+<div style="display: none;" id="indexToolBar">
+    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch">批量删除</button>
+
+</div>
+
+<!--双击行显示指标描述信息-->
+<div id="showDescription" style="display: none;padding: 10px">
+    <h2 id="show_title" align="center"></h2>
+    <hr>
+    <div id="show_content"></div>
+</div>
+
+<div id="indexBar" style="display: none;">
+    <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="javascript">
+    var tableIns;
+    layui.use(['jquery', 'layer', 'form', 'table', 'laydate'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem:"#sTime",
+            type:"date"
+        });
+        laydate.render({
+            elem:"#oTime",
+            type:"date"
+        });
+        laydate.render({
+            elem:"#stratTime",
+            type:"date"
+        });
+        //渲染数据表格
+        tableIns = table.render({
+            elem: '#indexTable'   //渲染的目标对象
+            , url: '/ind/loadAllIndex' //数据接口
+            , title: '指标列表'//数据导出来的标题
+            , toolbar: "#indexToolBar"   //表格的工具条
+            ,defaultToolbar:[""]
+            , height: 'full'
+            , cellMinWidth: 100 //设置列的最小默认宽度
+            , page: true  //是否启用分页
+            , cols: [[   //列表数据
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'indexId', title: 'ID', align: 'center',sort:true}
+                , {field: 'indexName', title: '指标名称', align: 'center'}
+                , {
+                    field: 'type', title: '指标类型', align: 'center', templet: function (data) {
+                        if (data.type == '0') {
+                            return "电量指标";
+                        } else if (data.type == "1" || data.type == "2" || data.type == "3") {
+                            return "电力均价";
+                        } else {
+                            "营销指标";
+                        }
+                    }
+                }
+                , {field: 'sTime', title: '起始时间', align: 'center',sort:true}
+                , {field: 'oTime', title: '截止时间', align: 'center',sort:true}
+                , {
+                    field: 'state', title: '是否完成', align: 'center',sort:true, templet: function (data) {
+                        return data.state == '1' ? "是" : "否";
+                    }
+                }
+
+                , {field: 'setPerson', title: '创建人', align: 'center'}
+                , {field: 'changePerson', title: '修改人', align: 'center'}
+                , {field: 'changePerson', title: '修改时间', align: 'center'}
+                , {fixed: 'right', title: '操作', toolbar: '#indexBar', width: 150, align: 'center'}
+            ]]
+        });
+
+        //监听行双击事件，查看指标内容（单击事件为：rowDouble）
+        table.on('rowDouble(indexTable)', function (obj) {
+            var data = obj.data;
+            layer.open({
+                type: 1,
+                title: '查看指标内容',
+                content: $("#showDescription"),
+                area: ['800px', '500px'],
+                success: function (index) {
+                    $("#show_title").html(data.indexName);
+                    $("#show_content").html(data.description);
+                }
+            });
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //模糊查询
+        $("#doSearch").click(function () {
+            var params = $("#searchFrom").serialize();
+            tableIns.reload({
+                url: "/ind/loadAllIndex?" + params,
+                page: {curr: 1}
+            })
+        });
+
+        //监听头部工具栏事件
+        table.on("toolbar(indexTable)", function (obj) {
+            switch (obj.event) {
+                case 'deleteBatch':
+                    deleteBatch();
+                    break;
+            };
+        });
+        //监听行工具事件
+        table.on('tool(indexTable)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (layEvent === 'del') { //删除
+                layer.confirm('真的删除【' + data.indexName + '】这个指标吗', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/ind/deleteIndex", {indexId: data.indexId}, function (res) {
+                        layer.msg(res.msg);
+                        //刷新数据 表格
+                        tableIns.reload();
+                    })
+                });
+            }else if(layEvent==='update'){
+                updateIndex(data);
+            }
+        });
+        var url;
+        var mainIndex;
+        // 打开修改
+        function updateIndex(data){
+            mainIndex = layer.open({
+                type: 1,
+                title: '修改指标内容',
+                content: $("#updateIndexDiv"),
+                area:  ['80%','100%'],
+                success: function (index) {
+                    form.val("updateForm",data);
+                    url = "/ind/updateIndex"
+                }
+            });
+        }
+        //保存
+        form.on("submit(doSubmit)", function (obj) {
+            //序列化表单数据
+            var params = $("#updateForm").serialize();
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex)
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+
+        //批量删除
+        function deleteBatch() {
+            //得到选中的数据行
+            var checkStatus = table.checkStatus('indexTable');
+            var data = checkStatus.data;
+            var params = "";
+            $.each(data, function (i, item) {
+                if (i == 0) {
+                    params += "ids=" + item.indexId;
+                } else {
+                    params += "&ids=" + item.indexId;
+                }
+            });
+            layer.confirm('真的删除选中的这些日志吗', function (index) {
+                //向服务端发送删除指令
+                $.post("/ind/deleteBatchIndex", params, function (res) {
+                    layer.msg(res.msg);
+                    //刷新数据 表格
+                    tableIns.reload();
+                })
+            });
+        }
+    });
+</script>
+</body>
+</html>

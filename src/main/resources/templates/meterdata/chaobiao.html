@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>抄表</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"media="all" />
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+</head>
+<body>
+
+<!-- 搜索条件开始 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>抄表年月</legend>
+</fieldset>
+<form class="layui-form" method="post" id="meterForm">
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">客户账号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userId"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="layui-inline">
+                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">查询</button>
+                <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--编辑电表信息-->
+<div style="display: none;" id="editMeterDiv">
+    <form class="layui-form" lay-filter="editMeterForm" id="editMeterForm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input type="hidden" name="meterId"/>
+                <label class="layui-form-label">电表编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" lay-verify="required" placeholder="请输入电表编码" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表厂家</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="factory" lay-verify="required" placeholder="请输入电表厂家名称" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userId" lay-verify="required" placeholder="请输入客户账号" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表类型</label>
+                <div class="layui-input-inline">
+                    <select name="type" class="layui-input">
+                        <option value="低压220V">低压220V</option>
+                        <option value="低压330V">低压330V</option>
+                        <option value="中压6kV">中压6kV</option>
+                        <option value="中压20kV">中压20kV</option>
+                        <option value="高压110kV">高压110kV</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电表状态</label>
+                <div class="layui-input-inline">
+                    <select name="state" class="layui-input">
+                        <option value="0">可用</option>
+                        <option value="1">停用</option>
+                        <option value="2">损坏</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">安装时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="startDate" id="startDate" lay-verify="date" placeholder="yyyy-MM-dd"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doMeterSubmit" lay-submit="">提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!--抄表div-->
+    <div  style="display: none;padding: 20px;" id="chaobiaoDiv">
+        <form class="layui-form" lay-filter="meterDataForm" id="meterDataForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">电表编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="meterId" lay-verify="required|title" autocomplete="off" placeholder="请输入电表编号" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">客户账号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="userId" lay-verify="required|title" autocomplete="off" placeholder="请输入客户账号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">当月总数</label>
+                <div class="layui-input-block">
+                    <input type="text"  name="displayNumber" lay-verify="required|number" autocomplete="off" placeholder="当月电表总数" class="layui-input clearNumber">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">抄表年月</label>
+                <div class="layui-input-block">
+                    <input type="text" name="recordMonth" id="recordMonth"  lay-verify="required|date" placeholder="yyyy-MM" autocomplete="off" class="layui-input clearNumber">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">电路等级/A</label>
+                <div class="layui-input-block">
+                    <input type="text" name="type" lay-verify="number|required" autocomplete="off" placeholder="请输入电路等级" class="layui-input clearNumber">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">抄表员</label>
+                <div class="layui-input-block">
+                    <input type="text" name="verifyPerson" lay-verify="title|required" autocomplete="off" placeholder="请输入审核人" class="layui-input clearNumber">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="reset" class="layui-btn " id="btnReset">重置</button>
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="showSubmit" id="doSubmit">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+<!--数据表格-->
+<table class="layui-hide" id="meterTable" lay-filter="meterTable"></table>
+
+<!--弹出电表数据录入界面-->
+<div id="inputMeter" style="display: none; background-color: #F2F2F2;">
+    <table class="layui-hide" id="showDataTable"></table>
+</div>
+
+
+<!--表头工具类-->
+<div style="display: none;" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <!--<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除</button>-->
+        <h3 class="layui-btn layui-btn-sm layui-btn-primary">双击查看抄表记录</h3>
+    </div>
+</div>
+<!--表中操作选项-->
+<div style="display: none" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">抄表</a>
+</div>
+
+
+<script type="text/javascript" th:src="@{/layui/layui.js}" src=""></script>
+<script th:inline="javascript">
+    layui.use(['table','laydate','form','jquery'], function(){
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var form = layui.form;
+        var $ = layui.jquery;
+
+        var tableIns;
+
+        laydate.render({
+            elem:"#recordMonth",
+            type:"month"
+        })
+        laydate.render({
+            elem:"#date1",
+            type:"month",
+            change: function(value, date, endDate){
+               var recordDate = value;
+               if(recordDate!=null){
+                    $.post("/meter/queryMeterdataByRecordDate",{"recordDate":recordDate},function (result) {
+                        tableIns.reload();
+                    })
+               }
+            }
+        });
+
+        tableIns = table.render({
+            elem: '#meterTable'
+            ,url:'/meter/meterList'
+            ,toolbar: '#toolbarDemo'
+            ,defaultToolbar:[""]
+            ,title: '电表信息'
+            ,totalRow: true
+            ,page: true
+            ,cols: [
+                [
+                {field:'meterId', title:'电表ID', width:120, sort: true}
+                ,{field:'userId', title:'客户账号', width:200, align: 'center', sort: true}
+                ,{field:'type', title:'等级类型', width:100, align: 'center', sort: true}
+                ,{field:'startDate', title:'装表日期', width:180, align: 'center', sort: true}
+                ,{field:'state', title:'电表状态', width:120, align: 'center', sort: true,templet:function (data) {
+                        if(data.state=='0') {
+                            return "可用";
+                        }else if(data.state=="1"){
+                            return "停用";
+                        }else{
+                            return "损坏";
+                        }
+                    }}
+                ,{field:'code', title:'电表编码', width:200, align: 'center', sort: true}
+                ,{field:'factory', title:'生产厂家', width:300, align: 'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:100}
+            ]
+            ]
+        });
+        //头工具栏事件
+        table.on('toolbar(meterTable)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'batchDelete':
+                    // 批量删除
+                    deleteBatch();
+            };
+        });
+        // 操作栏事件
+        table.on('tool(meterTable)',function (obj) {
+            var data = obj.data; // 获取操作行的数据
+            var event = obj.event; // 获取对应的事件
+            if(event === 'edit'){
+                openEdit(data);
+            }else if(event === 'del'){
+                layer.confirm('真的删除dataId【' + data.meterId + '】这个电表信息记录吗', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/meter/deleteMeter", {meterId: data.meterId}, function (res) {
+                        layer.msg(res.msg);
+                        //刷新数据 表格
+                        tableIns.reload();
+                    })
+                });
+            }
+        });
+        var url;
+        var mainIndex;
+        // 打开编辑电表
+        function openEdit(data){
+            mainIndex = layer.open({
+                type: 1,
+                title: '抄表数据',
+                content: $("#chaobiaoDiv"),
+                area: ['700px', '600px'],
+                success: function (index) {
+                    form.val("meterDataForm",data);
+                    url = "/data/addMeterData";
+                }
+            });
+        }
+
+        // //确认修改电表按钮
+        // form.on("submit(doMeterSubmit)", function (data) {
+        //     //序列化表单数据
+        //     var params = data.field;
+        //     $.post(url, params, function (obj) {
+        //         layer.msg(obj.msg);
+        //         //关闭弹出层
+        //         layer.close(mainIndex)
+        //         // 从新加载表格
+        //         tableIns.reload();
+        //     })
+        // });
+
+        //批量删除
+        // function deleteBatch() {
+        //     //得到选中的数据行
+        //     var checkStatus = table.checkStatus('meterTable');
+        //     var data = checkStatus.data;
+        //     var params = "";
+        //     $.each(data, function (i, item) {
+        //         if (i == 0) {
+        //             params += "ids=" + item.meterId;
+        //         } else {
+        //             params += "&ids=" + item.meterId;
+        //         }
+        //     });
+        //     layer.confirm('真的删除选中的这些电表吗', function (index) {
+        //         //向服务端发送删除指令
+        //         $.post("/meter/deleteBatchMeter", params, function (res) {
+        //             layer.msg(res.msg);
+        //             //刷新数据 表格
+        //             tableIns.reload();
+        //         })
+        //     });
+        // }
+        // 模糊查询按钮
+        $("#doSearch").click(function () {
+            var params =$("#meterForm").serialize();
+            tableIns.reload({
+                url: "/meter/meterList?" + params
+            });
+        });
+
+
+
+        /////////////电表数据录入相关操作////////////
+        var showDataTableIns; // 显示以往电表记录
+        var showUrl;
+        var clickRowId;
+        //监听行单击事件（单击事件为：rowDouble）
+        table.on('rowDouble(meterTable)', function(obj){
+            var data = obj.data;
+            layer.open({
+                type: 1,
+                title: '抄表记录',
+                content: $("#inputMeter"),
+                area: ['800px', '400px'],
+                success: function (index) {
+                    form.val("meterDataForm",data);
+                    showUrl = '/data/listMeterDataDescByTime?meterId='+data.meterId;
+                    showMeterData(showUrl);
+
+                }
+            });
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //  加载电表的抄表记录
+        function showMeterData(showUrl){
+            showDataTableIns = table.render({
+                elem: '#showDataTable'
+                ,url: showUrl
+                ,cellMinWidth: 80
+                ,page: true
+                ,cols: [
+                    [
+                        {field:'dataId', title: '数据ID', sort: true,hide:true}
+                        ,{field:'userId', title: '客户账号',width:180} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                        ,{field:'meterId', title: '电表ID',width:80}
+                        ,{field:'consume', title: '月耗电',templet:function (data) {
+                            return '<font color=blue>'+data.consume+'</font>'
+                        }}
+                        ,{field:'displayNumber', title: '电表显示',templet:function (data) {
+                            return '<font color=red>'+data.displayNumber+'</font>'
+                        }}
+                        ,{field:'recordDate', title: '抄表日期',sort:true,width:140, align: 'center'} //单元格内容水平居中
+                        ,{field:'state', title: '用电类型', align: 'right',templet:function (data) {
+                            if(data.state=='0'){
+                                return '家庭用电';
+                            }else if(data.state=='1'){
+                                return '商业用电';
+                            }else{
+                                return '工业用电';
+                            }
+                        }} //单元格内容水平居中
+                        ,{field:'verifyPerson', title: '审核人', align: 'right'}
+                    ]
+                ]
+            });
+        };
+
+        // 提交添加电表数据按钮
+        form.on("submit(showSubmit)",function (data) {
+            var params = data.field;
+            $.post("/data/addMeterData",params,function (obj) {
+                if(obj.code==-1){
+                    layer.msg(obj.msg);
+                }else{
+                    layer.msg(obj.msg);
+                    $(".clearNumber").val(""); // 清除数据
+                    showDataTableIns.reload(); // 刷新表格数据
+                }
+            });
+            return false;
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

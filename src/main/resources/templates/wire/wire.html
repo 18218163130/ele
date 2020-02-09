@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>电线管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+</head>
+<body class="childrenBody">
+<!-- 搜索条件开始 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>查询条件</legend>
+</fieldset>
+<form class="layui-form" method="post" id="searchFrm">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">客户ID:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userId" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">客户名称:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="realName" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">客户电话:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">身份证号:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="identify" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">用电类型:</label>
+            <div class="layui-input-inline">
+                <select name="type" class="layui-input">
+                    <option value=""></option>
+                    <option value="0">家庭用电</option>
+                    <option value="1">商业用电</option>
+                    <option value="2">工业用电</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">客户地址:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">性别:</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="sex" value="1" title="男">
+                <input type="radio" name="sex" value="0" title="女">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">
+                    查询
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<!-- 搜索条件结束 -->
+
+<!-- 数据表格开始 -->
+<table class="layui-hide" id="userTable" lay-filter="userTable"></table>
+<div style="display: none;" id="userToolBar" shiro:hasPermission="user:all">
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">新开客户</button>
+    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch">批量删除</button>
+</div>
+<div id="userBar" style="display: none;" shiro:hasPermission="user:all">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="addMeter">电表</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resetUserPwd">重置密码</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</div>
+<!-- 数据表格结束 -->
+
+<!-- 添加和修改的弹出层开始 -->
+<div style="display: none;padding: 20px" id="saveOrUpdateDiv">
+    <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
+        <div class="layui-form-item">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">客户姓名</label>
+                <div class="layui-input-inline">
+                    <input type="hidden" name="userId">
+                    <input type="text" name="realName" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">身份证号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="identify" lay-verify="required|identity" placeholder="请输入客户身份证号" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入客户电话" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">客户地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="address" layer-verify="title|required" placeholder="请输入客户地址" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">用电类型:</label>
+                <div class="layui-input-inline">
+                <select name="type" class="layui-input">
+                    <option value="0">家庭用电</option>
+                    <option value="1">商业用电</option>
+                    <option value="2">工业用电</option>
+                </select>
+            </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">描述:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="decription" placeholder="输入描述信息" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">用户性别</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="1" checked="checked" title="男">
+                    <input type="radio" name="sex" value="0" title="女">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doSubmit" lay-submit="">提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!--给客户分配电表信息-->
+<div style="display: none;padding: 20px" id="addMeter">
+    <form class="layui-form" lay-filter="meterForm" id="meterForm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电表编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" lay-verify="required" placeholder="请输入电表编码" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表厂家</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="factory" lay-verify="required" placeholder="请输入电表厂家名称" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userId" lay-verify="required" placeholder="请输入客户账号" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表类型</label>
+                <div class="layui-input-inline">
+                    <select name="type" class="layui-input">
+                        <option value="低压220V">低压220V</option>
+                        <option value="低压330V">低压330V</option>
+                        <option value="中压6kV">中压6kV</option>
+                        <option value="中压20kV">中压20kV</option>
+                        <option value="高压110kV">高压110kV</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电表状态</label>
+                <div class="layui-input-inline">
+                    <select name="state" class="layui-input">
+                        <option value="0">可用</option>
+                        <option value="1">停用</option>
+                        <option value="2">损坏</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">安装时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="startDate" id="startDate" lay-verify="date" placeholder="yyyy-MM-dd"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doMeterSubmit" lay-submit="">确认开通
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+    <table lay-filter="meterTab" id="meterTab"></table>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="javascript">
+    var tableIns;
+    layui.use(['jquery', 'layer', 'form', 'table', 'laydate'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem:"#startDate",
+            type:'date'
+        })
+
+        // 渲染电表列表
+        function initMeterTab(initPath){
+            table.render({
+                elem: '#meterTab'   //渲染的目标对象
+                , url: initPath //数据接口
+                , title: '客户数据表'//数据导出来的标题
+                , cellMinWidth: 100 //设置列的最小默认宽度
+                , page: true  //是否启用分页
+                , cols:[
+                    [
+                        {field:'meterId', title:'电表ID',align:'center',width:80, sort: true},
+                        {field:'userId', title:'客户账号',align:'center',width:180, sort: true},
+                        {field:'type', title:'电表类型',align:'center',width:160, sort: true},
+                        {field:'startDate', title:'开通日期',align:'center',width:160, sort: true},
+                        {field:'state', title:'电表转态',align:'center',width:80, sort: true},
+                        {field:'code', title:'出厂编号',align:'center',width:180, sort: true},
+                        {field:'factory', title:'出厂商',align:'center',width:180, sort: true},
+                    ]
+                ]
+            })
+        }
+
+
+        //渲染数据表格
+        tableIns = table.render({
+            elem: '#userTable'   //渲染的目标对象
+            , url: '/user/loadAllUser' //数据接口
+            , title: '客户数据表'//数据导出来的标题
+            , toolbar: "#userToolBar"   //表格的工具条
+            , height: 'full-200'
+            , cellMinWidth: 100 //设置列的最小默认宽度
+            , page: true  //是否启用分页
+            , cols: [[   //列表数据
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'userId', title: 'ID', align: 'center', width: '160',sort:true}
+                , {field: 'realName', title: '客户姓名', align: 'center', width: '100'}
+                , {field: 'identify', title: '身份证号', align: 'center', width: '180'}
+                , {field: 'phone', title: '客户电话', align: 'center', width: '120'}
+                , {field: 'address', title: '客户地址', align: 'center', width: '220'}
+                , {
+                    field: 'sex', title: '性别', align: 'center', width: '60',sort:true, templet: function (d) {
+                        return d.sex == '1' ? '<font color=blue>男</font>' : '<font color=red>女</font>';
+                    }
+                }
+                , {
+                    field: 'pwd', title: '密码', align: 'center', width: '80', templet: function (d) {
+                        return "******";
+                    }
+                }
+                , {
+                    field: 'type', title: '用电类型', align: 'center', width: '100',sort:true, templet: function (d) {
+                        if (d.type == '0') {
+                            return '家庭用电';
+                        } else if (d.type == '1') {
+                            return '商业用电';
+                        }
+                        return '工业用电';
+                    }
+                }
+                , {field: 'decription', title: '备注', align: 'center', width: '160'}
+                , {fixed: 'right', title: '操作', toolbar: '#userBar', width: 240, align: 'center'}
+            ]]
+        })
+        //模糊查询
+        $("#doSearch").click(function () {
+            var params = $("#searchFrm").serialize();
+            tableIns.reload({
+                url: "/user/loadAllUser?" + params
+            })
+        });
+
+        //监听头部工具栏事件
+        table.on("toolbar(userTable)", function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    openAddUser();
+                    break;
+                case 'deleteBatch':
+                    deleteBatch();
+                    break;
+            }
+            ;
+        })
+        //监听行工具事件
+        table.on('tool(userTable)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (layEvent === 'del') { //删除
+                layer.confirm('真的删除【' + data.realName + '】这个用户吗', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/user/deleteUser", {userId: data.userId}, function (res) {
+                        layer.msg(res.msg);
+                        //刷新数据 表格
+                        tableIns.reload();
+                    })
+                });
+            }else if(layEvent === 'addMeter'){ // 电表操作
+                openAddMeter(data);
+            } else if (layEvent === 'edit') { //编辑
+                openUpdateUser(data);
+            } else if (layEvent === 'resetUserPwd') {
+                layer.confirm('真的重置【' + data.realName + '】这个用户的密码吗', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/user/resetUserPwd", {userId: data.userId}, function (res) {
+                        layer.msg(res.msg);
+                    })
+                });
+            }
+        });
+
+        var url;
+        var mainIndex;
+
+        //打开添加页面
+        function openAddUser() {
+            mainIndex = layer.open({
+                type: 1,
+                title: '添加用户',
+                content: $("#saveOrUpdateDiv"),
+                area: ['800px', '440px'],
+                success: function (index) {
+                    //清空表单数据
+                    $("#dataFrm")[0].reset();
+                    url = "/user/addUser";
+                }
+            });
+        }
+        // 打开添加电表页面
+        function openAddMeter(data){
+            mainIndex = layer.open({
+                type: 1,
+                title: '添加电表信息',
+                content: $("#addMeter"),
+                area: ['80%', '100%'],
+                success: function (index) {
+                    form.val("meterForm", data);
+                    url = "/meter/addMeter";
+                    // 加载电表列表信息
+                    initPath = '/meter/queryMeterByUserId?userId='+data.userId;
+                    initMeterTab(initPath);
+                }
+            });
+        }
+
+        //确认添加电表按钮
+        form.on("submit(doMeterSubmit)", function (obj) {
+            //序列化表单数据
+            var params = $("#meterForm").serialize();
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex)
+                // 从新加载表格
+                tableIns.reload();
+            })
+        });
+
+        //打开修改页面
+        function openUpdateUser(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: '修改客户',
+                content: $("#saveOrUpdateDiv"),
+                area: ['80%', '100%'],
+                success: function (index) {
+                    form.val("dataFrm", data);
+                    url = "/user/updateUser";
+                }
+            });
+        }
+
+
+
+        //保存
+        form.on("submit(doSubmit)", function (obj) {
+            //序列化表单数据
+            var params = $("#dataFrm").serialize();
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex)
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+
+        //批量删除
+        function deleteBatch() {
+            //得到选中的数据行
+            var checkStatus = table.checkStatus('userTable');
+            var data = checkStatus.data;
+            var params = "";
+            $.each(data, function (i, item) {
+                if (i == 0) {
+                    params += "ids=" + item.userId;
+                } else {
+                    params += "&ids=" + item.userId;
+                }
+            });
+            layer.confirm('真的删除选中的这些用户吗', function (index) {
+                //向服务端发送删除指令
+                $.post("/user/deleteBatchUser", params, function (res) {
+                    layer.msg(res.msg);
+                    //刷新数据 表格
+                    tableIns.reload();
+                })
+            });
+        }
+
+    });
+</script>
+</body>
+</html>

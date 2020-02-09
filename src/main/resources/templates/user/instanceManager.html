@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>设备购置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+</head>
+<body class="childrenBody">
+<!-- 搜索条件开始 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>查询条件</legend>
+</fieldset>
+<form class="layui-form" method="post" id="searchFrm">
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">客户账号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userId" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">
+                    查询
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div id="facilityBar" style="display: none;">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="jiaofei">缴费</a>
+    <!--<a class="layui-btn layui-btn-green layui-btn-xs" lay-event="export">导出发票</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</div>
+
+<!-- 数据表格开始 -->
+<table class="layui-hide" id="facilityTable" lay-filter="facilityTable"></table>
+
+<div class="layui-btn-group" id="facilityTool" style="display: none;" >
+    <button type="button" class="layui-btn"  lay-event="addFacility">设备购置</button>
+</div>
+
+
+
+<!--客户设备报装-->
+<div style="display: none;padding: 20px" id="divFacility">
+    <form class="layui-form" lay-filter="facForm" id="facForm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userId" lay-verify="required" placeholder="请输入客户账号" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">客户姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">设备名称</label>
+                <div class="layui-input-inline">
+                    <select name="facId" lay-verify="required" id="select" lay-filter="price" >
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报装日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="createDate" id="date2"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">设备单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="facPrice" name="price" readonly="readonly" lay-verify="required|number"  autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">设备数量</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" lay-verify="required|number" placeholder="请输入数量" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">设备编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="code" name="code" readonly="readonly" lay-verify="required"  autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">生产厂商</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="factory" name="factory" readonly="readonly" lay-verify="required"  autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                        lay-filter="doSubmitFacForm" lay-submit="">提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="javascript">
+    var tableIns;
+    layui.use(['jquery', 'layer', 'form', 'table', 'laydate'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var laydate = layui.laydate;
+
+        var url;
+        var mainIndex;
+        var tableIns;
+
+        laydate.render({
+            elem:"#startDate",
+            type:'date'
+        });
+        laydate.render({
+            elem:"#date2",
+            type:'date',
+        });
+
+        tableIns = table.render({
+            elem: '#facilityTable'   //渲染的目标对象
+            , url: '/userFacility/queryFacilityList' //数据接口
+            ,toolbar: '#facilityTool'
+            , title: '电力设备信息'//数据导出来的标题
+            , cellMinWidth: 100 //设置列的最小默认宽度
+            , page: true  //是否启用分页
+            ,defaultToolbar:[""]
+            , cols:[
+                [
+                    {field:'userFacId', title:'ID',align:'center',width:80, sort: true},
+                    {field:'userId', title:'客户账号',align:'center',width:180, sort: true},
+                    {field:'userName', title:'客户名称',align:'center',width:160, sort: true},
+                    {field:'facId', title:'设备编号',align:'center',width:80, sort: true},
+                    {field:'facName', title:'设备名称',align:'center',width:200, sort: true},
+                    {field:'num', title:'数量',align:'center',width:80},
+                    {field:'price', title:'设备单价',align:'center',width:100},
+                    {field:'totalPrice', title:'小计',align:'center',width:100},
+                    {field:'isPay', title:'是否支付',align:'center',width:100,sort:true,templet:function (d) {
+                            return d.isPay == '1' ? '<font color=blue>已支付</font>' : '<font color=red>未支付</font>';
+                        }},
+                    {field:'createDate', title:'报装日期',align:'center',width:120},
+                    {fixed: 'right', title: '操作', toolbar: '#facilityBar', width: 160, align: 'center'}
+                ]
+            ]
+        });
+
+        //监听行工具事件
+        table.on('tool(facilityTable)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (layEvent === 'del') { //删除
+                layer.confirm('真的删除ID为【' + data.userFacId + '】报装记录吗', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/userFacility/deleteUserFacility", {userFacId: data.userFacId}, function (res) {
+                        layer.msg(res.msg);
+                        //刷新数据 表格
+                        tableIns.reload();
+                    })
+                });
+            }else if(layEvent === 'jiaofei'){ //
+                layer.confirm("确认缴费？",function (index) {
+                    $.post("/userFacility/jiaofei",{userFacId: data.userFacId},function (res) {
+                        layer.msg(res.msg);
+                        tableIns.reload();
+                    });
+                })
+            }
+        });
+
+        //模糊查询
+        $("#doSearch").click(function () {
+            var params = $("#searchFrm").serialize();
+            tableIns.reload({
+                url: "/userFacility/queryFacilityList?" + params
+            })
+        });
+
+
+
+        //监听头部工具栏事件
+        table.on("toolbar(facilityTable)", function (obj) {
+            switch (obj.event) {
+                case 'addFacility':
+                    openAddFacility();
+                    $.ajax({
+                        url: "/facility/findFacilityType",
+                        type: "get",
+                        datType: "json",
+                        success: function(data) {
+                            $("#select").html('<option value="-1"></option>');
+                            $.each(data.data, function (key, val) {
+                                var option1 = "<option value='"+val.facId+"' name='"+val.facPrice+"' code='"+val.facCode+"' factory='"+val.facFactory+"'>"+val.facName+"</option>";
+                                //通过LayUI.jQuery添加列表项
+                                $("#select").append(option1);
+
+                            });
+                            layui.form.render('select');
+                        }
+                    });
+                    break;
+            }
+
+        });
+
+
+        // 客户安装设备
+        function openAddFacility(){
+            mainIndex = layer.open({
+                type: 1,
+                title: '客户报装设备登记',
+                content: $("#divFacility"),
+                area: ['700px', '480px'],
+                success: function (index) {
+                    //清空表单数据
+                    $("#facForm")[0].reset();
+                    url = "/userFacility/addUserFacility";
+                }
+        });
+        }
+
+        // 单价联动
+        form.on('select(price)', function(data){
+            var price = $(data.elem).find("option:selected").attr("name");
+            var code = $(data.elem).find("option:selected").attr("code");
+            var factory = $(data.elem).find("option:selected").attr("factory");
+
+            $("#facPrice").val(price);
+            $("#code").val(code);
+            $("#factory").val(factory);
+
+        });
+
+        //保存
+        form.on("submit(doSubmitFacForm)", function (data) {
+             var formData = data.field
+            formData.facName = $("#select").find("option:selected").text();
+
+            $.post(url, formData, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex);
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+
+
+
+
+
+        });
+</script>
+</body>
+</html>

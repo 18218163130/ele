@@ -1,0 +1,578 @@
+<!DOCTYPE HTML>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Index</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="favicon.ico">
+	<link th:href="@{/css/bootstrap.css}" rel="stylesheet"  media="all">
+	<link th:href="@{/css/style.css}" rel="stylesheet" media="all"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style_common.css}" />
+	<link th:href="@{/css/galleryeffect.css}" rel="stylesheet" media="all" />
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" href="layui/css/layui.css" media="all" />
+	<link rel="stylesheet" th:href="@{/css/index.css}" href="css/index.css" media="all" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/move-top.js}"></script>
+<script type="text/javascript" th:src="@{/js/easing.js}"></script>
+<script type="text/javascript" >
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<script th:src="@{/js/jquery.magnific-popup.js}" type="text/javascript"></script>
+ <script>
+						$(document).ready(function() {
+						$('.popup-with-zoom-anim').magnificPopup({
+							type: 'inline',
+							fixedContentPos: false,
+							fixedBgPos: true,
+							overflowY: 'auto',
+							closeBtnInside: true,
+							preloader: false,
+							midClick: true,
+							removalDelay: 300,
+							mainClass: 'my-mfp-zoom-in'
+						});
+																						
+						});
+				</script>
+
+<script type="text/javascript" th:src="@{/js/numscroller-1.0.js}"></script>
+</head>
+<body>
+<div class="banner">
+
+<div class="header w3l">
+	<div class="fixed-header">	
+
+		    <div class="navbar-wrapper">
+		      <div class="container">
+		        <nav class="navbar navbar-inverse navbar-static-top">
+		             <div class="navbar-header">
+			              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			                <span class="sr-only">Toggle navigation</span>
+			                <span class="icon-bar"></span>
+			                <span class="icon-bar"></span>
+			                <span class="icon-bar"></span>
+			              </button>
+			              <div class="logo">
+			                   <h1><a class="navbar-brand" th:href="@{/index.html}"></a></h1>
+			              </div>
+			          </div>
+		            <div id="navbar" class="navbar-collapse collapse">
+		            <nav class="cl-effect-16" id="cl-effect-16">
+		              <ul class="nav navbar-nav">
+		               <li><a class="scroll active" th:href="@{/index.html}" data-hover="Home">Home</a></li>
+		                <li><a class="scroll" href="#about" data-hover="About">关于我们</a></li>
+						<li><a class="scroll" href="#services" data-hover="Services">服务</a></li>
+						  <li><a class="scroll" href="#gallery" id="jilu" data-hover="gallery">缴费记录</a></li>
+						<li><a class="scroll"  href="#price" id="showPrice" data-hover="Price">优惠活动</a></li>
+						<!--<li><a  th:href="@{/changeUserPwd.html}" id="resetPwd">修改密码</a></li>-->
+						  <li><a href="#" id="resetPwd">修改密码</a></li>
+						<li th:if="${session.user}==null"><a  th:href="@{/front_login.html}" >登录</a></li>
+                          <li th:if="${session.user}!=null"><a  th:href="@{/front/front_out}" >退出</a></li>
+		              </ul>
+		            </nav>
+
+		            </div>
+		            <div class="clearfix"> </div>
+		             </nav>		             		             
+		          </div>		           
+		    </div>
+		    <div class="banner-main">
+		    	<div class="container">
+		    		<div class="banner-text">
+		              <h3>Lorem ipsum dolor sit amet consectetur</h3>
+		            </div>
+		        </div>
+			</div>
+	 </div>
+ </div>
+</div> 
+
+<div class="information">
+	<div class="container">
+		<div class="information-main">
+			<div class="col-md-4 information-grid">
+				<span class="info-icons hovicon effect-4 sub-b"><img th:src="@{/images/icn1.png}" alt=""></span>
+				<h4>Nemo enim voluptatem</h4>
+				<p>Sed ut  perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque  laudantium.</p>
+			</div>
+			<div class="col-md-4 information-grid">
+				<span class="info-icons hovicon effect-4 sub-b"><img th:src="@{/images/icn2.png}" alt=""></span>
+				<h4>Lorem ipsum dolor sit</h4>
+				<p>Sed ut  perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque  laudantium.</p>
+			</div>
+			<div class="col-md-4 information-grid">
+				<span class="info-icons hovicon effect-4 sub-b"><img th:src="@{/images/icn3.png}" alt=""></span>
+				<h4>Duis aute irure dolor</h4>
+				<p>Sed ut  perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque  laudantium.</p>
+			</div>
+		  <div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+
+<div class="services" id="services">
+	<div class="container">
+		<div class="services-main">
+			<div class="services-top">
+				<h3>Services</h3>
+			</div>
+			<div class="services-bottom">
+				<div class="services-grid">
+					<div class="col-md-6 services-left">
+						<img th:src="@{/images/s4.jpg}" alt="" class="img-responsive">
+					</div>
+					<div class="col-md-6 services-right">
+						<h4>Vanes</h4>
+						<p> Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+				<div class="services-grid">
+					
+					<div class="col-md-6 services-right">
+						<h4>Turbine</h4>
+						<p> Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
+					</div>
+					<div class="col-md-6 services-left">
+						<img th:src="@{/images/s3.jpg}" alt="" class="img-responsive">
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+				<div class="services-grid">
+					<div class="col-md-6 services-left">
+						<img th:src="@{/images/s2.jpg}" alt="" class="img-responsive">
+					</div>
+					<div class="col-md-6 services-right">
+						<h4>Hydro Power line</h4>
+						<p> Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="price" id="price">
+	<div class="container">
+		<div class="price-main" >
+			<div class="price-top">
+				<h3>优惠活动</h3>
+				<p>最新优惠活动，就等你来参加</p>
+			</div>
+			<div class="price-bottom" id="priceDiv">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="popup">
+	<div id="small-dialog" class="mfp-hide">
+		<div class="pop_up">
+			<div class="payment-online-form-left">
+				<form action="#" method="post">
+					<h4>Sign Up</h4>
+					<ul>
+						<li><input class="text-box-dark" type="text" value="Name" name="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}"></li>																								
+						<li><input class="text-box-dark" type="text" value="Email" name="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}"></li>
+						<li><input class="text-box-dark" type="password" value="Password" name="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}"></li>
+						<li><input class="text-box-dark" type="text" value="Phone" name="Phone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Phone';}"></li>
+					</ul>																				
+					<span class="checkbox1">
+						   <label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>I Accept Terms.</label>
+					 </span>												
+					<ul class="payment-sendbtns">
+						<li><input type="submit" value="Submit"></li>
+					</ul>
+				</form>
+			</div>
+	  	</div>
+	</div>
+</div>								
+
+<div class="fact">
+	<div class="container">
+		<div class="fact-main">
+			<div class="facts-top">
+				<h3>Some Cool Facts</h3>
+				<p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+			</div>		
+			<div class="facts-bottom">
+				<div class="col-md-3 facts-grid">
+				  <div class="fact-agileinfo">
+					  <div class="col-md-6 fact-icn">
+					  	<img th:src="@{/images/fact-icn2.png}" alt="">
+					  </div>	
+					  <div class="col-md-6 fact-count">
+					  	 <div class="stats-grid slideanim">
+							<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='120' data-delay='.5' data-increment="100">120</div>
+							<p class="stats-info">Happy Clients</p>
+						 </div>
+					  </div>
+					 <div class="clearfix"> </div>
+				  </div>
+				</div>
+				<div class="col-md-3 facts-grid">
+					<div class="fact-agileinfo">
+					  <div class="col-md-6 fact-icn">
+					  	<img th:src="@{/images/fact-icn1.png}" alt="">
+					  </div>	
+					  <div class="col-md-6  fact-count">
+					  	 <div class="stats-grid slideanim">
+							<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='900' data-delay='.5' data-increment="5">900</div>
+							<p class="stats-info"> Projects</p>
+						</div>
+					  </div>
+					 <div class="clearfix"> </div>
+				  </div>
+				</div>
+				<div class="col-md-3 facts-grid">
+					<div class="fact-agileinfo">
+					  <div class="col-md-6 fact-icn">
+					  	<img th:src="@{/images/fact-icn3.png}" alt="">
+					  </div>	
+					  <div class="col-md-6 fact-count">
+					  	 <div class="stats-grid slideanim">
+							<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='24' data-delay='.5' data-increment="100">24</div>
+							<p class="stats-info">Working Hours</p>
+						</div>
+					  </div>
+					 <div class="clearfix"> </div>
+				  </div>
+				</div>
+				<div class="col-md-3 facts-grid">
+				   <div class="fact-agileinfo">
+					  <div class="col-md-6 fact-icn">
+					  	<img th:src="@{/images/fact-icn.png}" alt="">
+					  </div>	
+					  <div class="col-md-6 fact-count">
+					  	 <div class="stats-grid slideanim">
+							<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='169' data-delay='.5' data-increment="1">169</div>
+							<p class="stats-info">Coffees Drinks</p>
+						</div>
+					  </div>
+					 <div class="clearfix"> </div>
+				  </div>
+				</div>
+			  <div class="clearfix"> </div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="about" id="about">
+	<div class="container">
+		<div class="about-main">
+		   <div class="about-top">
+		   	  <h2>About Us</h2>
+		   </div>
+		   <div class="about-bottom">
+			<div class="col-md-6 about-left">
+				<div class="about-grid">
+					<span class="ab-icns wel-icon8 hovicon effect-4 sub-b"><img th:src="@{/images/ab-icn1.png}" alt=""></span>
+					<div class="about-text">
+						<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+					</div>
+				   <div class="clearfix"> </div>
+				</div>
+				<div class="about-grid">
+					<span class="ab-icns wel-icon8 hovicon effect-4 sub-b"><img th:src="@{/images/ab-icn2.png}" alt=""></span>
+					<div class="about-text">
+						<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+					</div>
+				   <div class="clearfix"> </div>
+				</div>
+				<div class="about-grid">
+					<span class="ab-icns wel-icon8 hovicon effect-4 sub-b"><img th:src="@{/images/ab-icn3.png}" alt=""></span>
+					<div class="about-text">
+						<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+					</div>
+				   <div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="col-md-6 about-rit">
+				<img th:src="@{/images/ab.jpg}" alt="" class="img-responsive">
+			</div>
+		   <div class="clearfix"> </div>
+		 </div>
+	 </div>
+  </div>
+</div>
+
+<div class="gallery" id="gallery">
+	<div class="container">
+		<div class="gallery-main">
+			<div class="gallery-top">
+				<h3>缴费记录</h3>
+				<table  id="feeTable" lay-filter="feeTable"></table>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="copy-rights">
+	<div class="container">
+		<div class="copy-rights-main">
+			 <p><a href="#" target="_blank" title="供电营销公司">供电营销公司</a> <a href="" title="供电营销公司" target="_blank">供电营销公司</a></p>
+		</div>
+		<script type="text/javascript">
+										$(document).ready(function() {
+											/*
+											var defaults = {
+									  			containerID: 'toTop', // fading element id
+												containerHoverID: 'toTopHover', // fading element hover id
+												scrollSpeed: 1200,
+												easingType: 'linear' 
+									 		};
+											*/
+											
+											$().UItoTop({ easingType: 'easeOutQuart' });
+											
+										});
+									</script>
+						<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+
+	</div>
+</div>
+
+<div id="updatePwdDiv" style="display: none;">
+	<form class="layui-form layui-row changePwd" id="empForm">
+		<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+			<div class="layui-input-block layui-red pwdTips">旧密码请输入“123456”，新密码必须两次输入一致才能提交</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">客户账号</label>
+				<div class="layui-input-block">
+					<input type="text" id="userId" name="userId" th:value="${session.user.userId}" readonly="readonly" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">旧密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="pwd" value="" placeholder="请输入旧密码" lay-verify="required|oldPwd" class="layui-input pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">新密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="newPwd" value="" placeholder="请输入新密码" lay-verify="required|newPwd" id="oldPwd" class="layui-input pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">确认密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="newPwd2" value="" placeholder="请确认密码" lay-verify="required|confirmPwd" class="layui-input pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit="" lay-filter="changePwd">立即修改</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<input type="hidden" name="userId" id="userId" th:value="${session.user.userId}"/>
+<div id="feeBar" style="display: none;">
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="export">导出发票</a>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="javascript">
+    layui.use(['layer','jquery','form','table'],function(){
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+        var tableIns;
+        var mainIndex;
+
+   			// 初始化优惠活动信息
+            $.get("/front/queryDiscount",function (res) {
+                var htmlStr = '';
+
+                for(var i=0;i<res.length;i++){
+                    htmlStr +='<div class="col-md-3 price-grid"">' +
+                        '<div class="price-block agile">' +
+                        '<h4 >'+ res[i].title +' </h4>' +
+                        '<h5 >有效时间：'+res[i].endTime+'</h5>' +
+                        '<div class="price-gd-bottom">' +
+                        '<div class="price-list">'+res[i].content+'</div>' +
+                        '</div>' +
+                        '<h5 >发布时间:'+res[i].createTime+'</h5>' +
+                        '<div class="price-selet pric-sclr1">' +
+                        '<a class="popup-with-zoom-anim" href="javascript:join('+res[i].discountId+')">报名参加</a>' +
+                        // '<a class="popup-with-zoom-anim" href="javascript:void(0);" onclick="join('+res[i].discountId+')">报名参加</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div >';
+                }
+                htmlStr += '<div class="clearfix"> </div>';
+                $("#priceDiv").html(htmlStr);
+            })
+        // }
+        var userId  = $("#userId").val();
+        if(userId!="" && userId!=null){
+            myTable("/fee/feeRecord?userId="+userId);
+		}
+
+        function myTable(url){
+            tableIns = table.render({
+                elem: '#feeTable'
+                ,url: url
+                ,toolbar: '#toolbarDemo'
+                ,title: '电表数据表'
+                ,totalRow: true
+                ,defaultToolbar:[""]
+                ,cellMinWidth:100
+                ,page: true
+                ,cols: [
+                    [
+                        ,{field:'feeId', title:'电费ID', width:140,  sort: true}
+                        ,{field:'userId', title:'客户账号', width:200, align: 'center', sort: true}
+                        ,{field:'realName', title:'客户名称', width:200, align: 'center', sort: true}
+                        ,{field:'recordDate', title:'账单日期', width:200, align: 'center', sort: true}
+                        ,{field:'amount', title:'月耗电/kV', width:120, align: 'center', sort: true}
+                        ,{field:'unitPrice', title:'单价', width:120, align: 'center', sort: true}
+                        ,{field:'prize', title:'电费', width:180, align: 'center', sort: true}
+                        ,{field:'createTime', title:'生成表单时间', width:180, align: 'center', sort: true}
+                        ,{field:'state', title:'是否缴费', width:100, align: 'center', sort: true,templet:function (data) {
+                            if(data.state=='0'){
+                                return '<font color=red>未缴费</font>';
+                            }else{
+                                return '<font color=blue>已缴费</font>';
+                            }
+                        }}
+                        ,{field:'payWay', title:'缴费方式', width:120, align: 'center',templet:function (data) {
+                            if(data.payWay=='2'){
+                                return '现金';
+                            }else if(data.payWay=='1'){
+                                return '微信';
+                            }else {
+                                return '--';
+                            }
+                        }}
+                        ,{field:'description', title:'备注', width:80, align: 'center'}
+                        , {fixed: 'right', title: '操作', toolbar: '#feeBar', width: 200, align: 'center'}
+                    ]
+                ]
+            });
+        }
+
+        // 查询按钮
+        form.on("submit(doSearch)",function(obj){
+            var userId  = $("#userId").val();
+            var url = "/fee/feeRecord?userId="+userId;
+            myTable(url);
+        });
+
+        //头工具栏事件
+        table.on('toolbar(feeTable)', function(obj){
+            switch(obj.event){
+                case 'delBatch': // 批量删除
+                    deleteBatch();
+                    break;
+            }
+        });
+
+        // 操作栏
+        table.on('tool(feeTable)',function(obj){
+            var data = obj.data; // 获取选中行
+            var event = obj.event; // 回去事件
+            if(event === 'export'){
+                layer.confirm('电费单导出到桌面', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/fee/export", data, function (res) {
+                        layer.msg(res.msg);
+                    });
+                });
+            }
+        });
+
+        // 参加报名
+        window.join = function (id){
+            var path = '/front/joinActivity?discountId='+id;
+            $.get(path,function (data) {
+				layer.msg(data.msg);
+            });
+        }
+
+
+
+        // 打开修改密码div
+		$("#resetPwd").on("click",function () {
+            mainIndex = layer.open({
+                type: 1,
+                title: '修改密码',
+                content: $("#updatePwdDiv"),
+                area: ['800px', '600px'],
+                success: function (index) {
+
+                }
+            });
+        })
+
+        //添加验证规则
+        form.verify({
+            oldPwd : function(value, item){
+                var res;
+                $.ajax({
+                    url: "/front/checkOldPwd",
+                    type: "post",
+                    async: false,
+                    data:{userId:$("#userId").val(),pwd:value},
+                    dataType:"json",
+                    success:function(data){
+                        res=data.code;
+                    }
+                });
+
+                if(res==-1){
+                    return "密码错误，请重新输入！";
+                }
+            },
+
+            newPwd : function(value, item){
+                if(value.length < 6){
+                    return "密码长度不能小于6位";
+                }
+            },
+            confirmPwd : function(value, item){
+                if(!new RegExp($("#oldPwd").val()).test(value)){
+                    return "两次输入密码不一致，请重新输入！";
+                }
+            }
+        })
+
+        // 发送修改密码请求
+        form.on("submit(changePwd)",function(){
+            var params = $("#empForm").serialize();
+            $.post("/front/updateUserPwd",params,function(obj){
+                layer.msg(obj.msg);
+                layer.close(mainIndex);
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>
