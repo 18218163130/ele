@@ -93,6 +93,7 @@
 </div>
 <!--表中操作选项-->
 <div style="display: none" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-green" lay-event="createFee">生成电费单</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
@@ -135,8 +136,10 @@
                 ,{field:'consume', title:'用电/度', width:100, align: 'center', sort: true}
                 ,{field:'recordMonth', title:'抄表年月', width:120, align: 'center',templet: '<div>{{layui.util.toDateString(d.recordMonth, "yyyy-MM") }}</div>' }
                 ,{field:'recordDate', title:'抄表日期', width:180, align: 'center'}
-                ,{field:'state', title:'状态', width:120, align: 'center',hide:true}
-                ,{field:'type', title:'用电类型', width:200, align: 'center',templet:function (data) {
+                ,{field:'state', title:'生成电费单', width:120, align: 'center',templet:function (data) {
+                        return data.state==0 ? "否":"是";
+                    }}
+                ,{field:'type', title:'用电类型', width:160, align: 'center',templet:function (data) {
                         if(data.type<3){
                             return '家庭用电';
                         }else if(data.type<5){
@@ -145,8 +148,8 @@
                             return '工业用电';
                         }
                     }}
-                ,{field:'verifyPerson', title:'抄表员', width:120, align: 'center', sort: true}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                ,{field:'verifyPerson', title:'抄表员', width:100, align: 'center', sort: true}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200,align:"center"}
             ]
             ]
         });
@@ -175,6 +178,8 @@
                         tableIns.reload();
                     })
                 });
+            }else if(event === 'createFee'){
+
             }
         });
 
