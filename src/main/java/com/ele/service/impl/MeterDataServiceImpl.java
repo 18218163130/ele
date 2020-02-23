@@ -134,4 +134,14 @@ public class MeterDataServiceImpl implements MeterDataService {
     public MeterData checkRecordMonth(Date recordMonth) {
         return meterDataMapper.checkRecordMonth(recordMonth);
     }
+
+    @Override
+    public int updateStateByDataId(Integer dataId) {
+        return meterDataMapper.updateStateByYearmonth(dataId);
+    }
+
+    @Override
+    public List<MeterData> selectByState(String recordMonth) {
+        return meterDataMapper.selectByState(recordMonth);
+    }
 }

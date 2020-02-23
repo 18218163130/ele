@@ -12,12 +12,15 @@ import com.ele.utils.FeeExcelUtil;
 import com.ele.utils.ResultObj;
 import com.ele.vo.FeeVo;
 import com.ele.vo.MeterDataVo;
+import com.ele.vo.PriceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,13 +41,72 @@ public class FeeController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("doCreateFee")
+    @ResponseBody
+    public ResultObj doCreateFee(PriceVo priceVo){
+        try{
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            //需要生成电费单记录
+            List<MeterData> needCreateList = meterDataService.selectByState(dateFormat.format(priceVo.getYearMonth()));
+            // 修改电表状态位state=1,代表生成电费单
+            for (MeterData need : needCreateList) {
+                meterDataService.updateStateByDataId(need.getDataId());
+                User dbUser = userService.getUserById(need.getUserId());
+
+                Fee fee = new Fee();
+                String feeId = new StringBuilder().append(System.currentTimeMillis()).toString();
+                fee.setFeeId(feeId);
+                /*
+                    private String feeId; // 电费单号
+                    private Date createTime; // 客户姓名
+                    private String realName;
+                    private String userId;
+                    private float amount; // 用电度数
+                    private float prize; // 单价
+                    private Integer state; // 缴费状态
+                    private String description; // 描述
+                    private Integer payWay;
+                    private float unitPrice; // 每度电价格
+                    private Date recordDate; // 抄表日期
+                 */
+                fee.setUserId(need.getUserId());
+                fee.setRealName(dbUser.getRealName());
+                fee.setCreateTime(new Date());
+                fee.setAmount(need.getConsume());
+                fee.setRecordDate(need.getRecordDate());
+                fee.setPayWay(0);
+                fee.setState(0);
+                // 判断用电类型
+                String userId = need.getUserId();
+                if(userId.startsWith("GY")){
+                    float f =priceVo.getGyPrice()* need.getConsume(); // 家庭用电
+                    fee.setPrize(f);
+                    fee.setUnitPrice(priceVo.getGyPrice());
+                }else if (userId.startsWith("SY")){
+                    float f =priceVo.getSyPrice()* need.getConsume(); // 家庭用电
+                    fee.setPrize(f);
+                    fee.setUnitPrice(priceVo.getSyPrice());
+                }else if(userId.startsWith("JT")){
+                    float f =priceVo.getJtPrice()* need.getConsume(); // 家庭用电
+                    fee.setPrize(f);
+                    fee.setUnitPrice(priceVo.getJtPrice());
+                }
+                // 生成电费单
+                feeService.createFee(fee);
+            }
+            return ResultObj.CREATE_FEE_SUCCESS;
+        }catch(Exception e){
+            return ResultObj.CREATE_FEE_ERROR;
+        }
+    }
+
     /**
      * 生成电费单
      *
      * @param meterDataVo
      * @return
      */
-    @RequestMapping("doCreateFee")
+//    @RequestMapping("doCreateFee")
     @ResponseBody
     public ResultObj loadMeterDataByMonth(MeterDataVo meterDataVo) {
         try {
@@ -83,7 +145,6 @@ public class FeeController {
                     }
                     // 生成电费单
                     feeService.createFee(fee);
-                    System.out.println(fee.toString());
                 }
             }
             return ResultObj.CREATE_FEE_SUCCESS;

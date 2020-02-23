@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Date 2020/2/12
  */
 @Controller
+@RequestMapping("price")
 public class PriceController {
 
     @Autowired
@@ -23,9 +24,9 @@ public class PriceController {
      * @param priceVo
      * @return
      */
-    @RequestMapping
+    @RequestMapping("addPrice")
     @ResponseBody
-    public ResultObj setPrice(PriceVo priceVo){
+    public ResultObj addPrice(PriceVo priceVo){
         try{
             priceService.setYearMonthPirce(priceVo);
             return ResultObj.ADD_SUCCESS;
@@ -39,7 +40,7 @@ public class PriceController {
      * @param priceVo
      * @return
      */
-    @RequestMapping
+    @RequestMapping("deletePrice")
     @ResponseBody
     public ResultObj deletePrice(PriceVo priceVo){
         try{
@@ -55,7 +56,7 @@ public class PriceController {
      * @param priceVo
      * @return
      */
-    @RequestMapping
+    @RequestMapping("updatePrice")
     @ResponseBody
     public ResultObj updatePrice(PriceVo priceVo){
         try{
@@ -71,7 +72,7 @@ public class PriceController {
      * @param priceVo
      * @return
      */
-    @RequestMapping
+    @RequestMapping("queryPrice")
     @ResponseBody
     public DataGridView queryPrice(PriceVo priceVo){
         return priceService.queryYearMonthPirce(priceVo);

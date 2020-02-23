@@ -36,6 +36,47 @@
     </div>
 </form>
 
+<!--批量生成电费单-->
+<div  style="display: none;padding: 20px;" layui-filter="batchCreateFeeDiv" id="batchCreateFeeDiv">
+    <form class="layui-form"  lay-filter="batchCreateFeeForm" id="batchCreateFeeForm">
+        <input type="hidden" name="id" value=""/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">抄表年月</label>
+            <div class="layui-input-block">
+                <input type="text" name="yearMonth" id="yearMonth"  lay-verify="required|date" placeholder="yyyy-MM" autocomplete="off" class="layui-input clearNumber">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">家庭用电单价</label>
+            <div class="layui-input-block">
+                <input type="text" name="jtPrice" lay-verify="required|number" autocomplete="off" placeholder="请输入家庭用电单价" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">工业用电单价</label>
+            <div class="layui-input-block">
+                <input type="text"  name="gyPrice" lay-verify="required|number" autocomplete="off" placeholder="请输入工业用电单价" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商业用电单价</label>
+            <div class="layui-input-block">
+                <input type="text" name="syPrice" lay-verify="title|required" autocomplete="off" placeholder="请输入商业用电单价" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="reset" class="layui-btn " id="reset">重置</button>
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="createFeeSubmit" id="createFeeSubmit">生成电费单</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <!--抄表div-->
 <div  style="display: none;padding: 20px;" layui-filter="editDiv" id="editDiv">
     <form class="layui-form"  lay-filter="editForm" id="editForm">
@@ -89,6 +130,7 @@
 <div style="display: none;" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除</button>
+        <button class="layui-btn layui-btn-sm layui-btn-green" lay-event="batchCreateFee">批量生成电费单</button>
     </div>
 </div>
 <!--表中操作选项-->
@@ -117,6 +159,10 @@
             elem:"#recordMonth2",
             type:"month"
         });
+        laydate.render({
+            elem:"#yearMonth",
+            type:"month"
+        });
 
         tableIns = table.render({
             elem: '#meterTable'
@@ -137,7 +183,7 @@
                 ,{field:'recordMonth', title:'抄表年月', width:120, align: 'center',templet: '<div>{{layui.util.toDateString(d.recordMonth, "yyyy-MM") }}</div>' }
                 ,{field:'recordDate', title:'抄表日期', width:180, align: 'center'}
                 ,{field:'state', title:'生成电费单', width:120, align: 'center',templet:function (data) {
-                        return data.state==0 ? "否":"是";
+                        return data.state==0 ? "<font color=red>否</font>":"<font color=blue>是</font>";
                     }}
                 ,{field:'type', title:'用电类型', width:160, align: 'center',templet:function (data) {
                         if(data.type<3){
@@ -160,6 +206,10 @@
             switch(obj.event){
                 case 'batchDelete':
                     deleteBatch(); // 批量删除
+                    break;
+                case 'batchCreateFee':
+                    batchCreateFee(); // 批量生成电费单
+                    break;
             };
         });
 
@@ -191,7 +241,7 @@
                 type: 1,
                 title: '编辑抄表记录',
                 content: $("#editDiv"),
-                area: ['700px', '600px'],
+                area: ['700px', '500px'],
                 success: function (index) {
                     form.val("editForm",data);
                     url = "/data/updateMeterData";
@@ -201,6 +251,31 @@
 
         //确认编辑
         form.on("submit(editSubmit)", function (data) {
+            //序列化表单数据
+            var params = data.field;
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex)
+                // 从新加载表格
+                tableIns.reload();
+            })
+        });
+
+        // 批量生成电费单
+        function batchCreateFee(){
+            mainIndex = layer.open({
+                type: 1,
+                title: '批量生成电费单',
+                content: $("#batchCreateFeeDiv"),
+                area: ['750px', '460px'],
+                success: function (index) {
+                    url = "/fee/doCreateFee";
+                }
+            });
+        }
+        //确认生成电费单
+        form.on("submit(createFeeSubmit)", function (data) {
             //序列化表单数据
             var params = data.field;
             $.post(url, params, function (obj) {

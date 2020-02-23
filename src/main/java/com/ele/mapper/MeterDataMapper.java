@@ -1,5 +1,6 @@
 package com.ele.mapper;
 
+import com.ele.entity.Meter;
 import com.ele.entity.MeterData;
 import com.ele.vo.AnalyMonthConsumeVo;
 import com.ele.vo.MeterDataVo;
@@ -61,6 +62,7 @@ public interface MeterDataMapper {
      */
     @Select("<script> select * from meter_data <where> " +
             "<if test='userId !=null'> and userId like concat('%',#{userId},'%')</if>" +
+
             "<if test='yearmonth != null'> and DATE_FORMAT(recordMonth,'%Y-%m')=#{yearmonth} </if>" +
             "</where></script>")
     List<MeterData> queryAllMeterData(MeterDataVo meterDataVo);
@@ -115,5 +117,17 @@ public interface MeterDataMapper {
     @Select("select meterId,date_format(recordMonth,'%Y-%m') from meter_data where meterId=#{meterId} order by recordMonth desc limit 0,1")
     MeterData checkRecordMonth(@Param("recordMonth")Date recordMonth);
 
+    /**
+     * 更新电表为已生成电费单状态
+     */
+    @Update("update meter_data set state=1 where dataId=#{dataId}")
+    int updateStateByYearmonth(@Param("dataId")Integer dataId);
+
+    /**
+     * 查询没有生成电费单的记录
+     * @return
+     */
+    @Select("select * from meter_data where state=0 and DATE_FORMAT(recordMonth,'%Y-%m')=#{recordMonth}")
+    List<MeterData> selectByState(@Param("recordMonth")String recordMonth);
 
 }

@@ -85,4 +85,10 @@ public interface MeterDataService {
      * @return
      */
     MeterData checkRecordMonth(Date recordMonth);
+
+    int updateStateByDataId(Integer dataId);
+
+    List<MeterData> selectByState(String recordMonth);
+
+
 }
