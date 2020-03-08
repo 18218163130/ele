@@ -16,8 +16,8 @@ public interface FeeMapping {
      * @param fee
      * @return
      */
-    @Insert("insert into fee(feeId,userId,realName,createTime,amount,prize,state,description,payWay,unitPrice,recordDate) " +
-            "values(#{feeId},#{userId},#{realName},#{createTime},#{amount},#{prize},#{state},#{description},#{payWay},#{unitPrice},#{recordDate})")
+    @Insert("insert into fee(feeId,userId,realName,createTime,amount,prize,state,description,payWay,unitPrice,recordDate,empCode,empName) " +
+            "values(#{feeId},#{userId},#{realName},#{createTime},#{amount},#{prize},#{state},#{description},#{payWay},#{unitPrice},#{recordDate},#{empCode},#{empName})")
     int insert(Fee fee);
 
     /**

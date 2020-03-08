@@ -130,4 +130,12 @@ public interface MeterDataMapper {
     @Select("select * from meter_data where state=0 and DATE_FORMAT(recordMonth,'%Y-%m')=#{recordMonth}")
     List<MeterData> selectByState(@Param("recordMonth")String recordMonth);
 
+    /**
+     *
+     * @param dataId
+     * @return
+     */
+    @Select("select * from meter_data where dataId=#{dataId}")
+    MeterData queryByDataId(@Param("dataId")Integer dataId);
+
 }

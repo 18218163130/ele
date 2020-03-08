@@ -22,9 +22,19 @@ public class MeterDataVo extends MeterData {
     private String yearmonth; // 根据月份查询
     private String yearmonth2;
 
+    private float price;
+
     private float jtPrice;
     private float syPrice;
     private float gyPrice;
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
     public float getJtPrice() {
         return jtPrice;

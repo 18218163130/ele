@@ -27,6 +27,24 @@ public class Fee implements Serializable {
     @JsonFormat(pattern = "yyyy-MM",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM")
     private Date recordDate; // 抄表日期
+    private String empCode;
+    private String empName;
+
+    public String getEmpCode() {
+        return empCode;
+    }
+
+    public void setEmpCode(String empCode) {
+        this.empCode = empCode;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
 
     public String getRealName(){
         return realName;

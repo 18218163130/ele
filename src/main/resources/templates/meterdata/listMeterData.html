@@ -77,6 +77,62 @@
     </form>
 </div>
 
+<!--逐条生成电费单-->
+<div  style="display: none;padding: 20px;" layui-filter="createFeeDiv" id="createFeeDiv">
+    <form class="layui-form"  lay-filter="createFeeForm" id="createFeeForm">
+        <input type="hidden" name="dataId" value=""/>
+        <input type="hidden" name="consume" value=""/>
+        <input type="hidden" name="state" value=""/>
+        <input type="hidden" name="type" value=""/>
+        <input type="hidden" name="recordDate" value=""/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电表编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="meterId" readonly="readonly" lay-verify="required|title" autocomplete="off" placeholder="请输入电表编号" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="userId" lay-verify="required|title" readonly="readonly" autocomplete="off" placeholder="请输入客户账号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">抄表年月</label>
+            <div class="layui-input-block">
+                <input type="text" name="recordMonth" id="recordMonth3" readonly="readonly"  lay-verify="required|date" placeholder="yyyy-MM" autocomplete="off" class="layui-input clearNumber">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">当月总数</label>
+            <div class="layui-input-block">
+                <input type="text"  name="displayNumber" lay-verify="required|number" readonly="readonly"  autocomplete="off" placeholder="当月电表总数" class="layui-input clearNumber">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">抄表员</label>
+            <div class="layui-input-block">
+                <input type="text" name="verifyPerson" lay-verify="title|required" readonly="readonly"  autocomplete="off" placeholder="请输入审核人" class="layui-input clearNumber">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电费单价</label>
+            <div class="layui-input-block">
+                <input type="text"  name="price" lay-verify="required|number"   autocomplete="off" placeholder="请输入电费单价" class="layui-input clearNumber">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="reset" class="layui-btn ">重置</button>
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="oneFeeSubmit" id="oneFeeSubmit">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <!--抄表div-->
 <div  style="display: none;padding: 20px;" layui-filter="editDiv" id="editDiv">
     <form class="layui-form"  lay-filter="editForm" id="editForm">
@@ -160,6 +216,10 @@
             type:"month"
         });
         laydate.render({
+            elem:"#recordMonth3",
+            type:"month"
+        });
+        laydate.render({
             elem:"#yearMonth",
             type:"month"
         });
@@ -229,7 +289,7 @@
                     })
                 });
             }else if(event === 'createFee'){
-
+                    createFee(data);
             }
         });
 
@@ -249,8 +309,21 @@
             });
         }
 
+
         //确认编辑
         form.on("submit(editSubmit)", function (data) {
+            //序列化表单数据
+            var params = data.field;
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex)
+                // 从新加载表格
+                tableIns.reload();
+            })
+        });
+        //确认生成电费单
+        form.on("submit(createFeeSubmit)", function (data) {
             //序列化表单数据
             var params = data.field;
             $.post(url, params, function (obj) {
@@ -274,8 +347,23 @@
                 }
             });
         }
+
+
+        // 生成一条电费单
+        function createFee(data){
+            mainIndex = layer.open({
+                type: 1,
+                title: '编辑抄表记录',
+                content: $("#createFeeDiv"),
+                area: ['700px', '540px'],
+                success: function (index) {
+                    form.val("createFeeForm",data);
+                    url = "/fee/createFeeOne";
+                }
+            });
+        }
         //确认生成电费单
-        form.on("submit(createFeeSubmit)", function (data) {
+        form.on("submit(oneFeeSubmit)", function (data) {
             //序列化表单数据
             var params = data.field;
             $.post(url, params, function (obj) {
@@ -286,6 +374,7 @@
                 tableIns.reload();
             })
         });
+
 
         //批量删除
         function deleteBatch() {

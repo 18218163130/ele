@@ -280,4 +280,13 @@ public class SysController {
     public String toChaobiaoMeterData(){
         return "meterdata/chaobiao";
     }
+
+    /**
+     * 营销统计
+     * @return
+     */
+    @RequestMapping("feeChart.html")
+    public String toFeeChart(){
+        return "fee/feeChart";
+    }
 }

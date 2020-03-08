@@ -144,4 +144,9 @@ public class MeterDataServiceImpl implements MeterDataService {
     public List<MeterData> selectByState(String recordMonth) {
         return meterDataMapper.selectByState(recordMonth);
     }
+
+    @Override
+    public MeterData queryById(Integer dataId) {
+        return meterDataMapper.queryByDataId(dataId);
+    }
 }

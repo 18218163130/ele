@@ -18,6 +18,25 @@ public class User implements Serializable {
     private String identify; // 身份证号码
     private String decription;
 
+    private String empName;
+    private String empCode;
+
+    public String getEmpCode() {
+        return empCode;
+    }
+
+    public void setEmpCode(String empCode) {
+        this.empCode = empCode;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
     public String getUserId() {
         return userId;
     }

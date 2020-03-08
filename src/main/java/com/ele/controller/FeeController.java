@@ -56,19 +56,6 @@ public class FeeController {
                 Fee fee = new Fee();
                 String feeId = new StringBuilder().append(System.currentTimeMillis()).toString();
                 fee.setFeeId(feeId);
-                /*
-                    private String feeId; // 电费单号
-                    private Date createTime; // 客户姓名
-                    private String realName;
-                    private String userId;
-                    private float amount; // 用电度数
-                    private float prize; // 单价
-                    private Integer state; // 缴费状态
-                    private String description; // 描述
-                    private Integer payWay;
-                    private float unitPrice; // 每度电价格
-                    private Date recordDate; // 抄表日期
-                 */
                 fee.setUserId(need.getUserId());
                 fee.setRealName(dbUser.getRealName());
                 fee.setCreateTime(new Date());
@@ -76,6 +63,8 @@ public class FeeController {
                 fee.setRecordDate(need.getRecordDate());
                 fee.setPayWay(0);
                 fee.setState(0);
+                fee.setEmpName(dbUser.getEmpName());
+                fee.setEmpCode(dbUser.getEmpCode());
                 // 判断用电类型
                 String userId = need.getUserId();
                 if(userId.startsWith("GY")){
@@ -96,6 +85,51 @@ public class FeeController {
             }
             return ResultObj.CREATE_FEE_SUCCESS;
         }catch(Exception e){
+            return ResultObj.CREATE_FEE_ERROR;
+        }
+    }
+
+    /**
+     * 生成一条电费单
+     * @param meterDataVo
+     * @return
+     */
+    @RequestMapping("createFeeOne")
+    @ResponseBody
+    public ResultObj createFeeOne(MeterDataVo meterDataVo){
+        try{
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            //需要生成电费单记录
+            MeterData dbMeterData = meterDataService.queryById(meterDataVo.getDataId());
+            // 修改电表状态位state=1,代表生成电费单
+            if (dbMeterData.getState()==0) {
+                User dbUser = userService.getUserById(dbMeterData.getUserId());
+                Fee fee = new Fee();
+                String feeId = new StringBuilder().append(System.currentTimeMillis()).toString();
+                fee.setFeeId(feeId);
+                fee.setUserId(dbMeterData.getUserId());
+                fee.setRealName(dbUser.getRealName());
+                fee.setCreateTime(new Date());
+                fee.setAmount(dbMeterData.getConsume());
+                fee.setRecordDate(dbMeterData.getRecordDate());
+                fee.setPayWay(0);
+                fee.setState(0);
+                fee.setEmpName(dbUser.getEmpName());
+                fee.setEmpCode(dbUser.getEmpCode());
+                // 判断用电类型
+                String userId = dbMeterData.getUserId();
+                float f =meterDataVo.getPrice()* dbMeterData.getConsume(); // 家庭用电
+                fee.setPrize(f);
+                fee.setUnitPrice(meterDataVo.getPrice());
+                // 生成电费单
+                feeService.createFee(fee);
+                meterDataService.updateStateByDataId(dbMeterData.getDataId());
+            }else{
+                //  失败，或已经生成电费单
+                return ResultObj.CREATE_FEE_ERROR;
+            }
+            return ResultObj.CREATE_FEE_SUCCESS;
+        }catch (Exception e){
             return ResultObj.CREATE_FEE_ERROR;
         }
     }
@@ -129,6 +163,8 @@ public class FeeController {
                     fee.setRecordDate(meterData.getRecordDate());
                     fee.setPayWay(0);
                     fee.setState(0);
+                    fee.setEmpCode(user.getEmpCode());
+                    fee.setEmpName(user.getEmpName());
                     Integer state = meterData.getState();
                     if (state == 0) {
                         float f =meterDataVo.getJtPrice()* meterData.getConsume(); // 家庭用电

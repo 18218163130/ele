@@ -32,8 +32,8 @@ public interface UserMapper {
      * 向user表中添加客户信息
      * @param user
      */
-    @Insert("insert into user(userId,realName,pwd,sex,type,phone,address,identify,decription) " +
-            "values(#{userId},#{realName},#{pwd},#{sex},#{type},#{phone},#{address},#{identify},#{decription})")
+    @Insert("insert into user(userId,realName,pwd,sex,type,phone,address,identify,decription,empId,empName) " +
+            "values(#{userId},#{realName},#{pwd},#{sex},#{type},#{phone},#{address},#{identify},#{decription},#{empId},#{empName})")
     int insert(User user);
 
     /**
@@ -48,7 +48,9 @@ public interface UserMapper {
             + "<if test='type != null'> and type like concat('%',#{type},'%') </if>"
             + "<if test='phone != null'> and phone like concat('%',#{phone},'%') </if>"
             + "<if test='address != null'> and address like concat('%',#{address},'%') </if>"
-            + "<if test='identify != null'> and address like concat('%',#{identify},'%') </if>"
+            + "<if test='identify != null'> and identify like concat('%',#{identify},'%') </if>"
+            + "<if test='empCode != null'> and empCode like concat('%',#{empCode},'%') </if>"
+            + "<if test='empName != null'> and empName like concat('%',#{empName},'%') </if>"
             + "</where>"
             + "</script>")
     List<User> queryUserList(User user);
@@ -58,7 +60,7 @@ public interface UserMapper {
      * @param userVo
      */
     @Update("update user set realName=#{realName},sex=#{sex},type=#{type},phone=#{phone},address=#{address}," +
-            "identify=#{identify},decription=#{decription} where userId=#{userId}")
+            "identify=#{identify},decription=#{decription},empId=#{empId},empName=#{empName} where userId=#{userId}")
     void updateUser(UserVo userVo);
 
     /**

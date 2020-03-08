@@ -90,5 +90,7 @@ public interface MeterDataService {
 
     List<MeterData> selectByState(String recordMonth);
 
+    MeterData queryById(Integer dataId);
+
 
 }

@@ -3,6 +3,7 @@ package com.ele.controller;
 import com.ele.config.SysConstast;
 import com.ele.entity.Emp;
 import com.ele.entity.User;
+import com.ele.service.EmpService;
 import com.ele.service.LogService;
 import com.ele.service.UserService;
 import com.ele.utils.DataGridView;
@@ -34,6 +35,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private LogService logService;
+    @Autowired
+    private EmpService empService;
 
     /**
      * 添加一个客户
@@ -51,6 +54,11 @@ public class UserController {
                 pre = "SY";
             }else{
                 pre = "GY";
+            }
+            // 查询销售人员是否正确
+            Emp dbEmp = empService.findByEmpCode(user.getEmpCode());
+            if(dbEmp==null || !dbEmp.getEmpName().equals(user.getEmpName())){
+                return ResultObj.EMPCODE_ERROR;
             }
             user.setUserId(pre+UserCodeUtils.getLocalTrmSeqNum()); // 产生并设置客户编号
             String md5Pwd = new Md5Hash(SysConstast.EMP_DEFAULT_PWD).toString(); // 以MD5加密并设置初始密码
