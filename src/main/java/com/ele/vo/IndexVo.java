@@ -4,6 +4,7 @@ import com.ele.entity.Index;
 
 /**
  * 指标包装类
+ *
  * @Author dongwf
  * @Date 2019/10/15
  */

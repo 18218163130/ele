@@ -1,7 +1,6 @@
 package com.ele.mapper;
 
 import com.ele.entity.Market;
-import com.ele.utils.DataGridView;
 import com.ele.vo.MarketVo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -17,6 +16,7 @@ import java.util.List;
 public interface MarketMapper {
     /**
      * 添加
+     *
      * @param marketVo
      * @return
      */
@@ -25,6 +25,7 @@ public interface MarketMapper {
 
     /**
      * 查询营销信息列表
+     *
      * @param marketVo
      * @return
      */
@@ -38,6 +39,7 @@ public interface MarketMapper {
 
     /**
      * 修改营销信息
+     *
      * @param marketVo
      */
     @Update("update market set marketName=#{marketName},marketDate=#{marketDate},userId=#{userId},state=#{state},remark=#{remark} where marketId=#{marketId}")
@@ -45,6 +47,7 @@ public interface MarketMapper {
 
     /**
      * 删除营销记录
+     *
      * @param id
      */
     @Delete("delete from market where marketId=#{marketId}")

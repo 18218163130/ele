@@ -1,6 +1,5 @@
 package com.ele.service;
 
-import com.ele.entity.Price;
 import com.ele.utils.DataGridView;
 import com.ele.vo.PriceVo;
 
@@ -16,18 +15,21 @@ public interface PriceService {
 
     /**
      * 更新年月电费单价
+     *
      * @param priceVo
      */
     void updateYearMonthPirce(PriceVo priceVo);
 
     /**
      * 删除年月电费单价
+     *
      * @param priceVo
      */
     void deleteYearMonthPirce(PriceVo priceVo);
 
     /**
      * 查询年月单价
+     *
      * @param priceVo
      * @return
      */

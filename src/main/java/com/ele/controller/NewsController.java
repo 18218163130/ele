@@ -8,7 +8,6 @@ import com.ele.utils.ResultObj;
 import com.ele.vo.NewsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,12 +15,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 系统公告操作
+ *
  * @Author dongwf
  * @Date 2019/10/14
  */
@@ -33,13 +32,14 @@ public class NewsController {
 
     /**
      * 添加系统公告操作
+     *
      * @param newsVo
      * @return
      */
     @RequestMapping("addNews")
     @ResponseBody
-    public ResultObj addNews(NewsVo newsVo){
-        try{
+    public ResultObj addNews(NewsVo newsVo) {
+        try {
             // 设置添加的时间
             newsVo.setCreateTime(new Date());
             // 获取session中的对象
@@ -49,37 +49,39 @@ public class NewsController {
             newsVo.setEditer(emp.getEmpName());
             newsService.addNews(newsVo);
             return ResultObj.ADD_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.ADD_ERROR;
         }
     }
 
     /**
      * 加载所有系统公告操作
+     *
      * @param newsVo
      * @return
      */
     @RequestMapping("loadAllNews")
     @ResponseBody
-    public DataGridView loadAllNews(NewsVo newsVo){
+    public DataGridView loadAllNews(NewsVo newsVo) {
         return newsService.queryAllNews(newsVo);
     }
 
     @RequestMapping("loadNewsList")
     @ResponseBody
-    public List<News> loadNewsList(NewsVo newsVo, HttpSession session){
+    public List<News> loadNewsList(NewsVo newsVo, HttpSession session) {
         return newsService.queryNewsList(newsVo);
     }
 
     /**
      * 修改系统公告
+     *
      * @param newsVo
      * @return
      */
     @RequestMapping("updateNews")
     @ResponseBody
-    public ResultObj updateNews(NewsVo newsVo){
-        try{
+    public ResultObj updateNews(NewsVo newsVo) {
+        try {
             // 设置添加的时间
             newsVo.setCreateTime(new Date());
             // 获取session中的对象
@@ -89,39 +91,41 @@ public class NewsController {
             newsVo.setEditer(emp.getEmpName());
             newsService.updateNews(newsVo);
             return ResultObj.UPDATE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.UPDATE_ERROR;
         }
     }
 
     /**
      * 删除系统公告记录
+     *
      * @param newsVo
      * @return
      */
     @RequestMapping("deleteNews")
     @ResponseBody
-    public ResultObj deleteNews(NewsVo newsVo){
-        try{
+    public ResultObj deleteNews(NewsVo newsVo) {
+        try {
             newsService.deleteNews(newsVo.getNewsId());
             return ResultObj.DELETE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.DELETE_ERROR;
         }
     }
 
     /**
      * 删除或批量删除系统公告
+     *
      * @param newsVo
      * @return
      */
     @RequestMapping("deleteBatchNews")
     @ResponseBody
-    public ResultObj deleteBatchNews(NewsVo newsVo){
-        try{
+    public ResultObj deleteBatchNews(NewsVo newsVo) {
+        try {
             newsService.deleteBatchNews(newsVo.getIds());
             return ResultObj.DELETE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.DELETE_ERROR;
         }
     }

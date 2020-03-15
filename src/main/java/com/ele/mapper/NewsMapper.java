@@ -14,6 +14,7 @@ public interface NewsMapper {
 
     /**
      * 添加一条公告
+     *
      * @param newsVo
      * @return
      */
@@ -22,14 +23,16 @@ public interface NewsMapper {
 
     /**
      * 删除公告
+     *
      * @param newsId
      * @return
      */
     @Delete("delete from news where newsId = #{newsId}")
-    int deleteNewsById(@Param("newsId")Integer newsId);
+    int deleteNewsById(@Param("newsId") Integer newsId);
 
     /**
      * 修改公告内容
+     *
      * @param newsVo
      * @return
      */
@@ -38,6 +41,7 @@ public interface NewsMapper {
 
     /**
      * 查询所有公告记录
+     *
      * @return
      */
     @Select("<script> select * from news <where>" +

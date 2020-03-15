@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>营销信息管理</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" href="../layui/css/layui.css" media="all" />
-    <link rel="stylesheet" th:href="@{/css/public.css}" href="../css/public.css" media="all" />
+    <link href="../layui/css/layui.css" media="all" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link href="../css/public.css" media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body>
 <!-- 搜索条件开始 -->
@@ -13,76 +13,82 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
-<form class="layui-form" method="" id="searchForm">
+<form class="layui-form" id="searchForm" method="">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">标题</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input"  name="title" id="title" placeholder="请输入标题">
+                <input class="layui-input" id="title" name="title" placeholder="请输入标题" type="text">
             </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search"
-                        lay-filter="doSearch" lay-submit="" id="doSearch">
+                <button class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch"
+                        lay-filter="doSearch" lay-submit="" type="button">
                     查询
                 </button>
             </div>
         </div>
     </div>
 </form>
-<table  id="discountTable" lay-filter="discountTable"></table>
+<table id="discountTable" lay-filter="discountTable"></table>
 
 <!--添加-->
-<div style="display: none;" id="addDiscountDiv">
-    <form class="layui-form" action="" lay-filter="discountForm" id="discountForm">
-        <input type="hidden" name="discountId"/>
+<div id="addDiscountDiv" style="display: none;">
+    <form action="" class="layui-form" id="discountForm" lay-filter="discountForm">
+        <input name="discountId" type="hidden"/>
         <div class="layui-form-item">
             <label class="layui-form-label">标题</label>
             <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="请输入指标名称" class="layui-input">
+                <input autocomplete="off" class="layui-input" lay-verify="required|title" name="title" placeholder="请输入指标名称"
+                       type="text">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">起始日期</label>
             <div class="layui-input-block">
-                <input type="text" name="startTime" id="startTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <input autocomplete="off" class="layui-input" id="startTime" lay-verify="required|date" name="startTime"
+                       placeholder="yyyy-MM-dd" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">截止日期</label>
             <div class="layui-input-block">
-                <input type="text" name="endTime" id="endTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <input autocomplete="off" class="layui-input" id="endTime" lay-verify="required|date" name="endTime"
+                       placeholder="yyyy-MM-dd" type="text">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <input type="radio" name="state" value="1" checked="checked"  title="有效">
-                <input type="radio" name="state" value="0" title="无效">
+                <input checked="checked" name="state" title="有效" type="radio" value="1">
+                <input name="state" title="无效" type="radio" value="0">
             </div>
         </div>
 
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" id="content"  name="content" lay-verify="content"></textarea>
+                <textarea class="layui-textarea" id="content" lay-verify="content" name="content"
+                          placeholder="请输入内容"></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="reset" class="layui-btn " id="btnReset">重置</button>
-                <button type="button" class="layui-btn" lay-submit="" lay-filter="doDiscountSubmit" id="doDiscountSubmit">提交</button>
+                <button class="layui-btn " id="btnReset" type="reset">重置</button>
+                <button class="layui-btn" id="doDiscountSubmit" lay-filter="doDiscountSubmit" lay-submit=""
+                        type="button">提交
+                </button>
             </div>
         </div>
     </form>
 </div>
 <!--查看详情-->
 <div id="viewDiscountDiv" style="padding: 10px;display: none;">
-    <h2 id="view_title" align="center"></h2>
+    <h2 align="center" id="view_title"></h2>
     <hr>
     <div style="text-align: right;">
         发布时间:<span id="view_createtime"></span>
@@ -96,66 +102,68 @@
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
-<div class="layui-btn-container"  id="toolbarDemo" style="display: none;">
+<div class="layui-btn-container" id="toolbarDemo" style="display: none;">
     <button class="layui-btn layui-btn-sm" lay-event="delBatch">批量删除</button>
     <button class="layui-btn layui-btn-sm" lay-event="addDiscount">添加优惠活动</button>
 </div>
 
-<script type="text/javascript" th:src="@{/layui/layui.js}" src=""></script>
+<script src="" th:src="@{/layui/layui.js}" type="text/javascript"></script>
 <script th:inline="javascript">
-    layui.use(['form', 'layedit', 'laydate','jquery','table'], function(){
+    layui.use(['form', 'layedit', 'laydate', 'jquery', 'table'], function () {
         var form = layui.form
-            ,table = layui.table
-            ,layer = layui.layer
-            ,layedit = layui.layedit
-            ,laydate = layui.laydate
-            ,$ = layui.jquery;
+            , table = layui.table
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , $ = layui.jquery;
         var tableIns;
         //初始化富文本编辑器
         var editIndex;
         // 渲染日期选择框
         laydate.render({
             elem: "#startTime",
-            type:'date',
-            value:new Date()
+            type: 'date',
+            value: new Date()
         });
         laydate.render({
             elem: "#endTime",
-            type:'date'
+            type: 'date'
         });
 
         tableIns = table.render({
             elem: '#discountTable'
-            ,url: '/discount/queryDiscount'
-            ,toolbar: '#toolbarDemo'
-            ,title: '电表数据表'
-            ,totalRow: true
-            ,cellMinWidth:100
-            ,defaultToolbar:[""]
-            ,page: true
-            ,cols: [
+            , url: '/discount/queryDiscount'
+            , toolbar: '#toolbarDemo'
+            , title: '电表数据表'
+            , totalRow: true
+            , cellMinWidth: 100
+            , defaultToolbar: [""]
+            , page: true
+            , cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'discountId', title:'ID', width:100,  sort: true}
-                    ,{field:'title', title:'标题', width:200, align: 'center', sort: true}
-                    ,{field:'createTime', title:'创建时间', width:200, align: 'center', sort: true}
-                    ,{field:'startTime', title:'起始时间', width:200, align: 'center', sort: true}
-                    ,{field:'endTime', title:'截止时间', width:200, align: 'center', sort: true}
-                    ,{field:'state', title:'状态', width:160, align: 'center', sort: true,templet:function (data) {
-                        if(data.state=='0'){
+                    , {field: 'discountId', title: 'ID', width: 100, sort: true}
+                    , {field: 'title', title: '标题', width: 200, align: 'center', sort: true}
+                    , {field: 'createTime', title: '创建时间', width: 200, align: 'center', sort: true}
+                    , {field: 'startTime', title: '起始时间', width: 200, align: 'center', sort: true}
+                    , {field: 'endTime', title: '截止时间', width: 200, align: 'center', sort: true}
+                    , {
+                    field: 'state', title: '状态', width: 160, align: 'center', sort: true, templet: function (data) {
+                        if (data.state == '0') {
                             return '<font color=red>无效</font>';
-                        }else{
+                        } else {
                             return '<font color=blue>有效</font>';
                         }
-                    }}
-                    ,{fixed: 'right', title:'操作', toolbar: '#marketBar', width:220,align:'center'}
+                    }
+                }
+                    , {fixed: 'right', title: '操作', toolbar: '#marketBar', width: 220, align: 'center'}
                 ]
             ]
         });
 
         //头工具栏事件
-        table.on('toolbar(discountTable)', function(obj){
-            switch(obj.event){
+        table.on('toolbar(discountTable)', function (obj) {
+            switch (obj.event) {
                 case 'delBatch': // 批量删除
                     deleteBatch();
                     break;
@@ -166,10 +174,10 @@
         });
 
         // 操作栏
-        table.on('tool(discountTable)',function(obj){
+        table.on('tool(discountTable)', function (obj) {
             var data = obj.data; // 获取选中行
             var event = obj.event; // 回去事件
-            if(event === 'del') {
+            if (event === 'del') {
                 layer.confirm('真的删除【' + data.title + '】这条优惠信息吗', function (index) {
                     //向服务端发送删除指令
                     $.post("/discount/deleteDiscount", {discountId: data.discountId}, function (res) {
@@ -178,18 +186,19 @@
                         tableIns.reload();
                     })
                 });
-            }else if(event === 'view'){
+            } else if (event === 'view') {
                 // 查看看详情
                 openView(data);
-            }else if(event === 'edit'){
+            } else if (event === 'edit') {
                 openEdit(data);
             }
         });
 
         var mainIns;
         var url;
+
         // 打开添加优惠活动div
-        function openAddDiscountDiv(){
+        function openAddDiscountDiv() {
             mainIns = layer.open({
                 type: 1,
                 title: '添加优惠活动',
@@ -201,6 +210,7 @@
                 }
             });
         }
+
         // 批量删除
         function deleteBatch() {
             //得到选中的数据行
@@ -225,13 +235,13 @@
         }
 
         //查看
-        function openView(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'查看详情',
-                content:$("#viewDiscountDiv"),
-                area:['80%','100%'],
-                success:function(index){
+        function openView(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: '查看详情',
+                content: $("#viewDiscountDiv"),
+                area: ['80%', '100%'],
+                success: function (index) {
                     $("#view_title").html(data.title);
                     $("#view_createtime").html(data.createTime);
                     $("#view_content").html(data.content);
@@ -240,43 +250,42 @@
         }
 
         // 编辑
-        function openEdit(data){
-            mainIns=layer.open({
-                type:1,
-                title:'编辑',
-                content:$("#addDiscountDiv"),
-                area:['80%','100%'],
-                success:function(index){
-                    editIndex=layedit.build('content'); //建立编辑器
+        function openEdit(data) {
+            mainIns = layer.open({
+                type: 1,
+                title: '编辑',
+                content: $("#addDiscountDiv"),
+                area: ['80%', '100%'],
+                success: function (index) {
+                    editIndex = layedit.build('content'); //建立编辑器
                     // 富文本回显
                     $("#content").html(data.content);
                     editIndex = layedit.build('content');
-                    form.val("discountForm",data);
+                    form.val("discountForm", data);
 
-                    url="/discount/editDiscount";
+                    url = "/discount/editDiscount";
                 }
             });
         }
-
 
 
         //创建一个编辑器
         editIndex = layedit.build('content');
         // 用来获取富文本内容弄
         form.verify({
-            content:function () {
+            content: function () {
                 layedit.sync(editIndex);
             }
         });
 
         // 给重置按钮绑定事件，用于清除富文本内容
-        $(document).on("click","#btnReset",function () {
-            layedit.setContent(editIndex,"");
+        $(document).on("click", "#btnReset", function () {
+            layedit.setContent(editIndex, "");
         });
         // 提交添加
-        form.on('submit(doDiscountSubmit)', function(data){
+        form.on('submit(doDiscountSubmit)', function (data) {
             var params = $("#discountForm").serialize();
-            $.post(url,params,function (obj) {
+            $.post(url, params, function (obj) {
                 layer.msg(obj.msg);
                 layer.close(mainIns);
                 tableIns.reload();
@@ -284,11 +293,11 @@
             return false;
         });
         //模糊查询
-        $("#doSearch").click(function(){
-            var params=$("#searchForm").serialize();
+        $("#doSearch").click(function () {
+            var params = $("#searchForm").serialize();
             tableIns.reload({
-                url:"/discount/queryDiscount?"+params,
-                page:{curr:1}
+                url: "/discount/queryDiscount?" + params,
+                page: {curr: 1}
             })
         });
 

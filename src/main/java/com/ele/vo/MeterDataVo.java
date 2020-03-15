@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * 电表数据包装类
+ *
  * @Author dongwf
  * @Date 2019/10/17
  */
@@ -18,7 +19,7 @@ public class MeterDataVo extends MeterData {
     private Date startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
-//    @DateTimeFormat(pattern = "yyyy-MM")
+    //    @DateTimeFormat(pattern = "yyyy-MM")
     private String yearmonth; // 根据月份查询
     private String yearmonth2;
 

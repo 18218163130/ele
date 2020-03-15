@@ -14,6 +14,7 @@ import java.util.List;
 public interface UserMapper {
     /**
      * 通过客户Id获取客户信息
+     *
      * @param userId
      * @return
      */
@@ -22,14 +23,17 @@ public interface UserMapper {
 
     /**
      * 通过客户ID和名称查询客户
+     *
      * @param userId
      * @param userName
      * @return
      */
     @Select("select * from user where userId=#{userId} and realName=#{userName}")
-    User findUser(@Param("userId")String userId,@Param("userName")String userName);
+    User findUser(@Param("userId") String userId, @Param("userName") String userName);
+
     /**
      * 向user表中添加客户信息
+     *
      * @param userVo
      */
     @Insert("insert into user(userId,realName,pwd,sex,type,phone,address,identify,decription,empCode,empName) " +
@@ -38,6 +42,7 @@ public interface UserMapper {
 
     /**
      * 可以根据条件查询客户信息列表
+     *
      * @param user
      * @return
      */
@@ -57,6 +62,7 @@ public interface UserMapper {
 
     /**
      * 修改客户信息
+     *
      * @param userVo
      */
     @Update("update user set realName=#{realName},sex=#{sex},type=#{type},phone=#{phone},address=#{address}," +
@@ -65,6 +71,7 @@ public interface UserMapper {
 
     /**
      * 修改客户密码
+     *
      * @param userVo
      */
     @Update("update user set pwd=#{pwd} where userId=#{userId}")
@@ -72,6 +79,7 @@ public interface UserMapper {
 
     /**
      * 根据客户Id删除用户信息
+     *
      * @param userId
      */
     @Delete("delete from user where userId=#{userId}")
@@ -79,22 +87,25 @@ public interface UserMapper {
 
     /**
      * 登录
+     *
      * @param userVo
      * @return
      */
     @Select("select * from user where userId=#{userId} and pwd=#{pwd}")
     User login(UserVo userVo);
+
     /**
      * 检查员工账号和密码
      */
     @Select("select * from user where userId=#{userId} and pwd=#{pwd}")
-    User checkUserIdAndPwd(@Param("userId") String userId,@Param("pwd") String pwd);
+    User checkUserIdAndPwd(@Param("userId") String userId, @Param("pwd") String pwd);
 
     /**
      * 更改员工密码
+     *
      * @param userId
      * @param newPwd
      */
     @Update("update user set pwd=#{newPwd} where userId=#{userId}")
-    void updateNewPwd(@Param("userId")String userId,@Param("newPwd")String newPwd);
+    void updateNewPwd(@Param("userId") String userId, @Param("newPwd") String newPwd);
 }

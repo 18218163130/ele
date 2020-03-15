@@ -8,6 +8,7 @@ import java.util.Properties;
 
 /**
  * 配置类
+ *
  * @Author dongwf
  * @Date 2019/10/10
  */
@@ -16,10 +17,11 @@ public class MyConfig {
 
     /**
      * 添加mybatis分页插件
+     *
      * @return
      */
     @Bean
-    public PageHelper getPageHelper(){
+    public PageHelper getPageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties p = new Properties();
         p.setProperty("offsetAsPageNum", "true");

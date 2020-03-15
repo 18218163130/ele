@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 指标实体
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */
@@ -15,17 +16,17 @@ public class Index implements Serializable {
     private Integer indexId; // 指标编号
     private String indexName; // 指标名称
     private Integer type; // 指标类型
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date sTime; // 生效时间
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date oTime; // 失效时间
     private Integer state; // 指标状态
     private String setPerson; // 设置人
     private String changePerson; // 修改指标人
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date changeTime; // 修改指标的时间
     private String description;
 

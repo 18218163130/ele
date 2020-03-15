@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 电费单价
+ *
  * @Author dongwf
  * @Date 2020/2/12
  */
@@ -24,7 +25,7 @@ public interface PriceMapper {
     List<Price> queryPrice(PriceVo priceVo);
 
     @Delete("delete from price where yearMonth=#{yearMonth}")
-    int delete(@Param("yearMonth")Date yearMonth);
+    int delete(@Param("yearMonth") Date yearMonth);
 
     @Update("update set gyPrice=#{gyPrice},jtPrice=#{jtPrice},syPrice=#{syPrice} where yearMonth=#{yearMonth}")
     int update(PriceVo priceVo);

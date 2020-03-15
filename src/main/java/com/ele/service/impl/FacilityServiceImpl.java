@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 电力设备业务实现
+ *
  * @Author dongwf
  * @Date 2019/12/20
  */
@@ -32,9 +33,9 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     public DataGridView queryFacility(FacilityVo facilityVo) {
-        Page page = PageHelper.startPage(facilityVo.getPage(),facilityVo.getLimit());
+        Page page = PageHelper.startPage(facilityVo.getPage(), facilityVo.getLimit());
         List<Facility> facilityList = facilityMapper.queryFacility(facilityVo);
-        return new DataGridView(page.getTotal(),facilityList);
+        return new DataGridView(page.getTotal(), facilityList);
     }
 
     @Override

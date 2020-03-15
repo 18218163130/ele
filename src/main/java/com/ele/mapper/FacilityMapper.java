@@ -13,6 +13,7 @@ import java.util.List;
 public interface FacilityMapper {
     /**
      * 添加设备种类信息
+     *
      * @param facilityVo
      * @return
      */
@@ -22,22 +23,24 @@ public interface FacilityMapper {
 
     /**
      * 查询电力设备信息列表
+     *
      * @param facilityVo
      * @return
      */
     @Select("<script> select * from facility <where> " +
-            "<if test='facId != null'> and facId =#{facId}</if>"+
-            "<if test='facName != null'> and facName like concat('%',#{facName},'%')</if>"+
-            "<if test='facType != null'> and facType =#{facType}</if>"+
-            "<if test='facTypeName != null'> and facTypeName like concat('%',#{facTypeName},'%')</if>"+
+            "<if test='facId != null'> and facId =#{facId}</if>" +
+            "<if test='facName != null'> and facName like concat('%',#{facName},'%')</if>" +
+            "<if test='facType != null'> and facType =#{facType}</if>" +
+            "<if test='facTypeName != null'> and facTypeName like concat('%',#{facTypeName},'%')</if>" +
 
-            "<if test='facFactory != null'> and facFactory like concat('%',#{facFactory},'%')</if>"+
-            "<if test='facCode != null'> and facCode like concat('%',#{facCode},'%')</if>"+
+            "<if test='facFactory != null'> and facFactory like concat('%',#{facFactory},'%')</if>" +
+            "<if test='facCode != null'> and facCode like concat('%',#{facCode},'%')</if>" +
             " </where></script>")
     List<Facility> queryFacility(FacilityVo facilityVo);
 
     /**
      * 删除电力设备
+     *
      * @param facId
      * @return
      */
@@ -46,6 +49,7 @@ public interface FacilityMapper {
 
     /**
      * 编辑修改电力设备
+     *
      * @param facilityVo
      */
     @Update("update facility set facName=#{facName},facPrice=#{facPrice},facTotal=#{facTotal}" +
@@ -55,18 +59,20 @@ public interface FacilityMapper {
 
     /**
      * 根据Id更新库存数量
+     *
      * @param facTotal
      * @param facId
      * @return
      */
     @Update("update facility set facTotal=facTotal-#{facTotal} where facId=#{facId}")
-    int updateFacTotal(@Param("facTotal") Integer facTotal,@Param("facId") Integer facId);
+    int updateFacTotal(@Param("facTotal") Integer facTotal, @Param("facId") Integer facId);
 
     @Select("select * from facility")
     List<Facility> findFacType();
 
     /**
      * 分类查询设备种类
+     *
      * @param facType
      * @return
      */

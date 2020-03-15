@@ -1,12 +1,10 @@
 package com.ele.vo;
 
 import com.ele.entity.Fee;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 /**
  * 电费包装类
+ *
  * @Author dongwf
  * @Date 2019/10/23
  */

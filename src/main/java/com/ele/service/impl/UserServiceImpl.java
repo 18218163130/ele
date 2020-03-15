@@ -8,7 +8,6 @@ import com.ele.vo.UserVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +15,7 @@ import java.util.List;
 
 /**
  * 客户业务操作
+ *
  * @Author dongwf
  * @Date 2019/10/10
  */
@@ -31,11 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String userId, String userName) {
-        return userMapper.findUser(userId,userName);
+        return userMapper.findUser(userId, userName);
     }
 
     /**
      * 添加新的客户信息
+     *
      * @param user
      */
     @Transactional // 添加事务支持
@@ -46,19 +47,21 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 查询客户列表信息
+     *
      * @return
      */
     @Override
     public DataGridView getUserList(UserVo userVo) {
         // 分页
-        Page<User> page = PageHelper.startPage(userVo.getPage(),userVo.getLimit());
+        Page<User> page = PageHelper.startPage(userVo.getPage(), userVo.getLimit());
         List<User> data = userMapper.queryUserList(userVo);
         // 将客户信息列表封装DataGridView返回
-        return new DataGridView(page.getTotal(),data);
+        return new DataGridView(page.getTotal(), data);
     }
 
     /**
      * 更新客户信息
+     *
      * @param userVo
      */
     @Transactional
@@ -69,6 +72,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 重置客户密码
+     *
      * @param userVo
      */
     @Transactional
@@ -79,6 +83,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据id删除客户信息
+     *
      * @param userId
      */
     @Transactional
@@ -95,13 +100,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User checkUserPwd(String userId, String md5Pwd) {
-        return userMapper.checkUserIdAndPwd(userId,md5Pwd);
+        return userMapper.checkUserIdAndPwd(userId, md5Pwd);
     }
 
     @Override
     @Transactional
     public void updateUserPwd(String userId, String newPwd) {
-        userMapper.updateNewPwd(userId,newPwd);
+        userMapper.updateNewPwd(userId, newPwd);
     }
 
 

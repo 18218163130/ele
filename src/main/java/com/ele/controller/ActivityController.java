@@ -26,27 +26,29 @@ public class ActivityController {
 
     /**
      * 查询报名列表
+     *
      * @param activityVo
      * @return
      */
     @RequestMapping("listActivity")
     @ResponseBody
-    public DataGridView listActivity(ActivityVo activityVo){
+    public DataGridView listActivity(ActivityVo activityVo) {
         return activityService.findActivityList(activityVo);
     }
 
     /**
      * 查询活动报名
+     *
      * @param activityVo
      * @return
      */
     @RequestMapping("deleteActivity")
     @ResponseBody
-    public ResultObj deleteActivity(ActivityVo activityVo){
-        try{
+    public ResultObj deleteActivity(ActivityVo activityVo) {
+        try {
             activityService.deleteActivityById(activityVo.getActivityId());
             return ResultObj.DELETE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.DELETE_ERROR;
         }
 
@@ -54,33 +56,35 @@ public class ActivityController {
 
     /**
      * 批量删除活动报名
+     *
      * @param activityVo
      * @return
      */
     @RequestMapping("deleteBatchActivity")
     @ResponseBody
-    public ResultObj deleteBatchActivity(ActivityVo activityVo){
-        try{
+    public ResultObj deleteBatchActivity(ActivityVo activityVo) {
+        try {
             activityService.deleteBatchActivity(activityVo.getIds());
             return ResultObj.DELETE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.DELETE_ERROR;
         }
     }
 
     /**
      * 批量导出Excel报名名单
+     *
      * @param activityVo
      * @return
      */
     @RequestMapping("exprotBatchActivity")
     @ResponseBody
-    public ResultObj exprotBatchActivity(ActivityVo activityVo){
-        try{
+    public ResultObj exprotBatchActivity(ActivityVo activityVo) {
+        try {
             List<Activity> activityList = activityService.batchExceportActivity(activityVo.getIds());
-           ActivityExcelUtil.exprot("F:/activitys.xls",activityList);
+            ActivityExcelUtil.exprot("F:/activitys.xls", activityList);
             return ResultObj.EXPORT_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.EXPORT_ERROR;
         }
     }

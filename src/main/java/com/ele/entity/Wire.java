@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 电线实体
+ *
  * @Author dongwf
  * @Date 2019/12/18
  */
@@ -19,7 +20,7 @@ public class Wire implements Serializable {
     private float wireLength; // 电线长度
     private float wirePrice; // 单价
     private String factory; // 电线生产厂家
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateTime; // 使用时间
     private float totalPrice; // 电线总价

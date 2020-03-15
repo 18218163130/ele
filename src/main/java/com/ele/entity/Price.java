@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * 电费单价
+ *
  * @Author dongwf
  * @Date 2020/2/12
  */
@@ -21,7 +22,7 @@ public class Price implements Serializable {
     private Float gyPrice;
     private Float jtPrice;
     private Float syPrice;
-    @JsonFormat(pattern = "yyyy-MM",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM")
     private Date yearMonth;
 

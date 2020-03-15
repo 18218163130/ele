@@ -32,9 +32,9 @@ public class MeterServiceImpl implements MeterService {
     @Override
     public DataGridView queryAllMeter(MeterVo meterVo) {
         // 进行结果分页
-        Page page = PageHelper.startPage(meterVo.getPage(),meterVo.getLimit());
+        Page page = PageHelper.startPage(meterVo.getPage(), meterVo.getLimit());
         List<Meter> meterList = meterMapper.queryAllMeter(meterVo);
-        return new DataGridView(page.getTotal(),meterList);
+        return new DataGridView(page.getTotal(), meterList);
     }
 
     @Override
@@ -49,25 +49,25 @@ public class MeterServiceImpl implements MeterService {
 
     @Override
     public void deleteBatchMeter(Integer[] ids) {
-        for(Integer id:ids){
+        for (Integer id : ids) {
             this.deleteMeterById(id);
         }
     }
 
     @Override
     public DataGridView queryMeterByUserId(MeterVo meterVo) {
-        Page page = PageHelper.startPage(meterVo.getPage(),meterVo.getLimit());
+        Page page = PageHelper.startPage(meterVo.getPage(), meterVo.getLimit());
         List<Meter> meterList = meterMapper.findMeterByUserId(meterVo.getUserId());
-        return new DataGridView(page.getTotal(),meterList);
+        return new DataGridView(page.getTotal(), meterList);
     }
 
     @Override
     public void changeCapaticy(MeterVo meterVo) {
-        meterMapper.changeCapacity(meterVo.getType(),meterVo.getMeterId());
+        meterMapper.changeCapacity(meterVo.getType(), meterVo.getMeterId());
     }
 
     @Override
     public void guohu(MeterVo meterVo) {
-        meterMapper.updateUserId(meterVo.getUserId(),meterVo.getMeterId());
+        meterMapper.updateUserId(meterVo.getUserId(), meterVo.getMeterId());
     }
 }

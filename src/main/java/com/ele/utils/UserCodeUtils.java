@@ -1,12 +1,11 @@
 package com.ele.utils;
 
-import org.springframework.scheduling.annotation.Scheduled;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * 产生用户编码工具类
+ *
  * @Author dongwf
  * @Date 2019/10/10
  */
@@ -18,6 +17,7 @@ public class UserCodeUtils {
 
     /**
      * 2位自增长码
+     *
      * @return
      */
     public static synchronized String getLocalTrmSeqNum() {
@@ -25,11 +25,12 @@ public class UserCodeUtils {
         String datetime = new SimpleDateFormat("yyyyMMddHHmmss")
                 .format(new Date());
         String s = Integer.toString(sequence);
-        return datetime +addLeftZero(s, length);
+        return datetime + addLeftZero(s, length);
     }
 
     /**
      * 在左边填充0
+     *
      * @param s
      * @param length
      * @return

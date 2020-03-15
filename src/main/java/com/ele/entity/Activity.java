@@ -13,7 +13,7 @@ import java.util.Date;
 public class Activity implements Serializable {
 
     private Integer activityId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date joinTime;
     private String userId;

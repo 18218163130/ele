@@ -10,7 +10,7 @@ import com.ele.entity.Price;
  * @Author dongwf
  * @Date 2020/2/12
  */
-public class PriceVo  extends Price {
+public class PriceVo extends Price {
 
     // 分页属性
     private Integer page;

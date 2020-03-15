@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 电表信息表
+ *
  * @Author dongwf
  * @Date 2019/10/17
  */
@@ -17,8 +18,8 @@ public class Meter implements Serializable {
     private String code; // 电表编码
     private String userId; // 客户编号
     private Float type; // 电表类型
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date startDate; // 安装时间
     private String factory; // 电表生产厂家
     private Integer state; // 电表状态

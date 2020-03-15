@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 客户表实体
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */

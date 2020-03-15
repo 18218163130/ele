@@ -3,40 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>电费收缴单管理</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
-    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+    <link media="all" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body>
 <!-- 搜索条件开始 -->
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>生成电费单</legend>
 </fieldset>
-<form class="layui-form" method="" id="searchFrm">
+<form class="layui-form" id="searchFrm" method="">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">选择年月</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="date" name="recordDate" placeholder="yyyy-MM">
+                <input class="layui-input" id="date" name="recordDate" placeholder="yyyy-MM" type="text">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">客户账号</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input"  name="userId" >
+                <input class="layui-input" name="userId" type="text">
             </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search"
-                        lay-filter="doSearch" lay-submit="" id="doSearch">
+                <button class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch"
+                        lay-filter="doSearch" lay-submit="" type="button">
                     查询
                 </button>
             </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal"
-                        lay-filter="doCreateFee" lay-submit="" id="btnFee">
+                <button class="layui-btn layui-btn-normal" id="btnFee"
+                        lay-filter="doCreateFee" lay-submit="" type="button">
                     生成电费单
                 </button>
             </div>
@@ -45,42 +45,45 @@
 </form>
 
 <!-- 设置电费单价-->
-<div style="display: none;padding: 20px" id="setFee">
-    <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
+<div id="setFee" style="display: none;padding: 20px">
+    <form class="layui-form" id="dataFrm" lay-filter="dataFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="date2" name="yearmonth2" placeholder="yyyy-MM">
+                    <input class="layui-input" id="date2" name="yearmonth2" placeholder="yyyy-MM" type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="jtPrice" lay-verify="required|number" placeholder="请输入家庭电费单价" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required|number" name="jtPrice"
+                           placeholder="请输入家庭电费单价"
+                           type="text">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="syPrice" lay-verify="required|number" placeholder="请输入商业电费单价" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required|number" name="syPrice"
+                           placeholder="请输入商业电费单价"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
 
                 <div class="layui-input-inline">
-                    <input type="text" name="gyPrice" lay-verify="required|number" placeholder="请输入工业电费单价" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required|number" name="gyPrice"
+                           placeholder="请输入工业电费单价"
+                           type="text">
                 </div>
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
-                        lay-filter="doFeeSubmit" lay-submit="">提交
+                <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doFeeSubmit"
+                        lay-submit="" type="button">提交
                 </button>
-                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                <button class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" type="reset">重置
                 </button>
             </div>
         </div>
@@ -89,30 +92,30 @@
 </div>
 
 <!-- 缴费 -->
-<div style="display: none;padding: 20px" id="jiaofeiDiv">
-    <form class="layui-form"  lay-filter="jiaofeiForm" id="jiaofeiForm">
+<div id="jiaofeiDiv" style="display: none;padding: 20px">
+    <form class="layui-form" id="jiaofeiForm" lay-filter="jiaofeiForm">
         <div class="layui-form-item">
             <label class="layui-form-label">电费单ID</label>
             <div class="layui-input-block">
-                <input type="text" name="feeId" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="feeId" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户账号</label>
             <div class="layui-input-block">
-                <input type="text" name="userId" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="userId" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">电费日期</label>
             <div class="layui-input-block">
-                <input type="text" name="recordDate" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="recordDate" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">是否缴费</label>
             <div class="layui-input-block">
-                <select name="state" id="state" lay-filter="state" readonly="readonly" lay-verify="required">
+                <select id="state" lay-filter="state" lay-verify="required" name="state" readonly="readonly">
                     <option value="0">未缴费</option>
                     <option value="1">已缴费</option>
                 </select>
@@ -121,7 +124,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">支付方式</label>
             <div class="layui-input-block">
-                <select name="payWay" id="payWay" lay-filter="payWay" readonly="readonly" lay-verify="required">
+                <select id="payWay" lay-filter="payWay" lay-verify="required" name="payWay" readonly="readonly">
                     <option value="">--</option>
                     <option value="1">微信</option>
                     <option value="2">现金</option>
@@ -131,42 +134,42 @@
         <div class="layui-form-item">
             <label class="layui-form-label">月耗电</label>
             <div class="layui-input-block">
-                <input type="text" name="amount" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="amount" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="text" name="unitPrice" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="unitPrice" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">应缴电费</label>
             <div class="layui-input-block">
-                <input type="text" name="prize" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="prize" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">创建电费单时间</label>
             <div class="layui-input-block">
-                <input type="text" name="createTime" readonly="readonly"  autocomplete="off"  class="layui-input">
+                <input autocomplete="off" class="layui-input" name="createTime" readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" name="description" lay-verify="description"></textarea>
+                <textarea class="layui-textarea" lay-verify="description" name="description"
+                          placeholder="请输入内容"></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn" lay-submit="" lay-filter="doJiaofei">确认缴费</button>
+                <button class="layui-btn" lay-filter="doJiaofei" lay-submit="" type="button">确认缴费</button>
             </div>
         </div>
     </form>
 </div>
-
 
 
 <table class="layui-hide" id="feeTable" lay-filter="feeTable"></table>
@@ -176,14 +179,14 @@
     <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="export">导出发票</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
-<div class="layui-btn-container"  id="toolbarDemo" style="display: none;">
+<div class="layui-btn-container" id="toolbarDemo" style="display: none;">
     <button class="layui-btn layui-btn-sm" lay-event="delBatch">批量删除</button>
 </div>
 
 
 <script th:src="@{/layui/layui.js}"></script>
 <script th:inline="javascript">
-    layui.use(['table','laydate','jquery','form','layer'], function(){
+    layui.use(['table', 'laydate', 'jquery', 'form', 'layer'], function () {
         var table = layui.table;
         var layerdate = layui.laydate;
         var $ = layui.jquery;
@@ -192,62 +195,66 @@
         var tableIns;
 
         layerdate.render({
-            elem:"#date",
-            type:"month"
+            elem: "#date",
+            type: "month"
         });
         layerdate.render({
-            elem:"#date2",
-            type:"month",
+            elem: "#date2",
+            type: "month",
         });
 
 
         tableIns = table.render({
-                elem: '#feeTable'
-                ,url:'/fee/loadFee'
-                ,toolbar: '#toolbarDemo'
-                ,title: '电表数据表'
-            ,defaultToolbar:[""]
-                ,totalRow: true
-                ,cellMinWidth:100
-                ,page: true
-                ,cols: [
-                    [
-                        {type: 'checkbox', fixed: 'left'}
-                        ,{field:'feeId', title:'电费ID', width:140,  sort: true}
-                        ,{field:'userId', title:'客户账号', width:200, align: 'center', sort: true}
-                        ,{field:'realName', title:'客户名称', width:200, align: 'center', sort: true}
-                        ,{field:'recordDate', title:'账单日期', width:200, align: 'center', sort: true}
-                        ,{field:'amount', title:'月耗电/kV', width:120, align: 'center', sort: true}
-                        ,{field:'unitPrice', title:'单价', width:120, align: 'center', sort: true}
-                        ,{field:'prize', title:'电费', width:180, align: 'center', sort: true}
-                        ,{field:'createTime', title:'生成表单时间', width:180, align: 'center', sort: true}
-                        ,{field:'state', title:'是否缴费', width:100, align: 'center', sort: true,templet:function (data) {
-                            if(data.state=='0'){
-                                return '<font color=red>未缴费</font>';
-                            }else{
-                                return '<font color=blue>已缴费</font>';
-                            }
-                        }}
-                        ,{field:'payWay', title:'缴费方式', width:120, align: 'center',templet:function (data) {
-                            if(data.payWay=='0'){
-                                return '--';
-                            }else if(data.payWay=='1'){
-                                return '微信';
-                            }else {
-                                return '现金';
-                            }
-                        }}
-                        ,{field:'description', title:'备注', width:80, align: 'center'}
-                        , {fixed: 'right', title: '操作', toolbar: '#feeBar', width: 220, align: 'center'}
-                    ]
+            elem: '#feeTable'
+            , url: '/fee/loadFee'
+            , toolbar: '#toolbarDemo'
+            , title: '电表数据表'
+            , defaultToolbar: [""]
+            , totalRow: true
+            , cellMinWidth: 100
+            , page: true
+            , cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    , {field: 'feeId', title: '电费ID', width: 140, sort: true}
+                    , {field: 'userId', title: '客户账号', width: 200, align: 'center', sort: true}
+                    , {field: 'realName', title: '客户名称', width: 200, align: 'center', sort: true}
+                    , {field: 'recordDate', title: '账单日期', width: 200, align: 'center', sort: true}
+                    , {field: 'amount', title: '月耗电/kV', width: 120, align: 'center', sort: true}
+                    , {field: 'unitPrice', title: '单价', width: 120, align: 'center', sort: true}
+                    , {field: 'prize', title: '电费', width: 180, align: 'center', sort: true}
+                    , {field: 'createTime', title: '生成表单时间', width: 180, align: 'center', sort: true}
+                    , {
+                    field: 'state', title: '是否缴费', width: 100, align: 'center', sort: true, templet: function (data) {
+                        if (data.state == '0') {
+                            return '<font color=red>未缴费</font>';
+                        } else {
+                            return '<font color=blue>已缴费</font>';
+                        }
+                    }
+                }
+                    , {
+                    field: 'payWay', title: '缴费方式', width: 120, align: 'center', templet: function (data) {
+                        if (data.payWay == '0') {
+                            return '--';
+                        } else if (data.payWay == '1') {
+                            return '微信';
+                        } else {
+                            return '现金';
+                        }
+                    }
+                }
+                    , {field: 'description', title: '备注', width: 80, align: 'center'}
+                    , {fixed: 'right', title: '操作', toolbar: '#feeBar', width: 220, align: 'center'}
                 ]
-            });
+            ]
+        });
 
         // 操作栏
-        table.on('tool(feeTable)',function(obj){
+        table.on('tool(feeTable)', function (obj) {
             var data = obj.data; // 获取选中行
             var event = obj.event; // 回去事件
-            if(event === 'del'){
+            if (event === 'del') {
                 layer.confirm('真的删除【' + data.feeId + '】这条电费单吗', function (index) {
                     //向服务端发送删除指令
                     $.post("/fee/deleteFee", {feeId: data.feeId}, function (res) {
@@ -256,9 +263,9 @@
                         tableIns.reload();
                     })
                 });
-            }else if(event === 'jiaofei'){
+            } else if (event === 'jiaofei') {
                 jiaofei(data); // 缴费
-            }else if(event === 'export'){
+            } else if (event === 'export') {
                 layer.confirm('电费单导出到桌面', function (index) {
                     //向服务端发送删除指令
                     $.post("/fee/export", data, function (res) {
@@ -269,8 +276,8 @@
         });
 
         //头工具栏事件
-        table.on('toolbar(feeTable)', function(obj){
-            switch(obj.event){
+        table.on('toolbar(feeTable)', function (obj) {
+            switch (obj.event) {
                 case 'delBatch': // 批量删除
                     deleteBatch();
                     break;
@@ -289,21 +296,22 @@
         });
 
         // 模糊查询
-        form.on("submit(doSearch)",function(obj){
+        form.on("submit(doSearch)", function (obj) {
             var yearmonth = $("#searchFrm").serialize();
             tableIns.reload({
                 url: "/fee/loadFee?" + yearmonth
             })
         });
         // 生成电费单
-        form.on("submit(doFeeSubmit)",function (data) {
-           var params = $("#dataFrm").serialize();
+        form.on("submit(doFeeSubmit)", function (data) {
+            var params = $("#dataFrm").serialize();
 
-           $.post("/fee/doCreateFee",params,function(obj){
-               layer.msg(obj.msg);
-               tableIns.reload();
-           });
+            $.post("/fee/doCreateFee", params, function (obj) {
+                layer.msg(obj.msg);
+                tableIns.reload();
+            });
         });
+
         //批量删除
         function deleteBatch() {
             //得到选中的数据行
@@ -326,8 +334,9 @@
                 })
             });
         }
+
         // 缴费
-        function jiaofei(data){
+        function jiaofei(data) {
             mainIndex = layer.open({
                 type: 1,
                 title: '生成电费单',
@@ -335,14 +344,14 @@
                 area: ['80%', '100%'],
                 success: function (index) {
                     form.val("jiaofeiForm", data);
-                    url="/fee/jiaofei";
+                    url = "/fee/jiaofei";
                 }
             });
         }
 
-        form.on("submit(doJiaofei)",function(obj){
+        form.on("submit(doJiaofei)", function (obj) {
             var params = $("#jiaofeiForm").serialize();
-            $.post("/fee/jiaofei",params,function(data){
+            $.post("/fee/jiaofei", params, function (data) {
                 layer.msg(data.msg);
                 layer.close(mainIndex);
                 tableIns.reload();

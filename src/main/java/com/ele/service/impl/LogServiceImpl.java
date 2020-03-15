@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 日志业务操作实体类
+ *
  * @Author dongwf
  * @Date 2019/10/12
  */
@@ -36,7 +37,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public void deleteBatchLogInfo(Integer[] ids) {
-        for (Integer id:ids){
+        for (Integer id : ids) {
             this.deleteLogInfo(id);
         }
     }
@@ -44,8 +45,8 @@ public class LogServiceImpl implements LogService {
     @Override
     public DataGridView queryAllLog(LogVo logVo) {
         // 分页
-        Page page = PageHelper.startPage(logVo.getPage(),logVo.getLimit());
+        Page page = PageHelper.startPage(logVo.getPage(), logVo.getLimit());
         List<Log> logs = logMapper.queryAllLog(logVo);
-        return new DataGridView(page.getTotal(),logs);
+        return new DataGridView(page.getTotal(), logs);
     }
 }

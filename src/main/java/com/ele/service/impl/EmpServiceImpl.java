@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * 公司员工业务操作的接口实现类
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */
@@ -39,9 +40,9 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public DataGridView loadAllEmp(EmpVo empVo) {
         // 分页
-        Page page = PageHelper.startPage(empVo.getPage(),empVo.getLimit());
+        Page page = PageHelper.startPage(empVo.getPage(), empVo.getLimit());
         List<Emp> emps = empMapper.queryAllEmp(empVo);
-        return new DataGridView(page.getTotal(),emps);
+        return new DataGridView(page.getTotal(), emps);
     }
 
     @Transactional
@@ -67,8 +68,9 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public void resetEmpPwd(Integer empId) {
         String restPwd = new Md5Hash(SysConstast.EMP_DEFAULT_PWD).toString();
-        empMapper.updateEmpPwd(empId,restPwd);
+        empMapper.updateEmpPwd(empId, restPwd);
     }
+
     @Transactional
     @Override
     public void deleteEmp(Integer empId) {
@@ -78,12 +80,12 @@ public class EmpServiceImpl implements EmpService {
     @Override
     @Transactional
     public Emp checkEmpPwd(String empCode, String pwd) {
-        return empMapper.checkEmpCodeAndPwd(empCode,pwd);
+        return empMapper.checkEmpCodeAndPwd(empCode, pwd);
     }
 
     @Transactional
     @Override
     public void updateEmpPwd(String empCode, String newPwd) {
-        empMapper.updateNewPwd(empCode,newPwd);
+        empMapper.updateNewPwd(empCode, newPwd);
     }
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * 系统公告封装类
+ *
  * @Author dongwf
  * @Date 2019/10/14
  */

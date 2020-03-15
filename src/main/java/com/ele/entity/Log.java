@@ -7,13 +7,14 @@ import java.util.Date;
 
 /**
  * 日志记录表实体
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */
 public class Log implements Serializable {
     private Integer logId; // 日志编号
     private String logName; // 日志名称
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date logTime; // 日志时间
     private String associated; // 日志关联人
     private String loginIp; // 登录IP地址

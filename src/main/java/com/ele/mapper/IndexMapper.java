@@ -14,6 +14,7 @@ public interface IndexMapper {
 
     /**
      * 添加一条指标记录
+     *
      * @param indexVo
      * @return
      */
@@ -23,6 +24,7 @@ public interface IndexMapper {
 
     /**
      * 修改指标记录
+     *
      * @param indexVo
      * @return
      */
@@ -33,6 +35,7 @@ public interface IndexMapper {
 
     /**
      * 删除指标记录
+     *
      * @param indexId
      * @return
      */
@@ -41,6 +44,7 @@ public interface IndexMapper {
 
     /**
      * 查询所有指标记录
+     *
      * @param indexVo
      * @return
      */

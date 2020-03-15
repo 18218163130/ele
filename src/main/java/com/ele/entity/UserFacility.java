@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 客户设备表
+ *
  * @Author dongwf
  * @Date 2019/12/28
  */

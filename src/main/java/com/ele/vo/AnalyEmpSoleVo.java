@@ -1,8 +1,5 @@
 package com.ele.vo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @Auther: dongwf
  * @Date: 2020/3/14 20:36
@@ -10,16 +7,14 @@ import java.util.List;
  */
 public class AnalyEmpSoleVo {
 
+    public Object[] values;
+    public Float[] prizes;
     private Float totals;
     private String empCode;
     private String empName;
-
     private String[] empNames;
-    public Object[] values;
 
-    public Float[] prizes;
-
-    public AnalyEmpSoleVo(int size){
+    public AnalyEmpSoleVo(int size) {
         empNames = new String[size];
         values = new Object[size];
         prizes = new Float[size];

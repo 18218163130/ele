@@ -13,6 +13,7 @@ import java.util.List;
 public interface DiscountMapper {
     /**
      * 添加营销信息
+     *
      * @param discountVo
      * @return
      */
@@ -21,6 +22,7 @@ public interface DiscountMapper {
 
     /**
      * 删除营销信息
+     *
      * @param discountId
      * @return
      */
@@ -29,6 +31,7 @@ public interface DiscountMapper {
 
     /**
      * 查询营销信息列表
+     *
      * @param discountVo
      * @return
      */
@@ -40,6 +43,7 @@ public interface DiscountMapper {
 
     /**
      * 更新营销信息
+     *
      * @param discountVo
      * @return
      */
@@ -55,6 +59,7 @@ public interface DiscountMapper {
 
     /**
      * 查询前面4条有效的优惠信息
+     *
      * @return
      */
     @Select("select * from discount where state=1 order by createTime desc limit 0,4")

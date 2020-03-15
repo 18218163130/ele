@@ -10,36 +10,42 @@ import java.util.List;
 
 /**
  * 电表数据业务接口
+ *
  * @Author dongwf
  * @Date 2019/10/17
  */
 public interface MeterDataService {
     /**
      * 添加新的电表记录数据
+     *
      * @param meterDataVo
      */
     void addMeterData(MeterDataVo meterDataVo);
 
     /**
      * 根据id删除电表记录数据
+     *
      * @param dataId
      */
     void deleteMeterData(Integer dataId);
 
     /**
      * 批量删除电表记录数据
+     *
      * @param ids
      */
     void deleteBatchMeterData(Integer[] ids);
 
     /**
      * 更新电表记录数据
+     *
      * @param meterDataVo
      */
     void updateMeterData(MeterDataVo meterDataVo);
 
     /**
      * 分页查询所有电表记录数据
+     *
      * @param meterDataVo
      * @return
      */
@@ -47,6 +53,7 @@ public interface MeterDataService {
 
     /**
      * 根据电表编号查询最近一条电表的额总数
+     *
      * @param meterId
      * @return
      */
@@ -54,6 +61,7 @@ public interface MeterDataService {
 
     /**
      * 根据电表id查询所有记录，并已升序也分返回
+     *
      * @param meterDataVo
      * @return
      */
@@ -61,12 +69,14 @@ public interface MeterDataService {
 
     /**
      * 每月分耗电总数
+     *
      * @return
      */
     AnalyMonthConsumeVo analyMothConsume(String year);
 
     /**
      * 分用电类型统计
+     *
      * @param
      * @return
      */
@@ -74,6 +84,7 @@ public interface MeterDataService {
 
     /**
      * 查询yyyy-MM月份的数据
+     *
      * @param meterDataVo
      * @return
      */
@@ -81,6 +92,7 @@ public interface MeterDataService {
 
     /**
      * 判断该月是否已经抄表
+     *
      * @param recordMonth
      * @return
      */

@@ -1,10 +1,10 @@
 package com.ele.vo;
 
-import com.ele.controller.FacilityController;
 import com.ele.entity.Facility;
 
 /**
  * 电力设备包装类
+ *
  * @Author dongwf
  * @Date 2019/12/20
  */

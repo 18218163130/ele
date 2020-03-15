@@ -10,6 +10,7 @@ import com.ele.vo.MarketVo;
 public interface MarketService {
     /**
      * 添加营销信息
+     *
      * @param marketVo
      * @return
      */
@@ -17,6 +18,7 @@ public interface MarketService {
 
     /**
      * 查询营销信息列表
+     *
      * @param marketVo
      * @return
      */
@@ -24,18 +26,21 @@ public interface MarketService {
 
     /**
      * 修改营销信息
+     *
      * @param marketVo
      */
     void editMarket(MarketVo marketVo);
 
     /**
      * 删除营销记录
+     *
      * @param marketId
      */
     void deleteMarket(Integer marketId);
 
     /**
      * 批量删除营销记录
+     *
      * @param ids
      */
     void deleteBatchMarket(Integer[] ids);

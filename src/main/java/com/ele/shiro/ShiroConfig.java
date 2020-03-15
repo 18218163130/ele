@@ -1,18 +1,15 @@
 package com.ele.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.sun.javafx.collections.MappingChange;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 /**
  * Shiro配置类
+ *
  * @Author dongwf
  * @Date 2019/10/8
  */
@@ -24,7 +21,7 @@ public class ShiroConfig {
      */
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(
-            @Qualifier("securityManager")DefaultWebSecurityManager securityManager){
+            @Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         /**
@@ -66,11 +63,12 @@ public class ShiroConfig {
 
     /**
      * 创建DefaultWebSecurityManager
+     *
      * @param empRealm
      * @return
      */
     @Bean("securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("empRealm")EmpRealm empRealm){
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("empRealm") EmpRealm empRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置管理Realm
         securityManager.setRealm(empRealm);
@@ -81,15 +79,15 @@ public class ShiroConfig {
     /**
      * 创建Realm
      */
-    @Bean(name="empRealm")
+    @Bean(name = "empRealm")
     public EmpRealm getRealm() {
         return new EmpRealm();
     }
 
     /**
      * 配置thymeleaf和shiro标签组合使用
-     * @return
      *
+     * @return
      */
     @Bean
     public ShiroDialect getShiroDialect() {

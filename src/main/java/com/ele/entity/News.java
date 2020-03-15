@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * 系统公告实体类
+ *
  * @Author dongwf
  * @Date 2019/10/14
  */
@@ -14,7 +15,7 @@ public class News implements Serializable {
     private Integer newsId;
     private String title;
     private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     private String editer;
 

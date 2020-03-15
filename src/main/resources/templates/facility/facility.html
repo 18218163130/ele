@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>设备管理</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
-    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="*" http-equiv="Access-Control-Allow-Origin">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="telephone=no" name="format-detection">
+    <link href="favicon.ico" rel="icon">
+    <link media="all" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body class="childrenBody">
 <!-- 搜索条件开始 -->
@@ -20,21 +20,21 @@
     <legend>查询条件</legend>
 </fieldset>
 
-<form class="layui-form" method="get" id="searchFrm">
+<form class="layui-form" id="searchFrm" method="get">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">设备名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="facName" lay-verify="" placeholder="请输入设备名称" autocomplete="off"
-                       class="layui-input">
+                <input autocomplete="off" class="layui-input" lay-verify="" name="facName" placeholder="请输入设备名称"
+                       type="text">
             </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">
+                <button class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch" type="button">
                     查询
                 </button>
-                <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+                <button class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh" type="reset">重置</button>
             </div>
         </div>
 
@@ -49,32 +49,33 @@
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="facilityTable" lay-filter="facilityTable"></table>
 
-<div class="layui-btn-group" id="facilityTool" style="display: none;" >
-    <button type="button" class="layui-btn"  lay-event="addFacility">电力设备添加</button>
+<div class="layui-btn-group" id="facilityTool" style="display: none;">
+    <button class="layui-btn" lay-event="addFacility" type="button">电力设备添加</button>
 
 </div>
-<div id="facilityBar" style="display: none;" >
+<div id="facilityBar" style="display: none;">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
 
 
 <!--添加设备种类-->
-<div style="display: none;padding: 20px" id="divFacility">
-    <form class="layui-form" lay-filter="facForm" id="facForm">
+<div id="divFacility" style="display: none;padding: 20px">
+    <form class="layui-form" id="facForm" lay-filter="facForm">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">类型名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="facTypeName" lay-verify="required" placeholder="请输入类型名称" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required" name="facTypeName" placeholder="请输入类型名称"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">类型编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="facType" lay-verify="required|number" placeholder="请输入设备类型编号" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required|number" name="facType"
+                           placeholder="请输入设备类型编号"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -82,16 +83,16 @@
             <div class="layui-inline">
                 <label class="layui-form-label">设备名称</label>
                 <div class="layui-input-inline">
-                    <input type="hidden" name="facId">
-                    <input type="text" name="facName" lay-verify="required" placeholder="请输入设备名称" autocomplete="off"
-                           class="layui-input">
+                    <input name="facId" type="hidden">
+                    <input autocomplete="off" class="layui-input" lay-verify="required" name="facName" placeholder="请输入设备名称"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">设备编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="facCode" lay-verify="required" placeholder="请输入设备编号" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required" name="facCode" placeholder="请输入设备编号"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -99,15 +100,17 @@
             <div class="layui-inline">
                 <label class="layui-form-label">设备库存</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="facTotal" lay-verify="required|number" placeholder="请输入设备库存" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required|number" name="facTotal"
+                           placeholder="请输入设备库存"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">设备单价</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="facPrice" layer-verify="number|required" placeholder="请输入设备单价" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" layer-verify="number|required" name="facPrice"
+                           placeholder="请输入设备单价"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -116,8 +119,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">生产厂商</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="facFactory" lay-verify="required" placeholder="请输入生产厂商" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" lay-verify="required" name="facFactory" placeholder="请输入生产厂商"
+                           type="text">
                 </div>
             </div>
 
@@ -125,7 +128,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">添加日期</label>
                     <div class="layui-input-block">
-                        <input type="text" name="facDate" id="date2"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="date2" lay-verify="date" name="facDate"
+                               placeholder="yyyy-MM-dd" type="text">
                     </div>
                 </div>
             </div>
@@ -134,16 +138,16 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
-                    <textarea name="facDesc"  placeholder="请输入备注信息" class="layui-textarea myself"></textarea>
+                    <textarea class="layui-textarea myself" name="facDesc" placeholder="请输入备注信息"></textarea>
                 </div>
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;">
             <div class="layui-input-block">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
-                        lay-filter="doSubmitFacForm" lay-submit="">提交
+                <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmitFacForm"
+                        lay-submit="" type="button">提交
                 </button>
-                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置
+                <button class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" type="reset">重置
                 </button>
             </div>
         </div>
@@ -166,37 +170,44 @@
         var tableIns;
 
         laydate.render({
-            elem:"#startDate",
-            type:'date'
+            elem: "#startDate",
+            type: 'date'
         });
         laydate.render({
-            elem:"#date2",
-            type:'date'
+            elem: "#date2",
+            type: 'date'
         });
 
         tableIns = table.render({
             elem: '#facilityTable'   //渲染的目标对象
             , url: '/facility/queryFacility' //数据接口
-            ,toolbar: '#facilityTool'
-            ,defaultToolbar:[""]
+            , toolbar: '#facilityTool'
+            , defaultToolbar: [""]
             , title: '电力设备信息'//数据导出来的标题
             , cellMinWidth: 100 //设置列的最小默认宽度
             , page: true  //是否启用分页
-            , cols:[
+            , cols: [
                 [
-                    {field:'facId', title:'ID',align:'center',width:80, sort: true},
-                    {field:'facTypeName', title:'类型',align:'center',width:100, sort: true},
+                    {field: 'facId', title: 'ID', align: 'center', width: 80, sort: true},
+                    {field: 'facTypeName', title: '类型', align: 'center', width: 100, sort: true},
 
-                    {field:'facName', title:'设备名称',align:'center',width:180, sort: true},
-                    {field:'facPrice', title:'设备单价',align:'center',width:160, sort: true},
-                    {field:'facTotal', title:'库存总数',align:'center',width:160, sort: true,templet:function (d) {
-                            return d.facTotal >10 ? '<font color=blue>'+d.facTotal+'</font>' : '<font color=red>'+d.facTotal+'</font>';
-                        }},
-                    {field:'facCode', title:'设备编号',align:'center',width:180, sort: true},
-                    {field:'facFactory', title:'出厂商',align:'center',width:180, sort: true},
-                    {field:'facDate', title:'日期',align:'center',width:180},
-                    {field:'facDesc', title:'备注',align:'center',width:200},
-                    {fixed: 'right', title:'操作', toolbar: '#facilityBar', width:120}
+                    {field: 'facName', title: '设备名称', align: 'center', width: 180, sort: true},
+                    {field: 'facPrice', title: '设备单价', align: 'center', width: 160, sort: true},
+                    {
+                        field: 'facTotal',
+                        title: '库存总数',
+                        align: 'center',
+                        width: 160,
+                        sort: true,
+                        templet: function (d) {
+                            return d.facTotal > 10 ? '<font color=blue>' + d.facTotal + '</font>' : '<font color=red>' + d.facTotal + '</font>';
+                        }
+                    },
+                    {field: 'facCode', title: '设备编号', align: 'center', width: 180, sort: true},
+                    {field: 'facFactory', title: '出厂商', align: 'center', width: 180, sort: true},
+                    {field: 'facDate', title: '日期', align: 'center', width: 180},
+                    {field: 'facDesc', title: '备注', align: 'center', width: 200},
+                    {fixed: 'right', title: '操作', toolbar: '#facilityBar', width: 120}
                 ]
             ]
         });
@@ -224,7 +235,7 @@
                         tableIns.reload();
                     })
                 });
-            }else if (layEvent === 'edit') { //编辑
+            } else if (layEvent === 'edit') { //编辑
                 editFacility(data);
             }
         });
@@ -245,9 +256,8 @@
         }
 
 
-
         // 添加设备种类
-        function openAddFacility(){
+        function openAddFacility() {
             mainIndex = layer.open({
                 type: 1,
                 title: '添加电力设备信息',
@@ -260,6 +270,7 @@
                 }
             });
         }
+
         //保存
         form.on("submit(doSubmitFacForm)", function (obj) {
             //序列化表单数据
@@ -275,7 +286,7 @@
 
         // 模糊查询按钮
         $("#doSearch").click(function () {
-            var params =$("#searchFrm").serialize();
+            var params = $("#searchFrm").serialize();
             tableIns.reload({
                 url: "/facility/queryFacility?" + params
             });

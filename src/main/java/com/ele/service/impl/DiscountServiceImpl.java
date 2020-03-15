@@ -36,7 +36,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public void deleteBatchDiscount(Integer[] ids) {
-        for(Integer id:ids){
+        for (Integer id : ids) {
             this.deleteDiscount(id);
         }
     }
@@ -48,9 +48,9 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DataGridView queryDiscount(DiscountVo discountVo) {
-        Page page = PageHelper.startPage(discountVo.getPage(),discountVo.getLimit());
+        Page page = PageHelper.startPage(discountVo.getPage(), discountVo.getLimit());
         List<Discount> discountList = discountMapper.queryDiscount(discountVo);
-        return new DataGridView(page.getTotal(),discountList);
+        return new DataGridView(page.getTotal(), discountList);
     }
 
     @Override

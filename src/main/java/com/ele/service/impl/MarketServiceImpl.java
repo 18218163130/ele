@@ -32,9 +32,9 @@ public class MarketServiceImpl implements MarketService {
     @Override
     public DataGridView queryAllMarket(MarketVo marketVo) {
         // 分页
-        Page page = PageHelper.startPage(marketVo.getPage(),marketVo.getLimit());
+        Page page = PageHelper.startPage(marketVo.getPage(), marketVo.getLimit());
         List<Market> marketList = marketMapper.queryAll(marketVo);
-        return new DataGridView(page.getTotal(),marketList);
+        return new DataGridView(page.getTotal(), marketList);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MarketServiceImpl implements MarketService {
 
     @Override
     public void deleteBatchMarket(Integer[] ids) {
-        for(Integer id:ids){
+        for (Integer id : ids) {
             this.deleteMarket(id);
         }
     }

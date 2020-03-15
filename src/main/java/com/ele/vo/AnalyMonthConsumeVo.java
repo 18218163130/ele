@@ -2,6 +2,7 @@ package com.ele.vo;
 
 /**
  * 封装分页每个月消耗电量
+ *
  * @Author dongwf
  * @Date 2019/10/19
  */
@@ -16,14 +17,6 @@ public class AnalyMonthConsumeVo {
      */
     private String[] monthsName;
     private Object[] totalsValue;
-    public AnalyMonthConsumeVo() {
-    }
-    public AnalyMonthConsumeVo(Integer size) {
-        monthsName = new String[size];
-        totalsValue = new Object[size];
-    }
-
-
     /**
      * 图表二使用的字段
      */
@@ -31,8 +24,14 @@ public class AnalyMonthConsumeVo {
     private Object[] jts; // 家庭用电
     private Object[] sys; // 商业用电
     private Object[] gys; // 工业用电
+    public AnalyMonthConsumeVo() {
+    }
+    public AnalyMonthConsumeVo(Integer size) {
+        monthsName = new String[size];
+        totalsValue = new Object[size];
+    }
 
-    public AnalyMonthConsumeVo(Integer size,boolean flag) {
+    public AnalyMonthConsumeVo(Integer size, boolean flag) {
         monthsName = new String[size];
         jts = new Object[size];
         sys = new Object[size];

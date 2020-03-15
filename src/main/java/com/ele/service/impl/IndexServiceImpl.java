@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 指标管理业务实现类
+ *
  * @Author dongwf
  * @Date 2019/10/15
  */
@@ -42,7 +43,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public void deleteBatchIndex(Integer[] ids) {
-        for(Integer id:ids){
+        for (Integer id : ids) {
             this.deleteIndexById(id);
         }
     }
@@ -50,8 +51,8 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public DataGridView queryAllIndex(IndexVo indexVo) {
         // 分页
-        Page page = PageHelper.startPage(indexVo.getPage(),indexVo.getLimit());
+        Page page = PageHelper.startPage(indexVo.getPage(), indexVo.getLimit());
         List<Index> indexList = indexMapper.queryAllIndex(indexVo);
-        return new DataGridView(page.getTotal(),indexList);
+        return new DataGridView(page.getTotal(), indexList);
     }
 }

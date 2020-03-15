@@ -9,103 +9,105 @@ import java.util.Random;
 
 /**
  * 图片验证码工具
+ *
  * @Author dongwf
  * @Date 2019/11/13
  */
 public class CaptchaCodeUtil {
 
+    Random random = new Random();
     /**
      * 验证码图片的宽度
      */
-    private  int width=114;
+    private int width = 114;
     /**
      * 验证码图片的宽度
      */
-    private  int height=36;
+    private int height = 36;
     /**
      * 干扰线的数量
      */
-    private  int lineCount=20;
+    private int lineCount = 20;
     /**
      * 验证码
      */
-    private  String  code=null;
-
+    private String code = null;
     /**
      * 验证码图片上字符个数
      */
-    private  int  codeCount=4;
-
+    private int codeCount = 4;
     /**
      * 验证码图片Buffer
      */
     private BufferedImage buffImg = null;
 
-    Random random = new Random();
-
-    public CaptchaCodeUtil(){
+    public CaptchaCodeUtil() {
         createImageCode();
     }
 
     /**
      * 指定宽高
+     *
      * @param width
      * @param height
      */
-    public CaptchaCodeUtil(int width, int height){
-        this.width=width;
-        this.height=height;
+    public CaptchaCodeUtil(int width, int height) {
+        this.width = width;
+        this.height = height;
         createImageCode();
     }
 
     /**
      * 指定宽高和干扰线的数量
+     *
      * @param width
      * @param height
      * @param lineCount
      */
-    public CaptchaCodeUtil(int width, int height, int lineCount){
-        this.width=width;
-        this.height=height;
-        this.lineCount=lineCount;
+    public CaptchaCodeUtil(int width, int height, int lineCount) {
+        this.width = width;
+        this.height = height;
+        this.lineCount = lineCount;
         createImageCode();
     }
 
     /**
      * 指定宽高、验证码字符个数、干扰线数量
+     *
      * @param width
      * @param height
      * @param codeCount
      * @param lineCount
      */
-    public CaptchaCodeUtil(int width, int height, int codeCount, int lineCount){
-        this.width=width;
-        this.height=height;
-        this.codeCount=codeCount;
-        this.lineCount=lineCount;
+    public CaptchaCodeUtil(int width, int height, int codeCount, int lineCount) {
+        this.width = width;
+        this.height = height;
+        this.codeCount = codeCount;
+        this.lineCount = lineCount;
         createImageCode();
     }
 
     /**
      * 指定宽高、验证码字符个数、干扰线数量、
+     *
      * @param width
      * @param height
      * @param codeCount
      * @param lineCount
      * @param code
      */
-    public CaptchaCodeUtil(int width, int height, int codeCount, int lineCount, String code){
-        this.width=width;
-        this.height=height;
-        this.codeCount=codeCount;
-        this.lineCount=lineCount;
+    public CaptchaCodeUtil(int width, int height, int codeCount, int lineCount, String code) {
+        this.width = width;
+        this.height = height;
+        this.codeCount = codeCount;
+        this.lineCount = lineCount;
         createImageCode(code);
     }
 
     /**
      * 生成验证码
      */
-    private void createImageCode(){
+    private void createImageCode() {
         // 字体的宽度
         int fontWidth = width / codeCount;
         // 字体的高度
@@ -143,10 +145,11 @@ public class CaptchaCodeUtil {
             String strRand = str1.substring(i, i + 1);
             g.setColor(getRandColor(1, 255));
             // a为要画出来的东西，x和y表示要画的东西最左侧字符的基线位于此图形上下文坐标系的 (x, y) 位置处
-            g.drawString(strRand, i*fontWidth+3, codeY);
+            g.drawString(strRand, i * fontWidth + 3, codeY);
         }
 
     }
+
     /**
      * 生成指定字符图片
      */
@@ -187,16 +190,17 @@ public class CaptchaCodeUtil {
             String strRand = code.substring(i, i + 1);
             g.setColor(getRandColor(1, 255));
             // a为要画出来的东西，x和y表示要画的东西最左侧字符的基线位于此图形上下文坐标系的 (x, y) 位置处
-            g.drawString(strRand, i*fontWidth+3, codeY);
+            g.drawString(strRand, i * fontWidth + 3, codeY);
         }
 
     }
 
     /**
      * 设置干扰线
+     *
      * @param g
      */
-    private void setLine(Graphics g){
+    private void setLine(Graphics g) {
         for (int i = 0; i < lineCount; i++) {
             int xs = random.nextInt(width);
             int ys = random.nextInt(height);
@@ -207,8 +211,10 @@ public class CaptchaCodeUtil {
         }
 
     }
+
     /**
      * 得到随机字符
+     *
      * @param n
      * @return
      */
@@ -226,16 +232,17 @@ public class CaptchaCodeUtil {
 
     /**
      * 得到随机颜色
+     *
      * @param fc
      * @param bc
      * @return
      */
     private Color getRandColor(int fc, int bc) {
         // 给定范围获得随机颜色
-        if (fc > 255){
+        if (fc > 255) {
             fc = 255;
         }
-        if (bc > 255){
+        if (bc > 255) {
             bc = 255;
         }
         int r = fc + random.nextInt(bc - fc);
@@ -249,7 +256,7 @@ public class CaptchaCodeUtil {
      */
     private Font getFont(int size) {
         Random random = new Random();
-        Font font[] = new Font[5];
+        Font[] font = new Font[5];
         font[0] = new Font("Ravie", Font.PLAIN, size);
         font[1] = new Font("Antique Olive Compact", Font.PLAIN, size);
         font[2] = new Font("Fixedsys", Font.PLAIN, size);
@@ -261,6 +268,7 @@ public class CaptchaCodeUtil {
 
     /**
      * 扭曲方法
+     *
      * @param g
      * @param w1
      * @param h1

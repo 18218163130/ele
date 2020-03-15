@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * 操作日志记录
+ *
  * @Author dongwf
  * @Date 2019/10/12
  */
@@ -15,6 +16,7 @@ import java.util.List;
 public interface LogMapper {
     /**
      * 插入日志信息
+     *
      * @param logVo
      * @return
      */
@@ -23,6 +25,7 @@ public interface LogMapper {
 
     /**
      * 删除日志信息
+     *
      * @param logId
      * @return
      */
@@ -31,6 +34,7 @@ public interface LogMapper {
 
     /**
      * 查询所有日志信息
+     *
      * @return
      */
     @Select("<script> select * from log <where> " +

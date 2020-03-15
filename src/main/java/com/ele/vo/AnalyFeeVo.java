@@ -2,6 +2,7 @@ package com.ele.vo;
 
 /**
  * 销售额
+ *
  * @Auther: dongwf
  * @Date: 2020/3/8 22:54
  * @Description:
@@ -17,21 +18,18 @@ public class AnalyFeeVo {
      */
     private String[] monthsName;
     private Object[] totalsValue;
-    public AnalyFeeVo(int size){
-        monthsName = new String[size];
-        totalsValue = new Object[size];
-    }
-
-
     /**
      * 分别统计家庭、工业、商业类型
-     *
      */
     private Object[] jts;
     private Object[] gys;
     private Object[] sys;
+    public AnalyFeeVo(int size) {
+        monthsName = new String[size];
+        totalsValue = new Object[size];
+    }
 
-    public AnalyFeeVo(int size,boolean flag){
+    public AnalyFeeVo(int size, boolean flag) {
         monthsName = new String[size];
         totalsValue = new Object[size];
         jts = new Object[size];

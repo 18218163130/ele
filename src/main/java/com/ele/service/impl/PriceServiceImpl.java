@@ -23,6 +23,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Autowired
     private PriceMapper priceMapper;
+
     @Override
     public void setYearMonthPirce(PriceVo priceVo) {
         priceMapper.insert(priceVo);
@@ -42,6 +43,6 @@ public class PriceServiceImpl implements PriceService {
     public DataGridView queryYearMonthPirce(PriceVo priceVo) {
         Page<Object> page = PageHelper.startPage(priceVo.getPage(), priceVo.getLimit());
         List<Price> pricesList = priceMapper.queryPrice(priceVo);
-        return new DataGridView(page.getTotal(),pricesList);
+        return new DataGridView(page.getTotal(), pricesList);
     }
 }

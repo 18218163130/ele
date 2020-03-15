@@ -2,10 +2,9 @@ package com.ele.vo;
 
 import com.ele.entity.User;
 
-import java.awt.*;
-
 /**
  * 客户信息包装类
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>数据录入</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"media="all" />
-    <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+    <link media="all" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body>
 
@@ -14,36 +14,40 @@
     <legend>电表数据录入</legend>
 </fieldset>
 
-<form class="layui-form" action="" lay-filter="meterDataForm" id="meterDataForm">
+<form action="" class="layui-form" id="meterDataForm" lay-filter="meterDataForm">
     <div class="layui-form-item">
         <label class="layui-form-label">电表编号</label>
         <div class="layui-input-block">
-            <input type="text" name="meterId" lay-verify="required|title" autocomplete="off" placeholder="请输入电表编号" class="layui-input">
+            <input autocomplete="off" class="layui-input" lay-verify="required|title" name="meterId" placeholder="请输入电表编号"
+                   type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">客户账号</label>
         <div class="layui-input-block">
-            <input type="text" name="userId" lay-verify="required|title" autocomplete="off" placeholder="请输入客户账号" class="layui-input">
+            <input autocomplete="off" class="layui-input" lay-verify="required|title" name="userId" placeholder="请输入客户账号"
+                   type="text">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">电表总数</label>
         <div class="layui-input-block">
-            <input type="text" name="displayNumber" lay-verify="required|number" autocomplete="off" placeholder="请输入电表总数" class="layui-input">
+            <input autocomplete="off" class="layui-input" lay-verify="required|number" name="displayNumber"
+                   placeholder="请输入电表总数" type="text">
         </div>
     </div>
     <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">本月耗电</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="consume"  autocomplete="off" placeholder="本月实际耗电总数" readonly="readonly" class="layui-input">-->
-        <!--</div>-->
+    <!--<label class="layui-form-label">本月耗电</label>-->
+    <!--<div class="layui-input-block">-->
+    <!--<input type="text" name="consume"  autocomplete="off" placeholder="本月实际耗电总数" readonly="readonly" class="layui-input">-->
+    <!--</div>-->
     <!--</div>-->
     <div class="layui-form-item">
         <label class="layui-form-label">抄表时间</label>
         <div class="layui-input-block">
-            <input type="text" name="recordDate" id="recordDate"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            <input autocomplete="off" class="layui-input" id="recordDate" lay-verify="required|date" name="recordDate"
+                   placeholder="yyyy-MM-dd" type="text">
         </div>
     </div>
 
@@ -51,66 +55,68 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" id="description"  name="description" lay-verify="description"></textarea>
+            <textarea class="layui-textarea" id="description" lay-verify="description" name="description"
+                      placeholder="请输入内容"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">是否审核</label>
         <div class="layui-input-block">
-            <input type="radio" name="state" value="1" checked="checked"  title="是">
-            <input type="radio" name="state" value="0" title="否">
+            <input checked="checked" name="state" title="是" type="radio" value="1">
+            <input name="state" title="否" type="radio" value="0">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">审核人</label>
         <div class="layui-input-block">
-            <input type="text" name="verifyPerson" lay-verify="title" autocomplete="off" placeholder="请输入审核人" class="layui-input">
+            <input autocomplete="off" class="layui-input" lay-verify="title" name="verifyPerson" placeholder="请输入审核人"
+                   type="text">
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="reset" class="layui-btn " id="btnReset">重置</button>
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit">提交</button>
+            <button class="layui-btn " id="btnReset" type="reset">重置</button>
+            <button class="layui-btn" id="doSubmit" lay-filter="doSubmit" lay-submit="" type="submit">提交</button>
         </div>
     </div>
 </form>
 
-<script type="text/javascript" th:src="@{/layui/layui.js}" src=""></script>
+<script src="" th:src="@{/layui/layui.js}" type="text/javascript"></script>
 <script th:inline="javascript">
-    layui.use(['form', 'layedit', 'laydate','jquery'], function(){
+    layui.use(['form', 'layedit', 'laydate', 'jquery'], function () {
         var form = layui.form
-            ,layer = layui.layer
-            ,layedit = layui.layedit
-            ,laydate = layui.laydate
-            ,$ = layui.jquery;
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , $ = layui.jquery;
         // 渲染日期选择框
         laydate.render({
             elem: "#recordDate",
-            type:'date'
-        })
+            type: 'date'
+        });
 
         //创建一个编辑器
         var editIndex = layedit.build('description');
         // 用来获取富文本内容弄
         form.verify({
-            description:function () {
+            description: function () {
                 layedit.sync(editIndex);
             }
         });
 
         // 给重置按钮绑定事件，用于清除富文本内容
-        $(document).on("click","#btnReset",function () {
-            layedit.setContent(editIndex,"");
-        })
+        $(document).on("click", "#btnReset", function () {
+            layedit.setContent(editIndex, "");
+        });
 
         //监听提交
-        form.on('submit(doSubmit)', function(data){
+        form.on('submit(doSubmit)', function (data) {
             var params = $("#meterDataForm").serialize();
-            $.post("/data/addMeterData",params,function (obj) {
+            $.post("/data/addMeterData", params, function (obj) {
                 layer.msg(obj.msg);
 
-            })
+            });
             return false;
         });
 

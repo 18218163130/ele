@@ -4,6 +4,7 @@ import com.ele.entity.Meter;
 
 /**
  * 电表信息封装类
+ *
  * @Author dongwf
  * @Date 2019/10/17
  */

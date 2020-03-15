@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 公告业务实现类
+ *
  * @Author dongwf
  * @Date 2019/10/14
  */
@@ -42,16 +43,16 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void deleteBatchNews(Integer[] ids) {
-        for (Integer id:ids){
+        for (Integer id : ids) {
             this.deleteNews(id);
         }
     }
 
     @Override
     public DataGridView queryAllNews(NewsVo newsVo) {
-        Page<News> page = PageHelper.startPage(newsVo.getPage(),newsVo.getLimit());
+        Page<News> page = PageHelper.startPage(newsVo.getPage(), newsVo.getLimit());
         List<News> newsList = newsMapper.queryAllNews(newsVo);
-        return new DataGridView(page.getTotal(),newsList);
+        return new DataGridView(page.getTotal(), newsList);
     }
 
     @Override

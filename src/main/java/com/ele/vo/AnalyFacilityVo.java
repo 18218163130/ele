@@ -2,11 +2,18 @@ package com.ele.vo;
 
 /**
  * 销售额
+ *
  * @Auther: dongwf
  * @Date: 2020/3/8 22:54
  * @Description:
  */
 public class AnalyFacilityVo {
+    /**
+     * 电表，电线，变压器
+     */
+    public Object[] dianxian;
+    public Object[] dianbiao;
+    public Object[] bianyaqi;
     /**
      * 封装数据库统计字段
      */
@@ -17,20 +24,10 @@ public class AnalyFacilityVo {
      */
     private String[] monthsName;
     private Object[] totalsValue;
-
-
     public AnalyFacilityVo(int size) {
         monthsName = new String[size];
         totalsValue = new Object[size];
     }
-
-
-    /**
-     * 电表，电线，变压器
-     */
-    public Object[] dianxian;
-    public Object[] dianbiao;
-    public Object[] bianyaqi;
 
     public AnalyFacilityVo(int size, boolean flag) {
         monthsName = new String[size];

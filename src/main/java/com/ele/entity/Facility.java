@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 设备信息
+ *
  * @Author dongwf
  * @Date 2019/12/19
  */
@@ -23,8 +24,7 @@ public class Facility implements Serializable {
     private String facTypeName;
 
 
-
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date facDate;
     private String facDesc;

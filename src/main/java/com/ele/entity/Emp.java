@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 公司员工实体
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */
@@ -23,7 +24,7 @@ public class Emp implements Serializable {
     private Integer sex;
     private String address;
     // 转换日期格式
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
 
@@ -117,7 +118,6 @@ public class Emp implements Serializable {
     public void setEmpCode(String empCode) {
         this.empCode = empCode;
     }
-
 
 
 }

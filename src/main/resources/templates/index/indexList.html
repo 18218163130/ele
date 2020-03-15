@@ -3,64 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>指标列表</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
-    <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
+    <link media="all" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body>
 <!-- 搜索条件开始 -->
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
-<form class="layui-form" method="post" id="searchFrom">
+<form class="layui-form" id="searchFrom" method="post">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">指标名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="indexName" autocomplete="off" class="layui-input">
+                <input autocomplete="off" class="layui-input" name="indexName" type="text">
             </div>
         </div>
         <!--<div class="layui-inline">-->
-            <!--<label class="layui-form-label">创建人</label>-->
-            <!--<div class="layui-input-inline">-->
-                <!--<input type="text" name="setPerson" autocomplete="off" class="layui-input">-->
-            <!--</div>-->
+        <!--<label class="layui-form-label">创建人</label>-->
+        <!--<div class="layui-input-inline">-->
+        <!--<input type="text" name="setPerson" autocomplete="off" class="layui-input">-->
+        <!--</div>-->
         <!--</div>-->
         <!--<div class="layui-inline">-->
-            <!--<label class="layui-form-label">起始时间</label>-->
-            <!--<div class="layui-input-block">-->
-                <!--<input type="text" name="sTime" id="stratTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">-->
-            <!--</div>-->
+        <!--<label class="layui-form-label">起始时间</label>-->
+        <!--<div class="layui-input-block">-->
+        <!--<input type="text" name="sTime" id="stratTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">-->
+        <!--</div>-->
         <!--</div>-->
         <!--<div class="layui-inline">-->
-            <!--<label class="layui-form-label">是否完成</label>-->
-            <!--<div class="layui-input-block">-->
-                <!--<input type="radio" name="state" value="1"  title="是">-->
-                <!--<input type="radio" name="state" value="0" title="否">-->
-            <!--</div>-->
+        <!--<label class="layui-form-label">是否完成</label>-->
+        <!--<div class="layui-input-block">-->
+        <!--<input type="radio" name="state" value="1"  title="是">-->
+        <!--<input type="radio" name="state" value="0" title="否">-->
+        <!--</div>-->
         <!--</div>-->
         <div class="layui-inline">
-            <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">查询
+            <button class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch" type="button">查询
             </button>
-            <button type="reset" class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh">重置</button>
+            <button class="layui-btn layui-btn-warm  layui-icon layui-icon-refresh" type="reset">重置</button>
         </div>
     </div>
 </form>
 
 <!--弹出编辑层-->
-<div id="updateIndexDiv"  style="display: none;padding: 20px;" >
-    <form class="layui-form" action="" lay-filter="updateForm" id="updateForm">
-        <input type="hidden" name="indexId"/>
+<div id="updateIndexDiv" style="display: none;padding: 20px;">
+    <form action="" class="layui-form" id="updateForm" lay-filter="updateForm">
+        <input name="indexId" type="hidden"/>
         <div class="layui-form-item">
             <label class="layui-form-label">指标名称</label>
             <div class="layui-input-block">
-                <input type="text" name="indexName" lay-verify="required|title" autocomplete="off" placeholder="请输入指标名称" class="layui-input">
+                <input autocomplete="off" class="layui-input" lay-verify="required|title" name="indexName" placeholder="请输入指标名称"
+                       type="text">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">指标类型</label>
             <div class="layui-input-block">
-                <select name="type" id="indexType" lay-filter="indexType" lay-verify="required">
+                <select id="indexType" lay-filter="indexType" lay-verify="required" name="type">
                     <option value=""></option>
                     <option value="0">电量销售</option>
                     <option value="1">工业售电均价</option>
@@ -75,47 +76,52 @@
         <div class="layui-form-item">
             <label class="layui-form-label">起始时间</label>
             <div class="layui-input-block">
-                <input type="text" name="sTime" id="sTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <input autocomplete="off" class="layui-input" id="sTime" lay-verify="required|date" name="sTime"
+                       placeholder="yyyy-MM-dd" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">截止时间</label>
             <div class="layui-input-block">
-                <input type="text" name="oTime" id="oTime"  lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <input autocomplete="off" class="layui-input" id="oTime" lay-verify="required|date" name="oTime"
+                       placeholder="yyyy-MM-dd" type="text">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">是否完成</label>
             <div class="layui-input-block">
-                <input type="radio" name="state" value="1" title="是">
-                <input type="radio" name="state" value="0" title="否">
+                <input name="state" title="是" type="radio" value="1">
+                <input name="state" title="否" type="radio" value="0">
             </div>
         </div>
 
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" id="description"  name="description" lay-verify="description"></textarea>
+                <textarea class="layui-textarea" id="description" lay-verify="description" name="description"
+                          placeholder="请输入内容"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">创建人</label>
             <div class="layui-input-block">
-                <input type="text" name="setPerson" lay-verify="title" autocomplete="off" readonly="readonly" placeholder="请输入创建人" class="layui-input">
+                <input autocomplete="off" class="layui-input" lay-verify="title" name="setPerson" placeholder="请输入创建人"
+                       readonly="readonly" type="text">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">修改人</label>
             <div class="layui-input-block">
-                <input type="text" name="changePerson" lay-verify="title|required" autocomplete="off"  placeholder="请输入修改人" class="layui-input">
+                <input autocomplete="off" class="layui-input" lay-verify="title|required" name="changePerson"
+                       placeholder="请输入修改人" type="text">
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="reset" class="layui-btn " id="btnReset">重置</button>
-                <button type="submit" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit">提交</button>
+                <button class="layui-btn " id="btnReset" type="reset">重置</button>
+                <button class="layui-btn" id="doSubmit" lay-filter="doSubmit" lay-submit="" type="submit">提交</button>
             </div>
         </div>
     </form>
@@ -123,14 +129,14 @@
 
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="indexTable" lay-filter="indexTable"></table>
-<div style="display: none;" id="indexToolBar">
-    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch">批量删除</button>
+<div id="indexToolBar" style="display: none;">
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch" type="button">批量删除</button>
 
 </div>
 
 <!--双击行显示指标描述信息-->
 <div id="showDescription" style="display: none;padding: 10px">
-    <h2 id="show_title" align="center"></h2>
+    <h2 align="center" id="show_title"></h2>
     <hr>
     <div id="show_content"></div>
 </div>
@@ -150,16 +156,16 @@
         var table = layui.table;
         var laydate = layui.laydate;
         laydate.render({
-            elem:"#sTime",
-            type:"date"
+            elem: "#sTime",
+            type: "date"
         });
         laydate.render({
-            elem:"#oTime",
-            type:"date"
+            elem: "#oTime",
+            type: "date"
         });
         laydate.render({
-            elem:"#stratTime",
-            type:"date"
+            elem: "#stratTime",
+            type: "date"
         });
         //渲染数据表格
         tableIns = table.render({
@@ -167,13 +173,13 @@
             , url: '/ind/loadAllIndex' //数据接口
             , title: '指标列表'//数据导出来的标题
             , toolbar: "#indexToolBar"   //表格的工具条
-            ,defaultToolbar:[""]
+            , defaultToolbar: [""]
             , height: 'full'
             , cellMinWidth: 100 //设置列的最小默认宽度
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'indexId', title: 'ID', align: 'center',sort:true}
+                , {field: 'indexId', title: 'ID', align: 'center', sort: true}
                 , {field: 'indexName', title: '指标名称', align: 'center'}
                 , {
                     field: 'type', title: '指标类型', align: 'center', templet: function (data) {
@@ -186,10 +192,10 @@
                         }
                     }
                 }
-                , {field: 'sTime', title: '起始时间', align: 'center',sort:true}
-                , {field: 'oTime', title: '截止时间', align: 'center',sort:true}
+                , {field: 'sTime', title: '起始时间', align: 'center', sort: true}
+                , {field: 'oTime', title: '截止时间', align: 'center', sort: true}
                 , {
-                    field: 'state', title: '是否完成', align: 'center',sort:true, templet: function (data) {
+                    field: 'state', title: '是否完成', align: 'center', sort: true, templet: function (data) {
                         return data.state == '1' ? "是" : "否";
                     }
                 }
@@ -233,7 +239,7 @@
                 case 'deleteBatch':
                     deleteBatch();
                     break;
-            };
+            }
         });
         //监听行工具事件
         table.on('tool(indexTable)', function (obj) {
@@ -248,25 +254,27 @@
                         tableIns.reload();
                     })
                 });
-            }else if(layEvent==='update'){
+            } else if (layEvent === 'update') {
                 updateIndex(data);
             }
         });
         var url;
         var mainIndex;
+
         // 打开修改
-        function updateIndex(data){
+        function updateIndex(data) {
             mainIndex = layer.open({
                 type: 1,
                 title: '修改指标内容',
                 content: $("#updateIndexDiv"),
-                area:  ['80%','100%'],
+                area: ['80%', '100%'],
                 success: function (index) {
-                    form.val("updateForm",data);
+                    form.val("updateForm", data);
                     url = "/ind/updateIndex"
                 }
             });
         }
+
         //保存
         form.on("submit(doSubmit)", function (obj) {
             //序列化表单数据
@@ -274,7 +282,7 @@
             $.post(url, params, function (obj) {
                 layer.msg(obj.msg);
                 //关闭弹出层
-                layer.close(mainIndex)
+                layer.close(mainIndex);
                 //刷新数据 表格
                 tableIns.reload();
             })

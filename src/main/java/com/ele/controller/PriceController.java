@@ -1,4 +1,5 @@
 package com.ele.controller;
+
 import com.ele.service.PriceService;
 import com.ele.utils.DataGridView;
 import com.ele.utils.ResultObj;
@@ -21,60 +22,64 @@ public class PriceController {
 
     /**
      * 设置电费单价
+     *
      * @param priceVo
      * @return
      */
     @RequestMapping("addPrice")
     @ResponseBody
-    public ResultObj addPrice(PriceVo priceVo){
-        try{
+    public ResultObj addPrice(PriceVo priceVo) {
+        try {
             priceService.setYearMonthPirce(priceVo);
             return ResultObj.ADD_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.ADD_ERROR;
         }
     }
 
     /**
      * 删除电费单价
+     *
      * @param priceVo
      * @return
      */
     @RequestMapping("deletePrice")
     @ResponseBody
-    public ResultObj deletePrice(PriceVo priceVo){
-        try{
+    public ResultObj deletePrice(PriceVo priceVo) {
+        try {
             priceService.deleteYearMonthPirce(priceVo);
             return ResultObj.DELETE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.DELETE_ERROR;
         }
     }
 
     /**
      * 修改电费单价
+     *
      * @param priceVo
      * @return
      */
     @RequestMapping("updatePrice")
     @ResponseBody
-    public ResultObj updatePrice(PriceVo priceVo){
-        try{
+    public ResultObj updatePrice(PriceVo priceVo) {
+        try {
             priceService.updateYearMonthPirce(priceVo);
             return ResultObj.UPDATE_SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResultObj.UPDATE_ERROR;
         }
     }
 
     /**
      * 查询单价列表
+     *
      * @param priceVo
      * @return
      */
     @RequestMapping("queryPrice")
     @ResponseBody
-    public DataGridView queryPrice(PriceVo priceVo){
+    public DataGridView queryPrice(PriceVo priceVo) {
         return priceService.queryYearMonthPirce(priceVo);
     }
 

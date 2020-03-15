@@ -1,15 +1,13 @@
 package com.ele.vo;
 
-import com.ele.entity.Auth;
 import com.ele.entity.Emp;
 
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * 封装员工与授权
+ *
  * @Author dongwf
  * @Date 2019/10/9
  */

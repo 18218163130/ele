@@ -19,6 +19,7 @@ import java.util.Map;
 
 /**
  * 电费单实现类
+ *
  * @Author dongwf
  * @Date 2019/10/23
  */
@@ -36,9 +37,9 @@ public class FeeServiceImpl implements FeeService {
 
     @Override
     public DataGridView queryAllFee(FeeVo feeVo) {
-        Page page = PageHelper.startPage(feeVo.getPage(),feeVo.getLimit());
+        Page page = PageHelper.startPage(feeVo.getPage(), feeVo.getLimit());
         List<Fee> feeList = feeMapping.queryAllFee(feeVo);
-        return new DataGridView(page.getTotal(),feeList);
+        return new DataGridView(page.getTotal(), feeList);
     }
 
     @Override
@@ -48,13 +49,13 @@ public class FeeServiceImpl implements FeeService {
 
     @Override
     public void deleteBatchFee(String[] feeIds) {
-        for(String id:feeIds){
+        for (String id : feeIds) {
             this.deleteFee(id);
         }
     }
 
     @Override
-    public void payFee(FeeVo feeVo){
+    public void payFee(FeeVo feeVo) {
         feeMapping.updateFee(feeVo);
     }
 
@@ -67,33 +68,33 @@ public class FeeServiceImpl implements FeeService {
         // 找到最长的集合
         List<AnalyFeeVo> tempList = null;
         int tempMax = 0;
-        if(list.size()>=listJT.size()){
-            tempMax=list.size();
-        }else{
+        if (list.size() >= listJT.size()) {
+            tempMax = list.size();
+        } else {
             tempMax = listJT.size();
         }
         int max = 0;
-        if(listGY.size()>=listSY.size()){
-            max=listGY.size();
-        }else{
+        if (listGY.size() >= listSY.size()) {
+            max = listGY.size();
+        } else {
             max = listSY.size();
         }
-        tempMax = tempMax>=max ? tempMax:max;
+        tempMax = tempMax >= max ? tempMax : max;
 
-        AnalyFeeVo analyFeeVo = new AnalyFeeVo(tempMax,true);
+        AnalyFeeVo analyFeeVo = new AnalyFeeVo(tempMax, true);
         String[] monthsName = analyFeeVo.getMonthsName();
         Object[] totalsValue = analyFeeVo.getTotalsValue();
-        for (int i=0;i<list.size();i++) {
-            monthsName[i] = list.get(i).getMonths()+"月";
+        for (int i = 0; i < list.size(); i++) {
+            monthsName[i] = list.get(i).getMonths() + "月";
             totalsValue[i] = list.get(i).getTotals();
         }
-        for (int i=0;i<listJT.size();i++) {
+        for (int i = 0; i < listJT.size(); i++) {
             analyFeeVo.getJts()[i] = listJT.get(i).getTotals();
         }
-        for (int i=0;i<listGY.size();i++) {
+        for (int i = 0; i < listGY.size(); i++) {
             analyFeeVo.getGys()[i] = listGY.get(i).getTotals();
         }
-        for (int i=0;i<listSY.size();i++) {
+        for (int i = 0; i < listSY.size(); i++) {
             analyFeeVo.getSys()[i] = listSY.get(i).getTotals();
         }
         return analyFeeVo;
@@ -101,6 +102,7 @@ public class FeeServiceImpl implements FeeService {
 
     /**
      * 统计员工销售额
+     *
      * @param yearMonth
      * @return
      */
@@ -111,11 +113,11 @@ public class FeeServiceImpl implements FeeService {
         String[] empNames = analyEmpSoleVo.getEmpNames();
         Object[] values = analyEmpSoleVo.getValues();
 
-        for (int i=0;i<analyEmpSoleVos.size();i++) {
+        for (int i = 0; i < analyEmpSoleVos.size(); i++) {
             // {value: 335, name: '直接访问'}
-            Map<String,String> map = new HashMap<>();
-            map.put("value",analyEmpSoleVos.get(i).getEmpCode());
-            map.put("name",analyEmpSoleVos.get(i).getEmpName());
+            Map<String, String> map = new HashMap<>();
+            map.put("value", analyEmpSoleVos.get(i).getEmpCode());
+            map.put("name", analyEmpSoleVos.get(i).getEmpName());
             values[i] = map;
             empNames[i] = analyEmpSoleVos.get(i).getEmpName();
         }
@@ -130,10 +132,10 @@ public class FeeServiceImpl implements FeeService {
         String[] empNames = analyEmpSoleVo.getEmpNames();
         Float[] prizes = analyEmpSoleVo.getPrizes();
 
-        for (int i=0;i<analyEmpSoleVos.size();i++) {
+        for (int i = 0; i < analyEmpSoleVos.size(); i++) {
             prizes[i] = analyEmpSoleVos.get(i).getTotals();
-            empNames[i] = analyEmpSoleVos.get(i).getEmpCode()+" "+ analyEmpSoleVos.get(i).getEmpName();
-            System.out.println(prizes[i]+" "+empNames[i]);
+            empNames[i] = analyEmpSoleVos.get(i).getEmpCode() + " " + analyEmpSoleVos.get(i).getEmpName();
+            System.out.println(prizes[i] + " " + empNames[i]);
         }
         return analyEmpSoleVo;
     }
@@ -145,7 +147,7 @@ public class FeeServiceImpl implements FeeService {
         AnalyFeeVo analyFeeVo = new AnalyFeeVo(feeList.size());
         String[] monthsName = analyFeeVo.getMonthsName();
         Object[] totalsValue = analyFeeVo.getTotalsValue();
-        for(int i=0;i<feeList.size();i++){
+        for (int i = 0; i < feeList.size(); i++) {
             monthsName[i] = feeList.get(i).getMonths();
             totalsValue[i] = feeList.get(i).getTotals();
         }

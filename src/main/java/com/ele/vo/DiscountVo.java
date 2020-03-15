@@ -3,7 +3,6 @@ package com.ele.vo;
 import com.ele.entity.Discount;
 
 /**
- *
  * @Author dongwf
  * @Date 2019/11/6
  */

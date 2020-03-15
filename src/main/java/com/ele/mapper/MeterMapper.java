@@ -13,6 +13,7 @@ import java.util.List;
 public interface MeterMapper {
     /**
      * 添加新的电表
+     *
      * @param meterVo
      * @return
      */
@@ -21,6 +22,7 @@ public interface MeterMapper {
 
     /**
      * 查询电表信息列表
+     *
      * @param meterVo
      * @return
      */
@@ -37,6 +39,7 @@ public interface MeterMapper {
 
     /**
      * 修改电表信息记录
+     *
      * @param meterVo
      * @return
      */
@@ -55,6 +58,7 @@ public interface MeterMapper {
 
     /**
      * 删除地点表记录
+     *
      * @param meterId
      * @return
      */
@@ -63,6 +67,7 @@ public interface MeterMapper {
 
     /**
      * 查询客户电表列表
+     *
      * @param userId
      * @return
      */
@@ -71,19 +76,21 @@ public interface MeterMapper {
 
     /**
      * 更改电路电容
+     *
      * @param type
      * @param meterId
      * @return
      */
     @Update("update meter set type=#{type} where meterId=#{meterId}")
-    int changeCapacity(@Param("type") Float type,@Param("meterId") Integer meterId);
+    int changeCapacity(@Param("type") Float type, @Param("meterId") Integer meterId);
 
     /**
      * 过户
+     *
      * @param userId
      * @param meterId
      * @return
      */
     @Update("update meter set userId=#{userId} where meterId=#{meterId}")
-    int updateUserId(@Param("userId")String userId,@Param("meterId")Integer meterId);
+    int updateUserId(@Param("userId") String userId, @Param("meterId") Integer meterId);
 }

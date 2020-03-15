@@ -1,12 +1,10 @@
 package com.ele.mapper;
 
-import com.ele.entity.Meter;
 import com.ele.entity.MeterData;
 import com.ele.vo.AnalyMonthConsumeVo;
 import com.ele.vo.MeterDataVo;
 import org.apache.ibatis.annotations.*;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +15,7 @@ import java.util.List;
 public interface MeterDataMapper {
     /**
      * 添加电表数据记录
+     *
      * @param meterDataVo
      * @return
      */
@@ -26,6 +25,7 @@ public interface MeterDataMapper {
 
     /**
      * 删除指定电表记录
+     *
      * @param dataId
      * @return
      */
@@ -34,6 +34,7 @@ public interface MeterDataMapper {
 
     /**
      * 更新电表记录数据
+     *
      * @param meterDataVo
      * @return
      */
@@ -55,8 +56,9 @@ public interface MeterDataMapper {
 
     /**
      * 查询所有电表记录数据
-     *  "<if test='startTime != null'> and recordDate >= #{startTime} </if>" +
-     *  "<if test='endTime !=null '> and recordDate <![CDATA[<=]]> #{endTime} </if>" +
+     * "<if test='startTime != null'> and recordDate >= #{startTime} </if>" +
+     * "<if test='endTime !=null '> and recordDate <![CDATA[<=]]> #{endTime} </if>" +
+     *
      * @param meterDataVo
      * @return
      */
@@ -69,6 +71,7 @@ public interface MeterDataMapper {
 
     /**
      * 查询上一个月的电表数字
+     *
      * @param meterId
      * @return
      */
@@ -78,6 +81,7 @@ public interface MeterDataMapper {
 
     /**
      * 根据meterid查询电表数据记录
+     *
      * @param meterId
      * @return
      */
@@ -87,6 +91,7 @@ public interface MeterDataMapper {
 
     /**
      * 分析统计每月消耗电量总数
+     *
      * @return
      */
 //    @Select("select DATE_FORMAT(recordDate,\"%m\") as months,sum(consume) as totals from meter_data where year(recordDate)=#{year} group by MONTH(recordDate)")
@@ -95,15 +100,17 @@ public interface MeterDataMapper {
 
     /**
      * 分用电类型查询
+     *
      * @param state
      * @return
      */
     @Select("select sum(consume) as totals,DATE_FORMAT(recordDate,'%m') as months from meter_data " +
             "where DATE_FORMAT(recordDate,'%Y')=#{year} and state=#{state} GROUP BY month(recordDate)")
-    List<AnalyMonthConsumeVo> queryState(@Param("state") Integer state,@Param("year")String year);
+    List<AnalyMonthConsumeVo> queryState(@Param("state") Integer state, @Param("year") String year);
 
     /**
      * 计算yyyy-MM电费
+     *
      * @param yearmonth
      * @return
      */
@@ -112,31 +119,32 @@ public interface MeterDataMapper {
 
     /**
      * 判断该月是否已经抄表
+     *
      * @param recordMonth
      * @return
      */
     @Select("select meterId,date_format(recordMonth,'%Y-%m') from meter_data where meterId=#{meterId} order by recordMonth desc limit 0,1")
-    MeterData checkRecordMonth(@Param("recordMonth")Date recordMonth);
+    MeterData checkRecordMonth(@Param("recordMonth") Date recordMonth);
 
     /**
      * 更新电表为已生成电费单状态
      */
     @Update("update meter_data set state=1 where dataId=#{dataId}")
-    int updateStateByYearmonth(@Param("dataId")Integer dataId);
+    int updateStateByYearmonth(@Param("dataId") Integer dataId);
 
     /**
      * 查询没有生成电费单的记录
+     *
      * @return
      */
     @Select("select * from meter_data where state=0 and DATE_FORMAT(recordMonth,'%Y-%m')=#{recordMonth}")
-    List<MeterData> selectByState(@Param("recordMonth")String recordMonth);
+    List<MeterData> selectByState(@Param("recordMonth") String recordMonth);
 
     /**
-     *
      * @param dataId
      * @return
      */
     @Select("select * from meter_data where dataId=#{dataId}")
-    MeterData queryByDataId(@Param("dataId")Integer dataId);
+    MeterData queryByDataId(@Param("dataId") Integer dataId);
 
 }

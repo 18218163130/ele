@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 营销表实体
+ *
  * @Author dongwf
  * @Date 2019/10/7
  */
@@ -16,7 +17,7 @@ public class Market implements Serializable {
     private String marketName; // 营销名称
     private String userId; // 客户名称
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date marketDate; // 日期
     private Integer state; // 状态
     private String remark; // 备注

@@ -16,21 +16,22 @@ public interface ActivityMapper {
     int insert(ActivityVo activityVo);
 
     @Select("select * from activity where discountId=#{discountId} and userId like concat('',#{userId},'')")
-    Activity select(@Param("discountId")Integer discountId,@Param("userId") String userId);
+    Activity select(@Param("discountId") Integer discountId, @Param("userId") String userId);
 
     /**
      * 活动报名客户列表
+     *
      * @return
      */
-    @Results(id = "userMap",value = {
-            @Result(property = "userId",column = "userId"),
-            @Result(property = "realName",column = "realName"),
-            @Result(property = "identify",column = "identify"),
-            @Result(property = "sex",column = "sex"),
-            @Result(property = "type",column = "type"),
-            @Result(property = "phone",column = "phone"),
-            @Result(property = "address",column = "address"),
-            @Result(property = "user",column = "userId",one = @One(select="com.ele.mapper.UserMapper.findUserById"))
+    @Results(id = "userMap", value = {
+            @Result(property = "userId", column = "userId"),
+            @Result(property = "realName", column = "realName"),
+            @Result(property = "identify", column = "identify"),
+            @Result(property = "sex", column = "sex"),
+            @Result(property = "type", column = "type"),
+            @Result(property = "phone", column = "phone"),
+            @Result(property = "address", column = "address"),
+            @Result(property = "user", column = "userId", one = @One(select = "com.ele.mapper.UserMapper.findUserById"))
     })
     @Select("<script> select * from activity <where>" +
             "<if test='activityId!=null'> activityId=#{activityId} </if>" +
@@ -44,22 +45,23 @@ public interface ActivityMapper {
 
     /**
      * 批量导出
+     *
      * @param ids
      * @return
      */
-    @Results(id = "userList",value = {
-            @Result(property = "userId",column = "userId"),
-            @Result(property = "realName",column = "realName"),
-            @Result(property = "identify",column = "identify"),
-            @Result(property = "sex",column = "sex"),
-            @Result(property = "type",column = "type"),
-            @Result(property = "phone",column = "phone"),
-            @Result(property = "address",column = "address"),
-            @Result(property = "user",column = "userId",one = @One(select="com.ele.mapper.UserMapper.findUserById"))
+    @Results(id = "userList", value = {
+            @Result(property = "userId", column = "userId"),
+            @Result(property = "realName", column = "realName"),
+            @Result(property = "identify", column = "identify"),
+            @Result(property = "sex", column = "sex"),
+            @Result(property = "type", column = "type"),
+            @Result(property = "phone", column = "phone"),
+            @Result(property = "address", column = "address"),
+            @Result(property = "user", column = "userId", one = @One(select = "com.ele.mapper.UserMapper.findUserById"))
     })
     @Select("<script> select * from activity <where>" +
             " activityId in " +
             "<foreach collection ='ids' item='item' open='(' separator=',' close=')'> #{item} </foreach>" +
             " </where></script>")
-    List<Activity> queryActivityById(@Param("ids")Integer[] ids);
+    List<Activity> queryActivityById(@Param("ids") Integer[] ids);
 }

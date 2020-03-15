@@ -2,8 +2,8 @@
 <html lang="en" style="height: 100%" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"media="all" />
-    <link rel="stylesheet" th:href="@{/css/public.css}" media="all" />
+    <link media="all" rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body style="height: 100%;">
 
@@ -13,15 +13,17 @@
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header" style="text-align: center">
-                    <form class="layui-form" lay-filter="searchForm1" id="searchForm">
+                    <form class="layui-form" id="searchForm" lay-filter="searchForm1">
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" name="year" id="year1" readonly="readonly" placeholder="yyyy">
+                                    <input class="layui-input" id="year1" name="year" placeholder="yyyy" readonly="readonly"
+                                           type="text">
                                 </div>
                                 <div class="layui-input-inline">
-                                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
-                                            lay-filter="doSubmit1" id="doSubmit1" lay-submit="">查询
+                                    <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                                            id="doSubmit1"
+                                            lay-filter="doSubmit1" lay-submit="" type="button">查询
                                     </button>
 
                                 </div>
@@ -30,22 +32,24 @@
                     </form>
                 </div>
                 <div class="layui-card-body">
-                    <div id="left" class="layui-card-body" style="width: 100%;height:600px;"></div>
+                    <div class="layui-card-body" id="left" style="width: 100%;height:600px;"></div>
                 </div>
             </div>
         </div>
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header" style="text-align: center">
-                    <form class="layui-form" lay-filter="searchForm2" id="searchForm2">
+                    <form class="layui-form" id="searchForm2" lay-filter="searchForm2">
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" name="year" id="year2" readonly="readonly" placeholder="yyyy">
+                                    <input class="layui-input" id="year2" name="year" placeholder="yyyy" readonly="readonly"
+                                           type="text">
                                 </div>
                                 <div class="layui-input-inline">
-                                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
-                                            lay-filter="doSubmit2" id="doSubmit2" lay-submit="">查询
+                                    <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
+                                            id="doSubmit2"
+                                            lay-filter="doSubmit2" lay-submit="" type="button">查询
                                     </button>
 
                                 </div>
@@ -54,38 +58,38 @@
                     </form>
                 </div>
                 <div class="layui-card-body">
-                    <div id="right" class="layui-card-body" style="width: 100%;height:600px;"></div>
+                    <div class="layui-card-body" id="right" style="width: 100%;height:600px;"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" th:src="@{/layui/layui.js}" ></script>
+<script th:src="@{/layui/layui.js}" type="text/javascript"></script>
 <!--<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}" ></script>-->
-<script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
-<script type="text/javascript" th:inline="javascript">
+<script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
+<script th:inline="javascript" type="text/javascript">
 
-    layui.use(['laydate','jquery','form'], function () {
+    layui.use(['laydate', 'jquery', 'form'], function () {
         var laydate = layui.laydate;
         var $ = layui.jquery;
         var form = layui.form;
         laydate.render({
-            elem:"#year1",
-            type:'year',
-            value:new Date()
-        })
+            elem: "#year1",
+            type: 'year',
+            value: new Date()
+        });
         laydate.render({
-            elem:"#year2",
-            type:'year',
-            value:new Date()
-        })
-        
+            elem: "#year2",
+            type: 'year',
+            value: new Date()
+        });
+
         // 提交分析
-        form.on("submit(doSubmit1)",function (obj) {
+        form.on("submit(doSubmit1)", function (obj) {
             var year = $("#year1").val();
             analyLeft(year);
         });
-        form.on("submit(doSubmit2)",function (obj) {
+        form.on("submit(doSubmit2)", function (obj) {
             var year = $("#year2").val();
             analyRight(year);
         });
@@ -93,8 +97,8 @@
         $("#doSubmit1").click(); // 默认点击查询按钮
         $("#doSubmit2").click(); // 默认点击查询按钮
         // 每月总用电量分析
-        function analyLeft(year){
-            $.get("/data/analyMonthConsume",{year:year},function (data) {
+        function analyLeft(year) {
+            $.get("/data/analyMonthConsume", {year: year}, function (data) {
                 // 基于准备好的dom，初始化echarts实例
                 var myChart = echarts.init(document.getElementById("left"));
                 option = {
@@ -105,14 +109,14 @@
                         type: 'category',
                         //[{"months":"10","totals":814.0},{"months":"11","totals":203.0}]
                         // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                        data:data.monthsName,
+                        data: data.monthsName,
                     },
                     yAxis: {
                         type: 'value'
                     },
                     series: [{
                         // data: [120, 200, 150, 80, 70, 110, 130],
-                        data:data.totalsValue,
+                        data: data.totalsValue,
                         type: 'bar'
                     }]
                 };
@@ -121,60 +125,54 @@
         }
 
         // 每月按用电类型分析
-        function analyRight(year){
-            $.get("/data/analyState",{year:year},function(data){
+        function analyRight(year) {
+            $.get("/data/analyState", {year: year}, function (data) {
                 // 家庭、商业、工业用电分析
                 var myRightChart = echarts.init(document.getElementById("right"));
                 option = {
-                    title : {
+                    title: {
                         subtext: '用电量'
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['家庭用电','商业用电','工业用电']
+                        data: ['家庭用电', '商业用电', '工业用电']
                     },
 
-                    xAxis : [
+                    xAxis: [
                         {
-                            type : 'category',
+                            type: 'category',
                             // data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-                            data:data.monthsName
+                            data: data.monthsName
                         }
                     ],
-                    yAxis : [
+                    yAxis: [
                         {
-                            type : 'value'
+                            type: 'value'
                         }
                     ],
-                    series : [
+                    series: [
                         {
-                            name:'家庭用电',
-                            type:'bar',
+                            name: '家庭用电',
+                            type: 'bar',
                             // data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                            data:data.jts,
-                            markPoint : {
-
-                            }
+                            data: data.jts,
+                            markPoint: {}
                         },
                         {
-                            name:'商业用电',
-                            type:'bar',
+                            name: '商业用电',
+                            type: 'bar',
                             // data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                            data:data.sys,
-                            markPoint : {
-
-                            }
+                            data: data.sys,
+                            markPoint: {}
                         },
                         {
-                            name:'工业用电',
-                            type:'bar',
+                            name: '工业用电',
+                            type: 'bar',
                             // data:[2.9, 3.9, 5.0, 29.4, 20.7, 50.7, 190.6, 132.2, 42.7, 10.8, 16.0, 12.3],
-                            data:data.gys,
-                            markPoint : {
-
-                            }
+                            data: data.gys,
+                            markPoint: {}
                         }
                     ]
                 };
@@ -184,8 +182,6 @@
         }
 
     });
-
-
 
 
 </script>
