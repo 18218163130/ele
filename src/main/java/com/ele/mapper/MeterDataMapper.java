@@ -89,7 +89,8 @@ public interface MeterDataMapper {
      * 分析统计每月消耗电量总数
      * @return
      */
-    @Select("select DATE_FORMAT(recordDate,\"%m\") as months,sum(consume) as totals from meter_data where year(recordDate)=#{year} group by MONTH(recordDate)")
+//    @Select("select DATE_FORMAT(recordDate,\"%m\") as months,sum(consume) as totals from meter_data where year(recordDate)=#{year} group by MONTH(recordDate)")
+    @Select("select DATE_FORMAT(recordMonth,'%m') as months,sum(consume) as totals from meter_data where year(recordMonth)=#{year} group by MONTH(recordMonth)")
     List<AnalyMonthConsumeVo> queryMonthConsume(@Param("year") String year);
 
     /**

@@ -92,6 +92,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="facType" value="" id="facType"/>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">设备单价</label>
@@ -233,7 +234,7 @@
                         success: function(data) {
                             $("#select").html('<option value="-1"></option>');
                             $.each(data.data, function (key, val) {
-                                var option1 = "<option value='"+val.facId+"' name='"+val.facPrice+"' code='"+val.facCode+"' factory='"+val.facFactory+"'>"+val.facName+"</option>";
+                                var option1 = "<option value='"+val.facId+"' name='"+val.facPrice+"' code='"+val.facCode+"' factory='"+val.facFactory+"' facType='"+val.facType+"'>"+val.facName+"</option>";
                                 //通过LayUI.jQuery添加列表项
                                 $("#select").append(option1);
 
@@ -267,10 +268,11 @@
             var price = $(data.elem).find("option:selected").attr("name");
             var code = $(data.elem).find("option:selected").attr("code");
             var factory = $(data.elem).find("option:selected").attr("factory");
-
+            var facType = $(data.elem).find("option:selected").attr("facType");
             $("#facPrice").val(price);
             $("#code").val(code);
             $("#factory").val(factory);
+            $("#facType").val(facType);
 
         });
 

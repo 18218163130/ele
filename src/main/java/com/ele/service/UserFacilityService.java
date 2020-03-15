@@ -1,6 +1,7 @@
 package com.ele.service;
 
 import com.ele.utils.DataGridView;
+import com.ele.vo.AnalyFacilityVo;
 import com.ele.vo.UserFacilityVo;
 import org.apache.ibatis.annotations.Update;
 
@@ -39,4 +40,7 @@ public interface UserFacilityService {
      * @param userFacId
      */
     void jiaofei(Integer userFacId);
+
+
+    AnalyFacilityVo analyFacility(String year);
 }

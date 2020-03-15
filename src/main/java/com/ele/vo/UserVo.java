@@ -15,10 +15,27 @@ public class UserVo extends User {
     private Integer limit; // 每页条数
     private String[] ids; // 用于接收批量删除传递的客户id
 
+    private String code;
     private String newPwd;
 
+    private String emoCode;
+    private String emoName;
 
-    private String code;
+    public String getEmoCode() {
+        return emoCode;
+    }
+
+    public void setEmoCode(String emoCode) {
+        this.emoCode = emoCode;
+    }
+
+    public String getEmoName() {
+        return emoName;
+    }
+
+    public void setEmoName(String emoName) {
+        this.emoName = emoName;
+    }
 
     public String getNewPwd() {
         return newPwd;

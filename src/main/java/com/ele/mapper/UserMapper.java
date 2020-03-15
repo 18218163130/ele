@@ -30,11 +30,11 @@ public interface UserMapper {
     User findUser(@Param("userId")String userId,@Param("userName")String userName);
     /**
      * 向user表中添加客户信息
-     * @param user
+     * @param userVo
      */
-    @Insert("insert into user(userId,realName,pwd,sex,type,phone,address,identify,decription,empId,empName) " +
-            "values(#{userId},#{realName},#{pwd},#{sex},#{type},#{phone},#{address},#{identify},#{decription},#{empId},#{empName})")
-    int insert(User user);
+    @Insert("insert into user(userId,realName,pwd,sex,type,phone,address,identify,decription,empCode,empName) " +
+            "values(#{userId},#{realName},#{pwd},#{sex},#{type},#{phone},#{address},#{identify},#{decription},#{empCode},#{empName})")
+    int insert(UserVo userVo);
 
     /**
      * 可以根据条件查询客户信息列表

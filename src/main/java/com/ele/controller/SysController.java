@@ -289,4 +289,22 @@ public class SysController {
     public String toFeeChart(){
         return "fee/feeChart";
     }
+
+    /**
+     * 员工销售统计
+     * @return
+     */
+    @RequestMapping("empSoleChart.html")
+    public String toEmpSoleChart(){
+        return "fee/empSoleChart";
+    }
+
+    /**
+     * 公司历史营销统计
+     * @return
+     */
+    @RequestMapping("companyChart.html")
+    public String toCompanyChart(){
+        return "fee/companyChart";
+    }
 }

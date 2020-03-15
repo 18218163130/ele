@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional // 添加事务支持
     @Override
-    public void addUser(User user) {
+    public void addUser(UserVo user) {
         userMapper.insert(user);
     }
 

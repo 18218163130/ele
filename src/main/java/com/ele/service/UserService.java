@@ -28,9 +28,9 @@ public interface UserService {
     User getUser(String userId,String userName);
     /**
      * 添加一个新的客户
-     * @param user
+     * @param userVo
      */
-    void addUser(User user);
+    void addUser(UserVo userVo);
 
     /**
      * 查询客户列表

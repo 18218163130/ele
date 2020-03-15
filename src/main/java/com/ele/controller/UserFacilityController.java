@@ -6,10 +6,12 @@ import com.ele.service.UserFacilityService;
 import com.ele.service.UserService;
 import com.ele.utils.DataGridView;
 import com.ele.utils.ResultObj;
+import com.ele.vo.AnalyFacilityVo;
 import com.ele.vo.UserFacilityVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.xml.transform.Result;
@@ -62,6 +64,17 @@ public class UserFacilityController {
     @ResponseBody
     public DataGridView queryFacilityList(UserFacilityVo userFacilityVo){
         return userFacilityService.queryFacilityList(userFacilityVo);
+    }
+
+    /**
+     * 分析设备营销额
+     * @param year
+     * @return
+     */
+    @RequestMapping("ananyFacilityMonth")
+    @ResponseBody
+    public AnalyFacilityVo ananyFacilityMonth(@RequestParam("year")String year){
+        return userFacilityService.analyFacility(year);
     }
 
     /**

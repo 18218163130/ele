@@ -10,9 +10,7 @@ import com.ele.service.UserService;
 import com.ele.utils.DataGridView;
 import com.ele.utils.FeeExcelUtil;
 import com.ele.utils.ResultObj;
-import com.ele.vo.FeeVo;
-import com.ele.vo.MeterDataVo;
-import com.ele.vo.PriceVo;
+import com.ele.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +58,7 @@ public class FeeController {
                 fee.setRealName(dbUser.getRealName());
                 fee.setCreateTime(new Date());
                 fee.setAmount(need.getConsume());
-                fee.setRecordDate(need.getRecordDate());
+                fee.setRecordDate(need.getRecordMonth());
                 fee.setPayWay(0);
                 fee.setState(0);
                 fee.setEmpName(dbUser.getEmpName());
@@ -111,7 +109,7 @@ public class FeeController {
                 fee.setRealName(dbUser.getRealName());
                 fee.setCreateTime(new Date());
                 fee.setAmount(dbMeterData.getConsume());
-                fee.setRecordDate(dbMeterData.getRecordDate());
+                fee.setRecordDate(dbMeterData.getRecordMonth());
                 fee.setPayWay(0);
                 fee.setState(0);
                 fee.setEmpName(dbUser.getEmpName());
@@ -272,6 +270,48 @@ public class FeeController {
         }catch(Exception e){
             return ResultObj.EXPORT_ERROR;
         }
+    }
 
+    /**
+     * 统计每月营销额
+     * @param year
+     * @return
+     */
+    @RequestMapping("analyFeeMonth")
+    @ResponseBody
+    public AnalyFeeVo analyFeeMonth(@RequestParam("year")String year){
+        return feeService.analyFee(year);
+    }
+
+    /**
+     * 统计员工销售额
+     * @param yearMonth
+     * @return
+     */
+    @RequestMapping("analyEmpSoleVo")
+    @ResponseBody
+    public AnalyEmpSoleVo analyEmpSoleVo(@RequestParam("year")String yearMonth){
+        return feeService.analyEmpSole(yearMonth);
+    }
+
+    /**
+     * 统计员工销售额
+     * @param yearMonth
+     * @return
+     */
+    @RequestMapping("analyEmpSoleVo2")
+    @ResponseBody
+    public AnalyEmpSoleVo analyEmpSoleVo2(@RequestParam("year")String yearMonth){
+        return feeService.analyEmpSole2(yearMonth);
+    }
+
+    /**
+     * 公司历史营销数据
+     * @return
+     */
+    @RequestMapping("analyFeeYM")
+    @ResponseBody
+    public AnalyFeeVo analyFeeYM(){
+        return feeService.analyFeeYM();
     }
 }

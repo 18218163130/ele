@@ -5,6 +5,8 @@ import com.ele.mapper.FacilityMapper;
 import com.ele.mapper.UserFacilityMapper;
 import com.ele.service.UserFacilityService;
 import com.ele.utils.DataGridView;
+import com.ele.utils.MonthSort;
+import com.ele.vo.AnalyFacilityVo;
 import com.ele.vo.UserFacilityVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -12,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author dongwf
@@ -57,4 +60,19 @@ public class UserFacilityServiceImpl implements UserFacilityService {
     public void jiaofei(Integer userFacId) {
         userFacilityMapper.updatePayField(userFacId);
     }
+
+    @Override
+    public AnalyFacilityVo analyFacility(String year) {
+        List<AnalyFacilityVo>  all = userFacilityMapper.analyFacilityAll(year);
+        AnalyFacilityVo analyFacilityVo = new AnalyFacilityVo(all.size(),true);
+        String[] monthsName = analyFacilityVo.getMonthsName();
+        Object[] totalsValue = analyFacilityVo.getTotalsValue();
+        for (int i=0;i<all.size();i++) {
+            monthsName[i] = all.get(i).getMonths();
+            totalsValue[i] = all.get(i).getTotals();
+        }
+        return analyFacilityVo;
+    }
+
+
 }

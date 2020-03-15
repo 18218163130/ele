@@ -71,20 +71,20 @@
         var form = layui.form;
         laydate.render({
             elem:"#year1",
-            type:'year',
+            type:'month',
             value:new Date()
         })
         laydate.render({
             elem:"#year2",
-            type:'year',
+            type:'month',
             value:new Date()
         })
-
         // 提交分析
         form.on("submit(doSubmit1)",function (obj) {
             var year = $("#year1").val();
             analyLeft(year);
         });
+        // 提交分析
         form.on("submit(doSubmit2)",function (obj) {
             var year = $("#year2").val();
             analyRight(year);
@@ -92,60 +92,40 @@
 
         $("#doSubmit1").click(); // 默认点击查询按钮
         $("#doSubmit2").click(); // 默认点击查询按钮
-        // 每月总用电量分析
+
         function analyLeft(year){
-            $.get("/fee/analyFeeMonth",{year:year},function (data) {
+            $.get("/fee/analyEmpSoleVo",{year:year},function (data) {
                 // 基于准备好的dom，初始化echarts实例
                 var myChart = echarts.init(document.getElementById("left"));
                 option = {
-                    title : {
-                        subtext: '月电费营销额(元)'
+                    title: {
+                        text: '员工销售占比',
+                        subtext: '',
+                        left: 'center'
                     },
-                    xAxis: {
-                        type: 'category',
-                        data:data.monthsName
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
                     },
-                    yAxis: {
-                        type: 'value'
-                    },
-
                     legend: {
-                        data:['总营销额','家庭用电营销额','工业用电营销额','商业用电营销额']
+                        orient: 'vertical',
+                        left: 'left',
+                        data:data.empNames
                     },
                     series: [
                         {
-                            name:'总营销额',
-                            type:'bar',
-                             data:data.totalsValue,
-                            markPoint : {
-                            }, type: 'line'
-                        },
-                        {
-                            name:'家庭用电营销额',
-                            type:'bar',
-                             // data:[88, 4.9, 277, 555, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 500, 127],
-                            data:data.jts,
-                            markPoint : {
-
-                            }, type: 'line'
-                        },
-                        {
-                            name:'工业用电营销额',
-                            type:'bar',
-                            // data:[58, 499, 85, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 288, 6.4,304],
-                            data:data.gys,
-                            markPoint : {
-
-                            }, type: 'line'
-                        },
-                        {
-                            name:'商业用电营销额',
-                            type:'bar',
-                            // data:[85, 4.9,88, 23.2, 25.6, 79, 135.6, 162.2, 32.6, 200, 99, 182],
-                            data:data.sys,
-                            markPoint : {
-
-                            }, type: 'line'
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data:data.values,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
                         }
                     ]
                 };
@@ -153,26 +133,26 @@
             });
         }
 
-        // 每月按用电类型分析
+
         function analyRight(year){
-            $.get("/userFacility/ananyFacilityMonth",{year:year},function(data){
+            $.get("/fee/analyEmpSoleVo2",{year:year},function(data){
                 var myRightChart = echarts.init(document.getElementById("right"));
                 option = {
                     title : {
-                        subtext: '月设备营销额(元)'
+                        subtext: '员工营销额'
                     },
                     tooltip : {
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['设备销售额']
+                        data:['员工营销额']
                     },
 
                     xAxis : [
                         {
                             type : 'category',
                             // data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-                            data:data.monthsName
+                            data:data.empNames
                         }
                     ],
                     yAxis : [
@@ -182,9 +162,10 @@
                     ],
                     series : [
                         {
-                            name:'设备营销总额',
+                            name:'员工营销额',
                             type:'bar',
-                            data:data.totalsValue,
+                            // data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                            data:data.prizes,
                             markPoint : {
                             }
                         }
@@ -193,6 +174,7 @@
                 myRightChart.setOption(option);
             });
         }
+
     });
 
 </script>

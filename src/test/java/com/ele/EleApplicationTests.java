@@ -70,10 +70,8 @@ public class EleApplicationTests {
 
     @Test
     public void test2(){
-        MeterDataVo meterData = new MeterDataVo();
-        meterData.setVerifyPerson("dddd");
-        meterData.setDataId(5);
-        meterDataService.updateMeterData(meterData);
+        List<AnalyEmpSoleVo> analyEmpSoleVos = feeMapping.analyEmpSole("2020-01");
+        System.out.println();
     }
 
 }

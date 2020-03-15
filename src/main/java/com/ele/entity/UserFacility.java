@@ -22,6 +22,8 @@ public class UserFacility implements Serializable {
     private Float totalPrice;
     private Integer isPay;
     private String userName;
+    private Integer facType;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
@@ -104,5 +106,13 @@ public class UserFacility implements Serializable {
 
     public void setIsPay(Integer isPay) {
         this.isPay = isPay;
+    }
+
+    public Integer getFacType() {
+        return facType;
+    }
+
+    public void setFacType(Integer facType) {
+        this.facType = facType;
     }
 }

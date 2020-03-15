@@ -2,6 +2,8 @@ package com.ele.service;
 
 import com.ele.entity.Fee;
 import com.ele.utils.DataGridView;
+import com.ele.vo.AnalyEmpSoleVo;
+import com.ele.vo.AnalyFeeVo;
 import com.ele.vo.FeeVo;
 
 import java.util.List;
@@ -42,4 +44,22 @@ public interface FeeService {
      */
     void payFee(FeeVo feeVo);
 
+    /**
+     * 统计电费营销额
+     * @param year
+     * @return
+     */
+    AnalyFeeVo analyFee(String year);
+
+    /**
+     * 统计员工销售额
+     * @param yearMonth
+     * @return
+     */
+    AnalyEmpSoleVo analyEmpSole(String yearMonth);
+
+    AnalyEmpSoleVo analyEmpSole2(String yearMonth);
+
+
+    AnalyFeeVo analyFeeYM();
 }

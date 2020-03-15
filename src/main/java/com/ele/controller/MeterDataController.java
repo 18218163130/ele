@@ -164,14 +164,6 @@ public class MeterDataController {
        return meterDataService.analyState(year);
     }
 
-    /**
-     * 查询该抄表日期
-     * @param meterDataVo
-     * @return
-     */
-    public DataGridView queryMeterdataByRecordDate(MeterDataVo meterDataVo){
 
-        return null;
-    }
 
 }

@@ -44,7 +44,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("addUser")
-    public ResultObj addUser(User user){
+    public ResultObj addUser(UserVo user){
         try {
             Integer type = user.getType();
             String pre = null; // 客户账号前缀

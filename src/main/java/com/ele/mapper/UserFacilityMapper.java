@@ -1,6 +1,7 @@
 package com.ele.mapper;
 
 import com.ele.entity.UserFacility;
+import com.ele.vo.AnalyFacilityVo;
 import com.ele.vo.UserFacilityVo;
 import org.apache.ibatis.annotations.*;
 import org.hibernate.validator.constraints.ParameterScriptAssert;
@@ -17,8 +18,8 @@ public interface UserFacilityMapper {
      * @param userFacilityVo
      * @return
      */
-    @Insert("insert into user_facility(userId,userName,facId,facName,num,price,totalPrice,isPay,createDate) " +
-            "values(#{userId},#{userName},#{facId},#{facName},#{num},#{price},#{totalPrice},#{isPay},#{createDate})")
+    @Insert("insert into user_facility(userId,userName,facId,facName,num,price,totalPrice,isPay,createDate,facType) " +
+            "values(#{userId},#{userName},#{facId},#{facName},#{num},#{price},#{totalPrice},#{isPay},#{createDate},#{facType})")
     int insert(UserFacilityVo userFacilityVo);
 
     /**
@@ -44,4 +45,34 @@ public interface UserFacilityMapper {
      */
     @Update("update user_facility set isPay = 1 where userFacId=#{userFacId}")
     int updatePayField(@Param("userFacId") Integer userFacId);
+
+    /**
+     * 统计每月设备营销总额
+     * @param year
+     * @return
+     */
+    @Select("select DATE_FORMAT(createDate,'%m') months,sum(totalPrice) as totals from user_facility where year(createDate)=#{year} and isPay=1 group by  MONTH(createDate)")
+    List<AnalyFacilityVo> analyFacilityAll(@Param("year")String year);
+
+    /**
+     * 统计每月电表营销总额
+     * @param year
+     * @return
+     */
+    @Select("select DATE_FORMAT(createDate,'%m') months,sum(totalPrice) as totals from user_facility where year(createDate)=#{year} and isPay=1 and facType=1 group by  MONTH(createDate)")
+    List<AnalyFacilityVo> analyFacilityDianbiao(@Param("year")String year);
+    /**
+     * 统计每月电线营销总额
+     * @param year
+     * @return
+     */
+    @Select("select DATE_FORMAT(createDate,'%m') months,sum(totalPrice) as totals from user_facility where year(createDate)=#{year} and isPay=1 and facType=2 group by  MONTH(createDate)")
+    List<AnalyFacilityVo> analyFacilityDianxian(@Param("year")String year);
+    /**
+     * 统计每月变压器营销总额
+     * @param year
+     * @return
+     */
+    @Select("select DATE_FORMAT(createDate,'%m') months,sum(totalPrice) as totals from user_facility where year(createDate)=#{year} and isPay=1 and facType=3 group by  MONTH(createDate)")
+    List<AnalyFacilityVo> analyFacilityBianyaqi(@Param("year")String year);
 }
