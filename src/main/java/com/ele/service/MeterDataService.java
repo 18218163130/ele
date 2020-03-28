@@ -104,5 +104,5 @@ public interface MeterDataService {
 
     MeterData queryById(Integer dataId);
 
-
+    DataGridView analyMeterdateList(String year);
 }

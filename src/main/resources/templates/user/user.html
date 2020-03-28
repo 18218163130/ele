@@ -89,15 +89,15 @@
 
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
-<div id="userToolBar" shiro:hasPermission="user:all" style="display: none;">
-    <button class="layui-btn layui-btn-sm" lay-event="add" type="button">新开客户</button>
-    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch" type="button">批量删除</button>
+<div id="userToolBar"  style="display: none;">
+    <button class="layui-btn layui-btn-sm" lay-event="add" type="button" >新开客户</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch" type="button" shiro:hasPermission="user:all">批量删除</button>
 </div>
-<div id="userBar" shiro:hasPermission="user:all" style="display: none;">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="addMeter">电表</a>
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resetUserPwd">重置密码</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+<div id="userBar"  style="display: none;">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" >编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="addMeter" >电表</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resetUserPwd" shiro:hasPermission="user:all">重置密码</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="user:all">删除</a>
 </div>
 <!-- 数据表格结束 -->
 

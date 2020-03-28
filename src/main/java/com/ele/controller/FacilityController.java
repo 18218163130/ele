@@ -8,6 +8,7 @@ import com.ele.vo.FacilityVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -119,6 +120,17 @@ public class FacilityController {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * 分析设备列表
+     * @param year
+     * @return
+     */
+    @RequestMapping("analyFacilityList")
+    @ResponseBody
+    public DataGridView analyFacilityList(@RequestParam("year")String year){
+        return facilityService.analyFacilityList(year);
     }
 
 

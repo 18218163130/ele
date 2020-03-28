@@ -1,6 +1,7 @@
 package com.ele.mapper;
 
 import com.ele.entity.Emp;
+import com.ele.vo.AnalyEmpSoleVo;
 import com.ele.vo.EmpVo;
 import org.apache.ibatis.annotations.*;
 
@@ -108,4 +109,7 @@ public interface EmpMapper {
      */
     @Update("update emp set pwd=#{newPwd} where empCode=#{empCode}")
     void updateNewPwd(@Param("empCode") String empCode, @Param("newPwd") String newPwd);
+
+    @Select("select empCode,empName,sum(prize) as totals,DATE_FORMAT(recordDate,'%Y-%m') as yearMonth from fee  where DATE_FORMAT(recordDate,'%Y-%m')=#{year} and state=1 group by  empCode")
+    List<AnalyEmpSoleVo> analyEmpList(@Param("year")String year);
 }

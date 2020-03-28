@@ -5,6 +5,7 @@ import com.ele.entity.Emp;
 import com.ele.mapper.EmpMapper;
 import com.ele.service.EmpService;
 import com.ele.utils.DataGridView;
+import com.ele.vo.AnalyEmpSoleVo;
 import com.ele.vo.EmpVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -87,5 +88,11 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public void updateEmpPwd(String empCode, String newPwd) {
         empMapper.updateNewPwd(empCode, newPwd);
+    }
+
+    @Override
+    public DataGridView analyEmpList(String year) {
+        List<AnalyEmpSoleVo> analyEmpSoleVos = empMapper.analyEmpList(year);
+        return new DataGridView(analyEmpSoleVos);
     }
 }

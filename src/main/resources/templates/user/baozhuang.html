@@ -60,20 +60,37 @@
         <input name="meterId" type="hidden" value=""/>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">原电容/A</label>
+                <label class="layui-form-label">客户账号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" lay-verify="required|number" name="type"
+                    <input autocomplete="off" class="layui-input" readonly="readonly" lay-verify="required" name="userId" placeholder="请输入客户账号"
                            type="text">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">新电容/A</label>
+                <label class="layui-form-label">电表</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input"  readonly="readonly" lay-verify="required" name="meterName" placeholder="请输入客户姓名"
+                           type="text">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">原电路容量(A)</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" readonly="readonly" class="layui-input" lay-verify="required|number" name="type"
+                           type="text">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">现电路容量(A)</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" lay-verify="required|number" name="newType"
                            type="text">
                 </div>
             </div>
         </div>
+
         <div class="layui-form-item" style="text-align: center;">
             <div class="layui-input-block">
                 <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doOptionSubmit"
@@ -93,10 +110,36 @@
             <div class="layui-inline">
                 <label class="layui-form-label">原客户账号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" lay-verify="required" name="userId"
+                    <input autocomplete="off" class="layui-input" lay-verify="required" readonly="readonly" name="userId"
                            type="text">
                 </div>
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电表</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input"  readonly="readonly" lay-verify="required" name="meterName" placeholder="请输入客户姓名"
+                           type="text">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电量容量</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" lay-verify="required" readonly="readonly" name="type"
+                           type="text">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">线路状态</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" id="std" class="layui-input"  readonly="readonly" lay-verify="required" name="stte"  placeholder=""
+                           type="text" value="可用">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">新客户账号</label>
                 <div class="layui-input-inline">
@@ -104,11 +147,20 @@
                            type="text">
                 </div>
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">新客户名称</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" lay-verify="required" name="myname"
+                           type="text">
+                </div>
+            </div>
         </div>
+
+
         <div class="layui-form-item" style="text-align: center;">
             <div class="layui-input-block">
                 <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doGouhuSubmit"
-                        lay-submit="" type="button">确认更改
+                        lay-submit="" type="button">确认过户
                 </button>
                 <button class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" type="reset">重置
                 </button>
@@ -281,6 +333,8 @@
             type: 'date',
         });
 
+
+
         tableIns = table.render({
             elem: '#meterTable'   //渲染的目标对象
             , url: '/meter/meterList' //数据接口
@@ -294,7 +348,7 @@
                     {field: 'meterId', title: 'ID', align: 'center', width: 80, sort: true},
                     {field: 'userId', title: '客户账号', align: 'center', width: 180, sort: true},
                     {field: 'meterName', title: '电表', align: 'center', width: 160, sort: true},
-                    {field: 'type', title: '电容(A)', align: 'center', width: 120, sort: true},
+                    {field: 'type', title: '电路容量(A)', align: 'center', width: 120, sort: true},
                     {field: 'code', title: '电表编号', align: 'center', width: 160, sort: true},
                     {field: 'factory', title: '出厂商', align: 'center', width: 160, sort: true},
                     {
@@ -368,7 +422,7 @@
                 type: 1,
                 title: '过户',
                 content: $("#guohuDiv"),
-                area: ['780px', '280px'],
+                area: ['780px', '400px'],
                 success: function (index) {
                     $("#guohuForm")[0].reset();
                     form.val("guohuForm", data);

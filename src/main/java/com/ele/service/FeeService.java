@@ -68,4 +68,8 @@ public interface FeeService {
 
 
     AnalyFeeVo analyFeeYM();
+
+    DataGridView analyFeeList(String year);
+
+    DataGridView analyCompanyList();
 }

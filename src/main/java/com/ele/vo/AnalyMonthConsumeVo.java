@@ -12,6 +12,14 @@ public class AnalyMonthConsumeVo {
      */
     private String months;
     private Object totals;
+    private Integer count;
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
     /**
      * 返回页面的json数据字段
      */

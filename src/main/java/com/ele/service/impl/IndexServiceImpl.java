@@ -55,4 +55,12 @@ public class IndexServiceImpl implements IndexService {
         List<Index> indexList = indexMapper.queryAllIndex(indexVo);
         return new DataGridView(page.getTotal(), indexList);
     }
+
+    @Override
+    public DataGridView queryIndexByState(IndexVo indexVo) {
+        // 分页
+        Page page = PageHelper.startPage(indexVo.getPage(), indexVo.getLimit());
+        List<Index> indexList = indexMapper.queryIndexByState(indexVo.getState());
+        return new DataGridView(page.getTotal(), indexList);
+    }
 }

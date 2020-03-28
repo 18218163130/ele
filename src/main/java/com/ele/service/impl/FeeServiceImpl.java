@@ -6,6 +6,7 @@ import com.ele.service.FeeService;
 import com.ele.utils.DataGridView;
 import com.ele.vo.AnalyEmpSoleVo;
 import com.ele.vo.AnalyFeeVo;
+import com.ele.vo.AnalyMonthConsumeVo;
 import com.ele.vo.FeeVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -152,5 +153,17 @@ public class FeeServiceImpl implements FeeService {
             totalsValue[i] = feeList.get(i).getTotals();
         }
         return analyFeeVo;
+    }
+
+    @Override
+    public DataGridView analyFeeList(String year) {
+        List<AnalyMonthConsumeVo> voList = feeMapping.analyFeeList(year);
+        return new DataGridView(voList);
+    }
+
+    @Override
+    public DataGridView analyCompanyList() {
+        List<AnalyFeeVo> feeList = feeMapping.analyFeeYM();
+        return new DataGridView(feeList);
     }
 }

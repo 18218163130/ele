@@ -98,13 +98,13 @@
 </div>
 
 <div id="marketBar" style="display: none;">
-    <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="edit" shiro:hasPermission="market:update">编辑</a>
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="market:delete">删除</a>
 </div>
 <div class="layui-btn-container" id="toolbarDemo" style="display: none;">
-    <button class="layui-btn layui-btn-sm" lay-event="delBatch">批量删除</button>
-    <button class="layui-btn layui-btn-sm" lay-event="addDiscount">添加优惠活动</button>
+    <button class="layui-btn layui-btn-sm" lay-event="delBatch" shiro:hasPermission="market:delete">批量删除</button>
+    <button class="layui-btn layui-btn-sm" lay-event="addDiscount" shiro:hasPermission="market:add">添加优惠活动</button>
 </div>
 
 <script src="" th:src="@{/layui/layui.js}" type="text/javascript"></script>

@@ -1,6 +1,7 @@
 package com.ele.service;
 
 import com.ele.utils.DataGridView;
+import com.ele.utils.ResultObj;
 import com.ele.vo.IndexVo;
 
 /**
@@ -43,4 +44,6 @@ public interface IndexService {
      * @return
      */
     DataGridView queryAllIndex(IndexVo indexVo);
+
+    DataGridView queryIndexByState(IndexVo indexVo);
 }

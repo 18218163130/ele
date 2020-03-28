@@ -50,12 +50,12 @@
 <table class="layui-hide" id="facilityTable" lay-filter="facilityTable"></table>
 
 <div class="layui-btn-group" id="facilityTool" style="display: none;">
-    <button class="layui-btn" lay-event="addFacility" type="button">电力设备添加</button>
+    <button class="layui-btn" lay-event="addFacility" type="button" shiro:hasPermission="news:all">电力设备添加</button>
 
 </div>
 <div id="facilityBar" style="display: none;">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="news:all">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="news:all">删除</a>
 </div>
 
 

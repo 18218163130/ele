@@ -406,6 +406,7 @@
                 } else {
                     layer.msg(obj.msg);
                     $(".clearNumber").val(""); // 清除数据
+                    layer.close(mainIndex);
                     showDataTableIns.reload(); // 刷新表格数据
                 }
             });

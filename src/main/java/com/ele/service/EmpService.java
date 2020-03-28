@@ -85,4 +85,6 @@ public interface EmpService {
      * @param newPwd
      */
     void updateEmpPwd(String empCode, String newPwd);
+
+    DataGridView analyEmpList(String year);
 }

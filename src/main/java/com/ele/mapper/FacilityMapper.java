@@ -1,6 +1,7 @@
 package com.ele.mapper;
 
 import com.ele.entity.Facility;
+import com.ele.vo.AnalyMonthConsumeVo;
 import com.ele.vo.FacilityVo;
 import org.apache.ibatis.annotations.*;
 
@@ -78,4 +79,7 @@ public interface FacilityMapper {
      */
     @Select("select * from facility where facType=#{facType}")
     List<Facility> findFacType2(@Param("facType") Integer facType);
+
+    @Select("select DATE_FORMAT(createDate,'%Y-%m') as months,sum(totalPrice) as totals ,count(userFacId) as count from user_facility where year(createDate)=#{year} group by MONTH(createDate)")
+    List<AnalyMonthConsumeVo> analyFacilityList(String year);
 }

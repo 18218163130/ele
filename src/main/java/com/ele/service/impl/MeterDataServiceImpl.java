@@ -149,4 +149,12 @@ public class MeterDataServiceImpl implements MeterDataService {
     public MeterData queryById(Integer dataId) {
         return meterDataMapper.queryByDataId(dataId);
     }
+
+    @Override
+    public DataGridView analyMeterdateList(String year) {
+
+        List<AnalyMonthConsumeVo> voList = meterDataMapper.analyMeterdateList(year);
+
+        return new DataGridView(voList);
+    }
 }

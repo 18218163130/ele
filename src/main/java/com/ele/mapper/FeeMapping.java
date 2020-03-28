@@ -3,6 +3,7 @@ package com.ele.mapper;
 import com.ele.entity.Fee;
 import com.ele.vo.AnalyEmpSoleVo;
 import com.ele.vo.AnalyFeeVo;
+import com.ele.vo.AnalyMonthConsumeVo;
 import com.ele.vo.FeeVo;
 import org.apache.ibatis.annotations.*;
 
@@ -105,5 +106,9 @@ public interface FeeMapping {
      */
     @Select("select DATE_FORMAT(recordDate,'%Y-%m') as months ,sum(prize) as totals from fee where  state=1 group by  months limit 0,36")
     List<AnalyFeeVo> analyFeeYM();
+
+    @Select("select DATE_FORMAT(recordDate,'%Y-%m') as months,sum(prize) as totals ,count(feeId) as count from fee where year(recordDate)=#{year} group by MONTH(recordDate) ")
+    List<AnalyMonthConsumeVo> analyFeeList(@Param("year")String year);
+
 
 }

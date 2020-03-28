@@ -14,6 +14,7 @@ import java.util.Date;
 public class MeterDataVo extends MeterData {
     private Integer page;
     private Integer limit;
+
     private Integer[] ids;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
@@ -28,6 +29,7 @@ public class MeterDataVo extends MeterData {
     private float jtPrice;
     private float syPrice;
     private float gyPrice;
+
 
     public float getPrice() {
         return price;

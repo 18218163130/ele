@@ -6,16 +6,21 @@
     <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body style="height: 100%;">
+<!--弹出数据类表-->
+<div id="meterdateListDiv" layui-filter="meterdateListDiv" style="display: none;padding: 20px;">
+    <table id="meterdateList" lay-filter="meterdateList"></table>
+</div>
 
 
 <div style="padding: 20px; background-color: #F2F2F2;height: 100%;">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md6">
+        <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header" style="text-align: center">
                     <form class="layui-form" id="searchForm" lay-filter="searchForm1">
                         <div class="layui-form-item">
                             <div class="layui-inline">
+
                                 <div class="layui-input-inline">
                                     <input class="layui-input" id="year1" name="year" placeholder="yyyy" readonly="readonly"
                                            type="text">
@@ -25,7 +30,12 @@
                                             id="doSubmit1"
                                             lay-filter="doSubmit1" lay-submit="" type="button">查询
                                     </button>
-
+                                </div>
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn layui-btn-sm"
+                                            id="findList"
+                                            lay-filter="findList" type="button">统计电量列表
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -36,66 +46,34 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-md6">
-            <div class="layui-card">
-                <div class="layui-card-header" style="text-align: center">
-                    <form class="layui-form" id="searchForm2" lay-filter="searchForm2">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <input class="layui-input" id="year2" name="year" placeholder="yyyy" readonly="readonly"
-                                           type="text">
-                                </div>
-                                <div class="layui-input-inline">
-                                    <button class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"
-                                            id="doSubmit2"
-                                            lay-filter="doSubmit2" lay-submit="" type="button">查询
-                                    </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="layui-card-body">
-                    <div class="layui-card-body" id="right" style="width: 100%;height:600px;"></div>
-                </div>
-            </div>
-        </div>
     </div>
+
 </div>
 <script th:src="@{/layui/layui.js}" type="text/javascript"></script>
 <!--<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}" ></script>-->
 <script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
 <script th:inline="javascript" type="text/javascript">
 
-    layui.use(['laydate', 'jquery', 'form'], function () {
+    layui.use(['laydate', 'jquery', 'form','table'], function () {
         var laydate = layui.laydate;
         var $ = layui.jquery;
         var form = layui.form;
+        var table= layui.table;
+
+        var url;
+        var mainIndex;
+
         laydate.render({
             elem: "#year1",
             type: 'year',
             value: new Date()
         });
-        laydate.render({
-            elem: "#year2",
-            type: 'year',
-            value: new Date()
-        });
-
         // 提交分析
         form.on("submit(doSubmit1)", function (obj) {
             var year = $("#year1").val();
             analyLeft(year);
         });
-        form.on("submit(doSubmit2)", function (obj) {
-            var year = $("#year2").val();
-            analyRight(year);
-        });
-
         $("#doSubmit1").click(); // 默认点击查询按钮
-        $("#doSubmit2").click(); // 默认点击查询按钮
         // 每月总用电量分析
         function analyLeft(year) {
             $.get("/data/analyMonthConsume", {year: year}, function (data) {
@@ -124,66 +102,37 @@
             });
         }
 
-        // 每月按用电类型分析
-        function analyRight(year) {
-            $.get("/data/analyState", {year: year}, function (data) {
-                // 家庭、商业、工业用电分析
-                var myRightChart = echarts.init(document.getElementById("right"));
-                option = {
-                    title: {
-                        subtext: '用电量'
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    legend: {
-                        data: ['家庭用电', '商业用电', '工业用电']
-                    },
+        $("#findList").click(function(){
+            var year = $("#year1").val();
+            layer.open({
+                type: 1,
+                title: '数据分析列表',
+                content: $("#meterdateListDiv"),
+                area: ['700px', '80%'],
+                success: function (index) {
+                    showUrl = '/data/analyMeterdateList?year=' + year;
+                    openList(showUrl);
 
-                    xAxis: [
-                        {
-                            type: 'category',
-                            // data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-                            data: data.monthsName
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
-                    series: [
-                        {
-                            name: '家庭用电',
-                            type: 'bar',
-                            // data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                            data: data.jts,
-                            markPoint: {}
-                        },
-                        {
-                            name: '商业用电',
-                            type: 'bar',
-                            // data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                            data: data.sys,
-                            markPoint: {}
-                        },
-                        {
-                            name: '工业用电',
-                            type: 'bar',
-                            // data:[2.9, 3.9, 5.0, 29.4, 20.7, 50.7, 190.6, 132.2, 42.7, 10.8, 16.0, 12.3],
-                            data: data.gys,
-                            markPoint: {}
-                        }
+                }
+            });
+        });
+
+        function openList(showUrl) {
+            mainIndex = table.render({
+                elem: '#meterdateList'
+                , url: showUrl
+                , cellMinWidth: 180
+                , cols: [
+                    [
+                         {field: 'months', title: '年月', width: 220,align:'center'}
+                        , {field: 'totals', title: '月总耗电(读)', width: 240,align:'center', templet: function (data) {return '<font color=blue>' + data.totals + '</font>'}}
+                        ,{field: 'count', title: '统计电表个数', width: 180,align:'center'}
                     ]
-                };
-
-                myRightChart.setOption(option);
+                ]
             });
         }
 
     });
-
-
 </script>
 </body>
 </html>

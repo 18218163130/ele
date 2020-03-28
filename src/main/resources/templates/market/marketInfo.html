@@ -88,12 +88,12 @@
 
 
 <div id="marketBar" style="display: none;">
-    <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-green layui-btn-xs" lay-event="edit" shiro:hasPermission="emp:all">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="emp:all">删除</a>
 </div>
 <div class="layui-btn-container" id="toolbarDemo" style="display: none;">
-    <button class="layui-btn layui-btn-sm" lay-event="delBatch">批量删除</button>
-    <button class="layui-btn layui-btn-sm" lay-event="addMarket">添加营销信息</button>
+    <button class="layui-btn layui-btn-sm" lay-event="delBatch" shiro:hasPermission="emp:all">批量删除</button>
+    <button class="layui-btn layui-btn-sm" lay-event="addMarket" shiro:hasPermission="emp:all">添加营销信息</button>
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>

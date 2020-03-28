@@ -7,6 +7,7 @@ import com.ele.vo.IndexVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -104,6 +105,17 @@ public class IndexController {
         } catch (Exception e) {
             return ResultObj.DELETE_ERROR;
         }
+    }
+    /**
+     * 首页面板显示指标信息
+     *
+     * @param indexVo
+     * @return
+     */
+    @RequestMapping("queryIndexState")
+    @ResponseBody
+    public DataGridView queryIndexState(IndexVo indexVo){
+        return indexService.queryIndexByState(indexVo);
     }
 
 

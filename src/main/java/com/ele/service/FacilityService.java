@@ -52,4 +52,6 @@ public interface FacilityService {
      * @return
      */
     DataGridView findFacType2(Integer facType);
+
+    DataGridView analyFacilityList(String year);
 }

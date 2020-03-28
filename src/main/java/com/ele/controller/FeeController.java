@@ -324,4 +324,23 @@ public class FeeController {
     public AnalyFeeVo analyFeeYM() {
         return feeService.analyFeeYM();
     }
+
+    /**
+     * 分析电费列表
+     * @param year
+     * @return
+     */
+    @RequestMapping("analyFeeList")
+    @ResponseBody
+    public DataGridView analyFeeList(@RequestParam("year")String year){
+        return feeService.analyFeeList(year);
+    }
+
+    @RequestMapping("analyCompanyList")
+    @ResponseBody
+    public DataGridView analyCompanyList(){
+        return feeService.analyCompanyList();
+
+    }
+
 }

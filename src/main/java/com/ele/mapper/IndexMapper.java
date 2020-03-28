@@ -62,4 +62,7 @@ public interface IndexMapper {
             " </where> " +
             "</script>")
     List<Index> queryAllIndex(IndexVo indexVo);
+
+    @Select("select * from tb_index where state=#{state} order by sTime desc")
+    List<Index> queryIndexByState(@Param("state") int state);
 }

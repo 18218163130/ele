@@ -6,6 +6,17 @@
     <link media="all" rel="stylesheet" th:href="@{/css/public.css}"/>
 </head>
 <body style="height: 100%;">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+   <legend> <button class="layui-btn layui-btn-sm"
+                    id="findList"
+                    lay-filter="findList" type="button">公司营销额列表
+   </button></legend>
+</fieldset>
+
+<!--弹出电费表-->
+<div id="feeListDiv" layui-filter="feeListDiv" style="display: none;padding: 20px;">
+    <table id="feeList" lay-filter="feeList"></table>
+</div>
 
 
 <div style="padding: 20px; background-color: #F2F2F2;height: 100%;">
@@ -43,10 +54,11 @@
 <script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
 <script th:inline="javascript" type="text/javascript">
 
-    layui.use(['laydate', 'jquery', 'form'], function () {
+    layui.use(['laydate', 'jquery', 'form','table'], function () {
         var laydate = layui.laydate;
         var $ = layui.jquery;
         var form = layui.form;
+        var table = layui.table;
 
         laydate.render({
             elem: "#year2",
@@ -59,8 +71,6 @@
             var year = $("#year2").val();
             analyRight(year);
         });
-
-
         $("#doSubmit2").click(); // 默认点击查询按钮
 
         function analyRight(year) {
@@ -100,6 +110,33 @@
                     ]
                 };
                 myRightChart.setOption(option);
+            });
+        }
+
+        $("#findList").click(function(){
+            layer.open({
+                type: 1,
+                title: '统计电费营收列表',
+                content: $("#feeListDiv"),
+                area: ['700px', '50%'],
+                success: function (index) {
+                    showUrl = '/fee/analyCompanyList';
+                    openList(showUrl);
+                }
+            });
+        });
+
+        function openList(showUrl) {
+            mainIndex = table.render({
+                elem: '#feeList'
+                , url: showUrl
+                , cellMinWidth: 180
+                , cols: [
+                    [
+                        {field: 'months', title: '年月', width: 300,align:'center'}
+                        , {field: 'totals', title: '电费营收(元)', width: 300,align:'center', templet: function (data) {return '<font color=blue>' + data.totals + '</font>'}}
+                    ]
+                ]
             });
         }
 

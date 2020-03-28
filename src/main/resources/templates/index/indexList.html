@@ -130,7 +130,7 @@
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="indexTable" lay-filter="indexTable"></table>
 <div id="indexToolBar" style="display: none;">
-    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch" type="button">批量删除</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch" type="button" shiro:hasPermission="index:delete">批量删除</button>
 
 </div>
 
@@ -142,8 +142,8 @@
 </div>
 
 <div id="indexBar" style="display: none;">
-    <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update"  shiro:hasPermission="index:update">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="index:delete">删除</a>
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>
@@ -184,11 +184,13 @@
                 , {
                     field: 'type', title: '指标类型', align: 'center', templet: function (data) {
                         if (data.type == '0') {
-                            return "电量指标";
-                        } else if (data.type == "1" || data.type == "2" || data.type == "3") {
-                            return "电力均价";
-                        } else {
-                            "营销指标";
+                            return "电量销售指标";
+                        } else if (data.type == "1") {
+                            return "设备销售指标";
+                        } else if(data.type=='2') {
+                            return "员工营销指标";
+                        }else{
+                            return "公司营收指标";
                         }
                     }
                 }

@@ -147,4 +147,12 @@ public interface MeterDataMapper {
     @Select("select * from meter_data where dataId=#{dataId}")
     MeterData queryByDataId(@Param("dataId") Integer dataId);
 
+    /**
+     * 统计数据列表
+     * @param year
+     * @return
+     */
+    @Select("select DATE_FORMAT(recordMonth,'%Y-%m') as months,sum(consume) as totals ,count(dataId) as count from meter_data where year(recordMonth)=#{year} group by MONTH(recordMonth) ")
+    List<AnalyMonthConsumeVo> analyMeterdateList(@Param("year")String year);
+
 }

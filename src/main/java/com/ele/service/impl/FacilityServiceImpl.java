@@ -4,6 +4,7 @@ import com.ele.entity.Facility;
 import com.ele.mapper.FacilityMapper;
 import com.ele.service.FacilityService;
 import com.ele.utils.DataGridView;
+import com.ele.vo.AnalyMonthConsumeVo;
 import com.ele.vo.FacilityVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -58,5 +59,11 @@ public class FacilityServiceImpl implements FacilityService {
     public DataGridView findFacType2(Integer facType) {
         List<Facility> facilityList = facilityMapper.findFacType2(facType);
         return new DataGridView(facilityList);
+    }
+
+    @Override
+    public DataGridView analyFacilityList(String year) {
+        List<AnalyMonthConsumeVo> voList = facilityMapper.analyFacilityList(year);
+        return new DataGridView(voList);
     }
 }

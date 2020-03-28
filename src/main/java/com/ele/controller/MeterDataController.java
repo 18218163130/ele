@@ -20,7 +20,7 @@ import java.util.Date;
  * 电表数据操作
  *
  * @Author dongwf
- * @Date 2019/10/17
+ * @Date 2019/10/17a
  */
 @Controller
 @RequestMapping("data")
@@ -173,5 +173,15 @@ public class MeterDataController {
         return meterDataService.analyState(year);
     }
 
+    /**
+     * 电表数据统计列表
+     * @param year
+     * @return
+     */
+    @RequestMapping("analyMeterdateList")
+    @ResponseBody
+    public DataGridView analyMeterdateList(@RequestParam("year")String year){
+        return meterDataService.analyMeterdateList(year);
+    }
 
 }

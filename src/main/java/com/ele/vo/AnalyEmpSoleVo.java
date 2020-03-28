@@ -12,6 +12,7 @@ public class AnalyEmpSoleVo {
     private Float totals;
     private String empCode;
     private String empName;
+    private String yearMonth;
     private String[] empNames;
 
     public AnalyEmpSoleVo(int size) {
@@ -24,6 +25,14 @@ public class AnalyEmpSoleVo {
 //    public AnalyEmpSoleVo(int size,boolean flag){
 //        empNames = new String[size];
 //    }
+
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
 
     public Float[] getPrizes() {
         return prizes;

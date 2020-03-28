@@ -19,10 +19,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -50,13 +47,14 @@ public class EmpController {
     /**
      * 员工登录
      *
-     * @param emp
+     * @param
      * @param model
      * @param session
      * @return
      */
     @PostMapping("login")
     public String Login(EmpVo empVo, Model model, HttpSession session) {
+//        saveLog();
         //获取到当前线程绑定的请求对象
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         // 判断验证码是否正确
@@ -78,15 +76,15 @@ public class EmpController {
             /**
              * 添加日志记录
              */
-//
-//            //已经拿到session,就可以拿到session中保存的用户信息了。
-//            Emp sessionEmp = (Emp)request.getSession().getAttribute("emp");
-//            LogVo logVo = new LogVo();
-//            logVo.setLogName(request.getRequestURI()); // 设置日志名称
-//            logVo.setLogTime(new Date()); // 设置日志记录时间
-//            logVo.setAssociated("员工编号:"+emp.getEmpCode()); // 设置触发人姓名
-//            logVo.setLoginIp(request.getRemoteAddr()); // 设置访问IP地址
-//            logService.addLogInfo(logVo);
+
+            //已经拿到session,就可以拿到session中保存的用户信息了。
+            Emp sessionEmp = (Emp)request.getSession().getAttribute("emp");
+            LogVo logVo = new LogVo();
+            logVo.setLogName(request.getRequestURI()); // 设置日志名称
+            logVo.setLogTime(new Date()); // 设置日志记录时间
+            logVo.setAssociated("员工编号:"+sessionEmp.getEmpCode()); // 设置触发人姓名
+            logVo.setLoginIp(request.getRemoteAddr()); // 设置访问IP地址
+            logService.addLogInfo(logVo);
 
             return "main/index";
         } catch (UnknownAccountException e) {
@@ -323,5 +321,11 @@ public class EmpController {
         logVo.setAssociated(sessionEmp.getEmpName()); // 设置触发人姓名
         logVo.setLoginIp(request.getRemoteAddr()); // 设置访问IP地址
         logService.addLogInfo(logVo);
+    }
+
+    @RequestMapping("analyEmpList")
+    @ResponseBody
+    public DataGridView analyEmpList(@RequestParam("year")String year){
+        return empService.analyEmpList(year);
     }
 }
